@@ -8116,3 +8116,123 @@ a { text-decoration: none; color: inherit; }
   font-size: 13px;
   margin-top: 8px;
 }
+
+/* ============================================
+   SKELETON LOADER - Style YouTube/Mey Beauty
+   ============================================ */
+
+.skeleton-page {
+  min-height: 100vh;
+  background: var(--blanc-casse, #fdfbf8);
+}
+
+.skeleton-hero {
+  background: var(--nude-lighter, #f5f0eb);
+  height: 208px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.skeleton-content {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+/* Base shimmer effect */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #e8e0d8 0%,
+    #f0ebe5 50%,
+    #e8e0d8 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 8px;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-image {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.skeleton-card {
+  border-radius: 12px;
+}
+
+.skeleton-text {
+  border-radius: 4px;
+}
+
+.skeleton-title {
+  border-radius: 8px;
+}
+
+.skeleton-breadcrumb {
+  border-radius: 4px;
+}
+
+/* Animation shimmer comme YouTube */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Responsive skeleton */
+@media (max-width: 992px) {
+  .skeleton-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .skeleton-hero {
+    height: auto;
+    min-height: 160px;
+    padding: 40px 16px;
+  }
+  .skeleton-content {
+    padding: 40px 16px;
+  }
+  .skeleton-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .skeleton-shimmer.skeleton-title {
+    width: 80% !important;
+    height: 32px !important;
+  }
+}
+
+/* Animation spin pour loader simple */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* LazyImage component styles */
+.lazy-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: opacity 0.3s ease;
+}
+
+.skeleton-error {
+  background: linear-gradient(135deg, #f5f0eb 0%, #e8e0d8 100%);
+}

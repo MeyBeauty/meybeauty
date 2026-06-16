@@ -2,6 +2,7 @@ import AnnounceBar from './components/AnnounceBar.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import RecentPurchaseToast from './components/RecentPurchaseToast.jsx';
+import { SkeletonPage } from './components/SkeletonLoader.jsx';
 import { useEffect, useState, lazy, Suspense } from 'react';
 import { ToastProvider } from './context/ToastContext.jsx';
 import { HelmetProvider } from 'react-helmet-async';
@@ -19,25 +20,8 @@ const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage.jsx'));
 const CartPage = lazy(() => import('./pages/CartPage.jsx'));
 const AdminPage = lazy(() => import('./pages/AdminPage.jsx'));
 
-// Composant de chargement rapide
-const PageLoader = () => (
-  <div style={{ 
-    minHeight: '50vh', 
-    display: 'flex', 
-    alignItems: 'center', 
-    justifyContent: 'center',
-    background: 'var(--blanc-casse, #fdfbf8)'
-  }}>
-    <div style={{ 
-      width: '40px', 
-      height: '40px', 
-      border: '3px solid rgba(139, 109, 86, 0.2)', 
-      borderTopColor: 'var(--brun, #8B6D56)',
-      borderRadius: '50%',
-      animation: 'spin 0.8s linear infinite'
-    }} />
-  </div>
-);
+// Skeleton Loader - effet YouTube style shimmer
+const PageLoader = () => <SkeletonPage />;
 
 export default function App() {
   const [hash, setHash] = useState(() => window.location.hash || '#home');
