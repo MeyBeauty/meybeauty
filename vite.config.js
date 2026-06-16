@@ -113,6 +113,33 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), stripeBackendPlugin(env)],
     server: {
       port: 5173
+    },
+    build: {
+      // Optimisations pour la performance
+      target: 'es2020',
+      minify: 'esbuild',
+      rollupOptions: {
+        output: {
+          // Code splitting manuel pour réduire le bundle initial
+          manualChunks: {
+            'vendor-react': ['react', 'react-dom'],
+            'vendor-router': ['react-helmet-async'],
+            'vendor-stripe': ['@stripe/stripe-js', '@stripe/react-stripe-js'],
+            'vendor-firebase': ['firebase/app', 'firebase/firestore', 'firebase/auth', 'firebase/storage']
+          }
+        }
+      },
+      // Compression des assets
+      assetsInlineLimit: 4096,
+      chunkSizeWarningLimit: 1000,
+      // Préchargement des modules critiques
+      modulePreload: {
+        polyfill: true
+      }
+    },
+    // Optimisations pour le développement
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'firebase/app', 'firebase/firestore']
     }
   };
 });

@@ -2,20 +2,42 @@ import AnnounceBar from './components/AnnounceBar.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import RecentPurchaseToast from './components/RecentPurchaseToast.jsx';
-import HomePage from './pages/HomePage.jsx';
-import AboutPage from './pages/AboutPage.jsx';
-import LegalPage from './pages/LegalPage.jsx';
-import PrivacyPage from './pages/PrivacyPage.jsx';
-import ContactPage from './pages/ContactPage.jsx';
-import BlogPage from './pages/BlogPage.jsx';
-import BlogDetailPage from './pages/BlogDetailPage.jsx';
-import ShopPage from './pages/ShopPage.jsx';
-import ProductDetailPage from './pages/ProductDetailPage.jsx';
-import CartPage from './pages/CartPage.jsx';
-import AdminPage from './pages/AdminPage.jsx';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { ToastProvider } from './context/ToastContext.jsx';
 import { HelmetProvider } from 'react-helmet-async';
+
+// Lazy loading des pages pour performance
+const HomePage = lazy(() => import('./pages/HomePage.jsx'));
+const AboutPage = lazy(() => import('./pages/AboutPage.jsx'));
+const LegalPage = lazy(() => import('./pages/LegalPage.jsx'));
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage.jsx'));
+const ContactPage = lazy(() => import('./pages/ContactPage.jsx'));
+const BlogPage = lazy(() => import('./pages/BlogPage.jsx'));
+const BlogDetailPage = lazy(() => import('./pages/BlogDetailPage.jsx'));
+const ShopPage = lazy(() => import('./pages/ShopPage.jsx'));
+const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage.jsx'));
+const CartPage = lazy(() => import('./pages/CartPage.jsx'));
+const AdminPage = lazy(() => import('./pages/AdminPage.jsx'));
+
+// Composant de chargement rapide
+const PageLoader = () => (
+  <div style={{ 
+    minHeight: '50vh', 
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    background: 'var(--blanc-casse, #fdfbf8)'
+  }}>
+    <div style={{ 
+      width: '40px', 
+      height: '40px', 
+      border: '3px solid rgba(139, 109, 86, 0.2)', 
+      borderTopColor: 'var(--brun, #8B6D56)',
+      borderRadius: '50%',
+      animation: 'spin 0.8s linear infinite'
+    }} />
+  </div>
+);
 
 export default function App() {
   const [hash, setHash] = useState(() => window.location.hash || '#home');
@@ -56,29 +78,31 @@ export default function App() {
       {isAdmin ? null : <AnnounceBar />}
       {isAdmin ? null : <Navbar />}
       {isAdmin ? null : <RecentPurchaseToast />}
-      {page === 'about' ? (
-        <AboutPage />
-      ) : page === 'legal' ? (
-        <LegalPage />
-      ) : page === 'privacy' ? (
-        <PrivacyPage />
-      ) : page === 'contact' ? (
-        <ContactPage />
-      ) : page === 'blog' ? (
-        <BlogPage />
-      ) : page === 'blog-detail' ? (
-        <BlogDetailPage />
-      ) : page === 'shop' ? (
-        <ShopPage />
-      ) : page === 'cart' ? (
-        <CartPage />
-      ) : page === 'product' ? (
-        <ProductDetailPage />
-      ) : page === 'admin' ? (
-        <AdminPage />
-      ) : (
-        <HomePage />
-      )}
+      <Suspense fallback={<PageLoader />}>
+        {page === 'about' ? (
+          <AboutPage />
+        ) : page === 'legal' ? (
+          <LegalPage />
+        ) : page === 'privacy' ? (
+          <PrivacyPage />
+        ) : page === 'contact' ? (
+          <ContactPage />
+        ) : page === 'blog' ? (
+          <BlogPage />
+        ) : page === 'blog-detail' ? (
+          <BlogDetailPage />
+        ) : page === 'shop' ? (
+          <ShopPage />
+        ) : page === 'cart' ? (
+          <CartPage />
+        ) : page === 'product' ? (
+          <ProductDetailPage />
+        ) : page === 'admin' ? (
+          <AdminPage />
+        ) : (
+          <HomePage />
+        )}
+      </Suspense>
       {isAdmin ? null : <Footer />}
     </ToastProvider>
   );
