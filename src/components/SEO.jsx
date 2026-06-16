@@ -4,8 +4,8 @@ const defaultSEO = {
   title: 'Mey Beauty - Institut de Beauté Viry-Châtillon | Soins Visage & Corps',
   description: 'Institut de beauté Mey Beauty à Viry-Châtillon (Essonne 91). Soins visage, massages relaxants, épilation, onglerie, produits cosmétiques LPG. Réservez votre soin esthétique près de Paris.',
   keywords: 'institut beauté Viry-Châtillon, esthéticienne Essonne 91, soin visage IDF, massage relaxant Ile-de-France, épilation Viry, onglerie Essonne, cosmétiques LPG, maquillage permanent, institut beauté proche Paris, soins esthétiques 91',
-  image: 'https://mey-beauty.com/soin%20visage%20(2).PNG',
-  url: 'https://mey-beauty.com/',
+  image: 'https://meybeauty.fr/soin%20visage%20(2).PNG',
+  url: 'https://meybeauty.fr/',
   type: 'website',
 };
 
@@ -72,7 +72,7 @@ export function generateProductSchema(product) {
       price: (product.priceCents / 100).toFixed(2),
       priceCurrency: product.currency || 'EUR',
       availability: 'https://schema.org/InStock',
-      url: `https://mey-beauty.com/#product?id=${product.id}`,
+      url: `https://meybeauty.fr/#product?id=${product.id}`,
     },
     category: product.category,
   };
@@ -86,7 +86,7 @@ export function generateLocalBusinessSchema() {
     name: 'Mey Beauty',
     alternateName: 'Mey Beauty Paris',
     description: 'Institut de beauté à Viry-Châtillon spécialisé en soins visage, massages du corps, épilation, onglerie et produits cosmétiques premium LPG. Situé en Essonne (91), près de Paris.',
-    url: 'https://mey-beauty.com/',
+    url: 'https://meybeauty.fr/',
     telephone: '+33-7-49-22-68-01',
     email: 'contact@meybeauty.fr',
     address: {
@@ -117,7 +117,7 @@ export function generateLocalBusinessSchema() {
       },
     ],
     priceRange: '€€',
-    image: 'https://mey-beauty.com/soin%20visage%20(2).PNG',
+    image: 'https://meybeauty.fr/soin%20visage%20(2).PNG',
     sameAs: [],
     areaServed: {
       '@type': 'City',
@@ -194,9 +194,9 @@ export function generateArticleSchema(post) {
       name: 'Mey Beauty Paris',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://mey-beauty.com/soin visage (2).PNG',
+        url: 'https://meybeauty.fr/soin visage (2).PNG',
       },
     },
-    url: `https://mey-beauty.com/#blog-detail/${post.slug || post.id}`,
+    url: `https://meybeauty.fr/#blog-detail/${post.slug || post.id}`,
   };
 }
