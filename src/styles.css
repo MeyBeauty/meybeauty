@@ -2738,11 +2738,12 @@ a { text-decoration: none; color: inherit; }
 
 .page-hero-banner h1 {
   font-family: var(--font-titre);
-  font-size: 54px;
+  font-size: 42px;
   font-weight: 400;
   color: var(--brun);
   letter-spacing: 0.02em;
   margin-bottom: 10px;
+  line-height: 1.2;
 }
 
 .page-hero-banner .breadcrumb {
@@ -3333,8 +3334,8 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 760px) {
-  .page-hero-banner { height: 176px; }
-  .page-hero-banner h1 { font-size: 44px; }
+  .page-hero-banner { height: auto; min-height: 160px; padding: 40px 16px; }
+  .page-hero-banner h1 { font-size: 28px; line-height: 1.3; }
   .form-panel { padding: 34px 18px 38px; }
   .form-row { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
