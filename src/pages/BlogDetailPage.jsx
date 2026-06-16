@@ -40,7 +40,7 @@ export default function BlogDetailPage() {
 
   const title = post?.title || 'Article';
   const hero = post?.image || '/soin%20visage%20(2).PNG';
-  const dateLabel = post?.dateLabel || post?.date || '—';
+  const dateLabel = post?.dateLabel || post?.date || '-';
 
   const recent = useMemo(() => {
     const list = Array.isArray(posts) ? posts.slice() : [];

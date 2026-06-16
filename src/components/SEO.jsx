@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 
 const defaultSEO = {
-  title: 'Mey Beauty Paris — Soins Esthétiques & Cosmétiques Premium',
-  description: 'Découvrez Mey Beauty Paris, institut d\'esthétique de luxe. Soins visage, massages corps, épilation laser, maquillage permanent et produits cosmétiques premium LPG.',
-  keywords: 'institut beauté paris, soin visage, massage corps, épilation laser, cosmétiques LPG, maquillage permanent, esthétique, bien-être, minceur',
-  image: 'https://mey-beauty.com/soin visage (2).PNG',
+  title: 'Mey Beauty - Institut de Beauté Viry-Châtillon | Soins Visage & Corps',
+  description: 'Institut de beauté Mey Beauty à Viry-Châtillon (Essonne 91). Soins visage, massages relaxants, épilation, onglerie, produits cosmétiques LPG. Réservez votre soin esthétique près de Paris.',
+  keywords: 'institut beauté Viry-Châtillon, esthéticienne Essonne 91, soin visage IDF, massage relaxant Ile-de-France, épilation Viry, onglerie Essonne, cosmétiques LPG, maquillage permanent, institut beauté proche Paris, soins esthétiques 91',
+  image: 'https://mey-beauty.com/soin%20visage%20(2).PNG',
   url: 'https://mey-beauty.com/',
   type: 'website',
 };
@@ -78,26 +78,29 @@ export function generateProductSchema(product) {
   };
 }
 
-// Helper to generate local business schema
+// Helper to generate local business schema - Optimisé pour SEO local IDF
 export function generateLocalBusinessSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'BeautySalon',
-    name: 'Mey Beauty Paris',
-    description: 'Institut d\'esthétique de luxe à Paris. Soins visage, massages corps, épilation laser, maquillage permanent.',
+    name: 'Mey Beauty',
+    alternateName: 'Mey Beauty Paris',
+    description: 'Institut de beauté à Viry-Châtillon spécialisé en soins visage, massages du corps, épilation, onglerie et produits cosmétiques premium LPG. Situé en Essonne (91), près de Paris.',
     url: 'https://mey-beauty.com/',
-    telephone: '+33-1-XX-XX-XX-XX',
+    telephone: '+33-7-49-22-68-01',
+    email: 'contact@meybeauty.fr',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Adresse à compléter',
-      addressLocality: 'Paris',
-      postalCode: '75000',
+      streetAddress: '6 Place des Martyrs de Châteaubriand',
+      addressLocality: 'Viry-Châtillon',
+      addressRegion: 'Île-de-France',
+      postalCode: '91170',
       addressCountry: 'FR',
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: 48.8566,
-      longitude: 2.3522,
+      latitude: 48.6681,
+      longitude: 2.3881,
     },
     openingHoursSpecification: [
       {
@@ -114,7 +117,43 @@ export function generateLocalBusinessSchema() {
       },
     ],
     priceRange: '€€',
-    image: 'https://mey-beauty.com/soin visage (2).PNG',
+    image: 'https://mey-beauty.com/soin%20visage%20(2).PNG',
+    sameAs: [],
+    areaServed: {
+      '@type': 'City',
+      name: 'Viry-Châtillon',
+      containsPlace: [
+        { '@type': 'City', name: 'Essonne' },
+        { '@type': 'City', name: 'Paris' },
+        { '@type': 'City', name: 'Île-de-France' },
+      ],
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Services de beauté',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: 'Soin visage' },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: 'Massage du corps' },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: 'Épilation' },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: 'Onglerie' },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: 'Maquillage permanent' },
+        },
+      ],
+    },
   };
 }
 

@@ -71,9 +71,9 @@ export default function ShopPage() {
   return (
     <>
       <SEO
-        title="Boutique — Produits Cosmétiques LPG"
-        description="Découvrez notre boutique de cosmétiques premium LPG. Crèmes visage et corps, compléments alimentaires, textiles minceur. Livraison rapide."
-        keywords="boutique cosmétiques, produits LPG, crème anti-cellulite, soin visage, compléments alimentaires beauté"
+        title="Boutique Cosmétiques - LPG & Produits Beauté | Mey Beauty 91"
+        description="Boutique de cosmétiques premium LPG à Viry-Châtillon (91). Crèmes visage et corps, compléments alimentaires, soins minceur. Retrait en institut ou livraison en Ile-de-France."
+        keywords="boutique cosmétiques Viry-Châtillon, produits LPG Essonne 91, crème anti-cellulite, soin visage IDF, compléments alimentaires beauté, achat cosmétiques Ile-de-France, institut beauté boutique 91"
       />
       <main className="shop-page">
       <section className="page-hero-banner" aria-label="Bannière">
@@ -125,7 +125,7 @@ export default function ShopPage() {
                 <div className="price-fill" />
               </div>
             </div>
-            <div className="price-label">Prix : 0 € — 50 €</div>
+            <div className="price-label">Prix : 0 € - 50 €</div>
             <button className="btn-filter" type="button">Filtrer</button>
           </div>
 

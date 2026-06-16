@@ -31,9 +31,9 @@ export default function AboutPage() {
   return (
     <>
       <SEO
-        title="À Propos — Mey Beauty Paris"
-        description="Découvrez Mey Beauty, institut d'esthétique à Viry-Châtillon. Soins visage, minceur, épilation, beauté du regard, onglerie et blanchiment dentaire."
-        keywords="institut esthétique Viry-Châtillon, soins beauté, équipe Mey Beauty, experts beauté"
+        title="À Propos - Mey Beauty | Institut Beauté Viry-Châtillon (91)"
+        description="Découvrez Mey Beauty, institut d'esthétique à Viry-Châtillon, Essonne (91). Équipe d'experts en soins visage, minceur, épilation, beauté du regard et onglerie. Votre beauté en Ile-de-France."
+        keywords="institut esthétique Viry-Châtillon, Mey Beauty Essonne 91, équipe beauté IDF, experts soins visage Ile-de-France, salon esthétique Viry, institut bien-être 91"
       />
       <main className="about-page">
       <section className="about-hero" aria-label="À propos de Mey Beauty">

@@ -13,9 +13,9 @@ export default function HomePage() {
   return (
     <>
       <SEO
-        title="Mey Beauty Paris — Soins Esthétiques & Cosmétiques Premium"
-        description="Découvrez Mey Beauty Paris, institut d'esthétique de luxe. Soins visage, massages corps, épilation laser, maquillage permanent et produits cosmétiques premium LPG."
-        keywords="institut beauté paris, soin visage, massage corps, épilation laser, cosmétiques LPG, maquillage permanent, esthétique, bien-être, minceur"
+        title="Mey Beauty - Institut Beauté Viry-Châtillon (91) | Soins Visage & Massage"
+        description="Institut de beauté Mey Beauty à Viry-Châtillon, Essonne (91). Soins visage professionnels, massages relaxants, épilation, onglerie et produits cosmétiques LPG. Proche de Paris, votre esthéticienne en Ile-de-France."
+        keywords="institut beauté Viry-Châtillon, esthéticienne Essonne 91, soin visage IDF, massage relaxant Ile-de-France, épilation Viry, onglerie Essonne, cosmétiques LPG, maquillage permanent, institut beauté proche Paris, soins esthétiques 91, spa bien-être Viry"
         structuredData={generateLocalBusinessSchema()}
       />
       <main id="home">

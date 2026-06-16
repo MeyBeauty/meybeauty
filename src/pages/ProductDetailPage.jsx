@@ -191,9 +191,9 @@ export default function ProductDetailPage() {
     return (
       <>
         <SEO
-          title="Produit — Mey Beauty"
-          description="Produit cosmétique premium LPG. Découvrez notre gamme de soins visage et corps."
-          keywords="produit LPG, cosmétique, soin visage"
+          title="Produit LPG - Cosmétiques Visage & Corps | Mey Beauty 91"
+          description="Produits cosmétiques premium LPG disponibles à Viry-Châtillon (91). Soins visage et corps, crèmes anti-cellulite, compléments alimentaires beauté. Retrait en institut ou livraison IDF."
+          keywords="produits LPG Viry-Châtillon, cosmétiques soin visage Essonne 91, crème anti-cellulite, compléments alimentaires beauté, achat cosmétiques Ile-de-France, boutique LPG 91"
         />
         <main className="product-detail-page">
           <section className="page-hero-banner" aria-label="Bannière">
@@ -221,9 +221,9 @@ export default function ProductDetailPage() {
     return (
       <>
         <SEO
-          title="Produit — Mey Beauty"
-          description="Produit cosmétique premium LPG. Découvrez notre gamme de soins visage et corps."
-          keywords="produit LPG, cosmétique, soin visage"
+          title="Produit LPG - Cosmétiques Visage & Corps | Mey Beauty 91"
+          description="Produits cosmétiques premium LPG disponibles à Viry-Châtillon (91). Soins visage et corps, crèmes anti-cellulite, compléments alimentaires beauté. Retrait en institut ou livraison IDF."
+          keywords="produits LPG Viry-Châtillon, cosmétiques soin visage Essonne 91, crème anti-cellulite, compléments alimentaires beauté, achat cosmétiques Ile-de-France, boutique LPG 91"
         />
         <main className="product-detail-page">
           <section className="page-hero-banner" aria-label="Bannière">
@@ -394,7 +394,7 @@ export default function ProductDetailPage() {
               {Array.isArray(product.specs) && product.specs.length ? (
                 <ul>
                   {product.specs.map((s, idx) => (
-                    <li key={`${s?.label || 'spec'}-${idx}`}>{s?.label || '—'} : {s?.value || '—'}</li>
+                    <li key={`${s?.label || 'spec'}-${idx}`}>{s?.label || '-'} : {s?.value || '-'}</li>
                   ))}
                   <li>Quantité nette : {netQty}</li>
                   <li>Type de peau : {skinType}</li>

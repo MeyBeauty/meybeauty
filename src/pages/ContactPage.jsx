@@ -5,9 +5,9 @@ export default function ContactPage() {
   return (
     <>
       <SEO
-        title="Contact & Réservation — Mey Beauty Paris"
-        description="Contactez Mey Beauty à Viry-Châtillon. Réservez vos soins visage, massages, épilation. Tél: +33 7 49 22 68 01. 6 Place des Martyrs de Châteaubriand."
-        keywords="contact institut beauté, réserver soin visage, Viry-Châtillon, Mey Beauty téléphone"
+        title="Contact & Réservation - Mey Beauty Viry-Châtillon (91)"
+        description="Contactez Mey Beauty institut de beauté à Viry-Châtillon, Essonne (91). Réservez vos soins visage, massages relaxants, épilation. Adresse: 6 Place des Martyrs de Châteaubriand. Tél: 07 49 22 68 01."
+        keywords="contact institut beauté Viry-Châtillon, réserver soin visage Essonne 91, esthéticienne Ile-de-France, Mey Beauty adresse téléphone, rendez-vous beauté IDF, salon esthétique Viry"
       />
       <main className="contact-page">
       <section className="page-hero-banner" aria-label="Bannière">
@@ -24,7 +24,7 @@ export default function ContactPage() {
           <p className="contact-label">Nous contacter</p>
           <h2>Notre institut</h2>
 
-          <p className="branch-title">Mey Beauty — Viry‑Châtillon</p>
+          <p className="branch-title">Mey Beauty - Viry‑Châtillon</p>
 
           <div className="contact-infos">
             <div className="contact-info-item">
@@ -73,7 +73,7 @@ export default function ContactPage() {
           <h3>Réserver un rendez‑vous</h3>
           <p className="form-desc">
             Dites‑nous ce que vous souhaitez (soin visage, soins minceur et bien‑être, soin spa,
-            massages corps, beauté du regard, onglerie) — nous vous recontactons rapidement.
+            massages corps, beauté du regard, onglerie) - nous vous recontactons rapidement.
           </p>
 
           <form onSubmit={(e) => e.preventDefault()}>
@@ -146,7 +146,7 @@ export default function ContactPage() {
               </label>
             </div>
 
-            <button type="submit" className="btn-submit">— Envoyer la demande —</button>
+            <button type="submit" className="btn-submit">- Envoyer la demande -</button>
           </form>
         </div>
       </section>

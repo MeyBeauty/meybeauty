@@ -104,9 +104,9 @@ export default function CartPage() {
   return (
     <>
       <SEO
-        title="Panier — Commande"
-        description="Finalisez votre commande de produits cosmétiques LPG. Paiement sécurisé par carte ou PayPal. Livraison rapide."
-        keywords="panier, commande cosmétiques, paiement sécurisé, achat LPG"
+        title="Panier - Commande Cosmétiques LPG | Mey Beauty Viry-Châtillon"
+        description="Finalisez votre commande de cosmétiques LPG à Viry-Châtillon (91). Paiement sécurisé par carte ou PayPal. Retrait en institut ou livraison en Ile-de-France."
+        keywords="panier cosmétiques Viry-Châtillon, commande LPG Essonne 91, paiement sécurisé beauté, achat soins visage IDF, boutique en ligne beauté Ile-de-France"
         noindex={true}
       />
       <main className="cart-page">

@@ -75,7 +75,7 @@ function seedAdminProducts() {
     id: p.id,
     name: p.name,
     sku: p.id,
-    category: p.category || '—',
+    category: p.category || '-',
     priceCents: p.priceCents || 0,
     stock: 50,
     status: 'active',
@@ -120,7 +120,7 @@ function seedAdminPosts() {
 
         <div class="blog-article-quote">
           <p>“Une routine simple, répétée régulièrement, fait plus de différence qu’un soin occasionnel.”</p>
-          <cite>— Mey Beauty</cite>
+          <cite>- Mey Beauty</cite>
         </div>
 
         <p class="blog-article-p">Astuce : fais ce rituel 1 fois par semaine. Entre‑temps, garde un mini‑rituel quotidien (nettoyage + hydratation + SPF le matin).</p>
@@ -159,7 +159,7 @@ function seedAdminPosts() {
 
         <div class="blog-article-quote">
           <p>“La constance vaut mieux que la perfection : 10 minutes chaque jour, c’est déjà énorme.”</p>
-          <cite>— Mey Beauty</cite>
+          <cite>- Mey Beauty</cite>
         </div>
 
         <p class="blog-article-p">Si ta peau réagit facilement : simplifie (moins de produits), évite les actifs trop forts, et privilégie une routine barrière.</p>
@@ -196,7 +196,7 @@ function seedAdminPosts() {
 
         <div class="blog-article-quote">
           <p>“Le secret : des gestes légers. Sur le contour de l’œil, moins c’est plus.”</p>
-          <cite>— Mey Beauty</cite>
+          <cite>- Mey Beauty</cite>
         </div>
 
         <p class="blog-article-p">Astuce : dors avec la tête légèrement surélevée et hydrate-toi bien. Les poches sont souvent liées à la rétention d’eau et au manque de sommeil.</p>
@@ -233,7 +233,7 @@ function seedAdminPosts() {
 
         <div class="blog-article-quote">
           <p>“Ton corps parle en tensions. Le massage, c’est lui répondre avec douceur.”</p>
-          <cite>— Mey Beauty</cite>
+          <cite>- Mey Beauty</cite>
         </div>
 
         <p class="blog-article-p">Conseil : après un massage, bois de l’eau et évite le sport intense le jour même. Ton corps a besoin d’intégrer le relâchement.</p>
@@ -270,7 +270,7 @@ function seedAdminPosts() {
 
         <div class="blog-article-quote">
           <p>“L’objectif : se sentir bien. La silhouette suit quand le corps retrouve son équilibre.”</p>
-          <cite>— Mey Beauty</cite>
+          <cite>- Mey Beauty</cite>
         </div>
 
         <p class="blog-article-p">Pour une vraie cure : 1 séance/semaine pendant 4 à 6 semaines, puis entretien selon ton rythme.</p>
@@ -301,7 +301,7 @@ function seedAdminPosts() {
 
         <div class="blog-article-quote">
           <p>“Le bien‑être, ce n’est pas une destination. C’est une façon de se traiter chaque jour.”</p>
-          <cite>— Mey Beauty</cite>
+          <cite>- Mey Beauty</cite>
         </div>
 
         <p class="blog-article-p">Si tu veux un effet visible : choisis 1 micro‑habitude et tiens-la 14 jours. Ensuite, ajoute la suivante. C’est comme ça qu’on crée une vraie routine durable.</p>
@@ -526,7 +526,7 @@ function AdminProductDetail({ product, onBack, onEdit }) {
           <div className="admin-detail-meta">
             <div>
               <div className="admin-detail-label">Catégorie</div>
-              <div className="admin-detail-value">{product.category || '—'}</div>
+              <div className="admin-detail-value">{product.category || '-'}</div>
             </div>
             <div>
               <div className="admin-detail-label">Prix</div>
@@ -534,7 +534,7 @@ function AdminProductDetail({ product, onBack, onEdit }) {
             </div>
             <div>
               <div className="admin-detail-label">Stock</div>
-              <div className="admin-detail-value">{product.stock ?? '—'}</div>
+              <div className="admin-detail-value">{product.stock ?? '-'}</div>
             </div>
             <div>
               <div className="admin-detail-label">Statut</div>
@@ -545,9 +545,9 @@ function AdminProductDetail({ product, onBack, onEdit }) {
 
         <div className="admin-detail-card">
           <div className="admin-detail-label">Description</div>
-          <div className="admin-detail-long">{product.description || '—'}</div>
+          <div className="admin-detail-long">{product.description || '-'}</div>
           <div className="admin-detail-label" style={{ marginTop: 16 }}>Image URL</div>
-          <div className="admin-detail-mono">{product.image || '—'}</div>
+          <div className="admin-detail-mono">{product.image || '-'}</div>
         </div>
       </div>
     </div>
@@ -594,7 +594,7 @@ function AdminPostDetail({ post, onBack, onEdit }) {
           <div className="admin-detail-meta">
             <div>
               <div className="admin-detail-label">Catégorie</div>
-              <div className="admin-detail-value">{post.category || '—'}</div>
+              <div className="admin-detail-value">{post.category || '-'}</div>
             </div>
             <div>
               <div className="admin-detail-label">Statut</div>
@@ -602,12 +602,12 @@ function AdminPostDetail({ post, onBack, onEdit }) {
             </div>
           </div>
           <div className="admin-detail-label" style={{ marginTop: 16 }}>Extrait</div>
-          <div className="admin-detail-long">{post.excerpt || '—'}</div>
+          <div className="admin-detail-long">{post.excerpt || '-'}</div>
         </div>
 
         <div className="admin-detail-card">
           <div className="admin-detail-label">Contenu HTML</div>
-          <div className="admin-detail-code">{post.contentHtml || '—'}</div>
+          <div className="admin-detail-code">{post.contentHtml || '-'}</div>
         </div>
       </div>
     </div>
@@ -752,7 +752,7 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
       brand: form.brand.trim() || 'Mey Beauty',
       name: form.name.trim() || 'Produit',
       sku: form.sku.trim() || (editingId || uid('SKU')),
-      category: form.category.trim() || '—',
+      category: form.category.trim() || '-',
       priceCents: parseEurosToCents(form.priceEuros),
       stock: Math.max(0, Number(form.stock) || 0),
       status: form.status,
@@ -1344,7 +1344,7 @@ function AdminPostEditor({ userEmail, posts, setPosts, postId, onBack }) {
                   className="admin-editor-tool"
                   onClick={() =>
                     insertHtmlIntoEditor(
-                      '<div class="blog-article-quote"><p>Votre citation inspirante…</p><cite>— Mey Beauty</cite></div>'
+                      '<div class="blog-article-quote"><p>Votre citation inspirante…</p><cite>- Mey Beauty</cite></div>'
                     )
                   }
                 >
@@ -1785,7 +1785,7 @@ export default function AdminPage() {
       const seedProducts = (catalogProducts || []).map((p) => ({
         id: p.id,
         brand: p.brand || 'Mey Beauty',
-        category: p.category || '—',
+        category: p.category || '-',
         name: p.name,
         description: p.description || '',
         priceCents: p.priceCents || 0,
@@ -1856,7 +1856,7 @@ export default function AdminPage() {
       const seedProducts = catalogProducts.map((p) => ({
         id: p.id,
         brand: p.brand || 'LPG',
-        category: p.category || '—',
+        category: p.category || '-',
         name: p.name,
         description: p.description || '',
         priceCents: p.priceCents || 0,

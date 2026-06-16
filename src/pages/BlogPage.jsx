@@ -58,9 +58,9 @@ export default function BlogPage() {
   return (
     <>
       <SEO
-        title="Blog — Conseils Beauté & Bien-être"
-        description="Découvrez nos articles sur les soins visage, les massages, l'épilation et les conseils beauté de Mey Beauty Paris."
-        keywords="blog beauté, conseils soins visage, massage bien-être, astuces épilation, institut"
+        title="Blog Beauté - Conseils Soins Visage & Bien-être | Mey Beauty 91"
+        description="Blog beauté de Mey Beauty Viry-Châtillon (91). Conseils soins visage, massages bien-être, astuces épilation et tendances beauté en Essonne et Ile-de-France."
+        keywords="blog beauté Viry-Châtillon, conseils soins visage Essonne 91, massage bien-être IDF, astuces épilation Ile-de-France, tendances beauté 91, institut beauté conseils"
       />
       <main className="blog-page">
       <section className="page-hero-banner" aria-label="Bannière">
