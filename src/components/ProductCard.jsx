@@ -7,6 +7,7 @@
 import { formatPriceEUR } from '../data/products.js';
 import { useCart } from '../context/CartContext.jsx';
 import { useCatalog } from '../context/CatalogContext.jsx';
+import LazyImage from './LazyImage.jsx';
 import { Percent, Heart } from 'lucide-react';
 
 function Stars({ value }) {
@@ -89,12 +90,11 @@ export default function ProductCard({
           </span>
         )}
         
-        <img 
+        <LazyImage 
           className="product-photo" 
           src={product.images?.[0]} 
           alt={product.name}
-          loading="lazy"
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          aspectRatio="1/1"
         />
         
         {showAddToCart && (

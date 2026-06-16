@@ -3,12 +3,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { popularProductIds } from '../data/products.js';
 import { useCatalog } from '../context/CatalogContext.jsx';
 import ProductCard from './ProductCard.jsx';
+import { SkeletonCard } from './SkeletonLoader.jsx';
 
 export default function ProductsSection() {
   useRevealOnScroll('.reveal');
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const { products: allProducts } = useCatalog();
+  const { products: allProducts, loading } = useCatalog();
   const cardRefs = useRef([]);
   const gridRef = useRef(null);
   const sectionRef = useRef(null);
@@ -86,16 +87,23 @@ export default function ProductsSection() {
       </div>
 
       <div ref={gridRef} className="products-grid">
-        {items.map((p, idx) => (
-          <ProductCard
-            key={p.id}
-            product={p}
-            className="products-section-card"
-            onClick={() => {
-              window.location.hash = `#product?id=${encodeURIComponent(p.id)}`;
-            }}
-          />
-        ))}
+        {loading ? (
+          // Skeleton cards pendant le chargement
+          Array.from({ length: 4 }).map((_, idx) => (
+            <SkeletonCard key={idx} height="380px" />
+          ))
+        ) : (
+          items.map((p, idx) => (
+            <ProductCard
+              key={p.id}
+              product={p}
+              className="products-section-card"
+              onClick={() => {
+                window.location.hash = `#product?id=${encodeURIComponent(p.id)}`;
+              }}
+            />
+          ))
+        )}
       </div>
 
       {isMobile ? (

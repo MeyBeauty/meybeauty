@@ -458,11 +458,33 @@ a { text-decoration: none; color: inherit; }
   background: var(--blanc);
   border: 1px solid var(--gris-border);
   border-radius: 12px;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+/* Scrollbar styling for table */
+.admin-orders-table-wrap::-webkit-scrollbar {
+  height: 8px;
+}
+
+.admin-orders-table-wrap::-webkit-scrollbar-track {
+  background: var(--nude-lighter);
+  border-radius: 4px;
+}
+
+.admin-orders-table-wrap::-webkit-scrollbar-thumb {
+  background: var(--brun-medium);
+  border-radius: 4px;
+}
+
+.admin-orders-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: var(--brun);
 }
 
 .admin-orders-table {
   width: 100%;
+  min-width: 900px;
   border-collapse: collapse;
   font-size: 14px;
 }
