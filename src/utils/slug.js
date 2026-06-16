@@ -13,15 +13,21 @@ export function generateSlug(title) {
 }
 
 export function parseSlugFromHash(hash) {
+  // New path-style format: #blog-detail/slug-name
+  const pathMatch = hash.match(/#blog-detail\/(.+)/);
+  if (pathMatch) {
+    const slug = decodeURIComponent(pathMatch[1]);
+    return { type: 'slug', value: slug };
+  }
+  
+  // Legacy query format: #blog-detail?slug=xxx or #blog-detail?id=xxx
   const idx = hash.indexOf('?');
   const query = idx >= 0 ? hash.slice(idx + 1) : '';
   const params = new URLSearchParams(query);
   
-  // Try 'slug' parameter first (new SEO format)
   const slug = params.get('slug');
   if (slug) return { type: 'slug', value: slug };
   
-  // Fall back to 'id' parameter (legacy format)
   const id = params.get('id');
   if (id) return { type: 'id', value: id };
   
@@ -54,5 +60,5 @@ export function findPostBySlugOrId(posts, identifier) {
 export function buildPostUrl(post) {
   if (!post) return '#blog';
   const slug = post.slug || generateSlug(post.title);
-  return `#blog-detail?slug=${encodeURIComponent(slug)}`;
+  return `#blog-detail/${encodeURIComponent(slug)}`;
 }

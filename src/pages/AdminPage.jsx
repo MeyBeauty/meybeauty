@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Plus,
   Search,
@@ -41,6 +41,7 @@ import {
   syncAllProducts,
   upsertPost,
   upsertProduct,
+  migratePostsWithSlugs,
 } from '../firebase/collections.js';
 
 function readJson(key, fallback) {
@@ -1578,6 +1579,94 @@ function AdminDashboard({ products, posts, orders, userEmail, onGoProducts, onGo
           </a>
         </div>
       </div>
+
+      <AdminMaintenanceSection />
+    </div>
+  );
+}
+
+// Context for admin data sharing
+const AdminContext = createContext({ posts: [], products: [], orders: [] });
+
+function AdminMaintenanceSection() {
+  const { posts } = useContext(AdminContext);
+  const [seedBusy, setSeedBusy] = useState(false);
+  const [seedMsg, setSeedMsg] = useState('');
+
+  const runMigrateSlugs = async () => {
+    if (seedBusy) return;
+    setSeedMsg('');
+    setSeedBusy(true);
+    try {
+      const res = await migratePostsWithSlugs(posts);
+      setSeedMsg(`Migration slugs: ${res.updated} mis à jour, ${res.skipped} déjà OK${res.errors.length > 0 ? ', ' + res.errors.length + ' erreurs' : ''}`);
+    } catch (e) {
+      setSeedMsg(e?.message || 'Migration impossible');
+    } finally {
+      setSeedBusy(false);
+      setTimeout(() => setSeedMsg(''), 6000);
+    }
+  };
+
+  const runSyncPosts = async () => {
+    if (seedBusy) return;
+    setSeedMsg('');
+    setSeedBusy(true);
+    try {
+      const seedPosts = seedAdminPosts().map((p) => ({
+        id: p.id,
+        title: p.title,
+        author: p.author || 'Mey Beauty',
+        category: p.category || 'Wellness',
+        status: 'published',
+        date: p.date,
+        excerpt: p.excerpt || '',
+        image: p.image || '',
+        contentHtml: p.contentHtml || '<p>Votre contenu ici…</p>',
+      }));
+
+      const res = await seedPostsMerge(seedPosts);
+      setSeedMsg(`Synchronisation articles: ${res.count}`);
+    } catch (e) {
+      setSeedMsg(e?.message || 'Sync impossible');
+    } finally {
+      setSeedBusy(false);
+      setTimeout(() => setSeedMsg(''), 4000);
+    }
+  };
+
+  return (
+    <div className="admin-section">
+      <div className="admin-section-header">
+        <div className="admin-section-title">Maintenance</div>
+      </div>
+      <div className="admin-cards-row">
+        <button
+          type="button"
+          className="admin-mini-card"
+          onClick={runMigrateSlugs}
+          disabled={seedBusy}
+        >
+          <Database size={18} />
+          <div>
+            <div className="admin-mini-card-title">Migrer les slugs</div>
+            <div className="admin-mini-card-sub">Ajouter slugs SEO aux articles</div>
+          </div>
+        </button>
+        <button
+          type="button"
+          className="admin-mini-card"
+          onClick={runSyncPosts}
+          disabled={seedBusy}
+        >
+          <RefreshCw size={18} />
+          <div>
+            <div className="admin-mini-card-title">Sync articles</div>
+            <div className="admin-mini-card-sub">Synchroniser avec le seed</div>
+          </div>
+        </button>
+      </div>
+      {seedMsg && <div className="admin-seed-msg">{seedMsg}</div>}
     </div>
   );
 }
@@ -1787,6 +1876,21 @@ export default function AdminPage() {
     }
   };
 
+  const runMigrateSlugs = async () => {
+    if (seedBusy) return;
+    setSeedMsg('');
+    setSeedBusy(true);
+    try {
+      const res = await migratePostsWithSlugs(posts);
+      setSeedMsg(`Migration slugs: ${res.updated} mis à jour, ${res.skipped} déjà OK${res.errors.length > 0 ? ', ' + res.errors.length + ' erreurs' : ''}`);
+    } catch (e) {
+      setSeedMsg(e?.message || 'Migration impossible');
+    } finally {
+      setSeedBusy(false);
+      setTimeout(() => setSeedMsg(''), 6000);
+    }
+  };
+
   const navItems = [
     { key: 'dashboard', label: 'Tableau de bord', icon: <LayoutDashboard className="admin-nav-icon" /> },
     { key: 'products', label: 'Produits', icon: <ShoppingBag className="admin-nav-icon" /> },
@@ -1963,14 +2067,16 @@ export default function AdminPage() {
                 onEdit={() => setAdminHash({ view: 'post-edit', id: selectedId })}
               />
             ) : (
-              <AdminDashboard
-                products={products}
-                posts={posts}
-                orders={orders}
-                userEmail={user?.email || ''}
-                onGoProducts={() => setAdminHash({ view: 'products' })}
-                onGoBlog={() => setAdminHash({ view: 'blog' })}
-              />
+              <AdminContext.Provider value={{ posts, products, orders }}>
+                <AdminDashboard
+                  products={products}
+                  posts={posts}
+                  orders={orders}
+                  userEmail={user?.email || ''}
+                  onGoProducts={() => setAdminHash({ view: 'products' })}
+                  onGoBlog={() => setAdminHash({ view: 'blog' })}
+                />
+              </AdminContext.Provider>
             )}
           </div>
         </section>

@@ -118,6 +118,24 @@ export function generateLocalBusinessSchema() {
   };
 }
 
+// Helper to safely convert Firestore timestamp or Date to ISO string
+function toISOString(dateValue) {
+  if (!dateValue) return new Date().toISOString();
+  // Firestore Timestamp has toDate() method
+  if (typeof dateValue.toDate === 'function') {
+    return dateValue.toDate().toISOString();
+  }
+  // Regular Date object
+  if (dateValue instanceof Date) {
+    return dateValue.toISOString();
+  }
+  // String timestamp
+  if (typeof dateValue === 'string') {
+    return new Date(dateValue).toISOString();
+  }
+  return new Date().toISOString();
+}
+
 // Helper to generate article schema for blog posts
 export function generateArticleSchema(post) {
   return {
@@ -126,8 +144,8 @@ export function generateArticleSchema(post) {
     headline: post.title,
     description: post.excerpt || '',
     image: post.image || '',
-    datePublished: post.createdAt?.toISOString() || new Date().toISOString(),
-    dateModified: post.updatedAt?.toISOString() || new Date().toISOString(),
+    datePublished: toISOString(post.createdAt),
+    dateModified: toISOString(post.updatedAt || post.createdAt),
     author: {
       '@type': 'Organization',
       name: 'Mey Beauty Paris',
@@ -140,6 +158,6 @@ export function generateArticleSchema(post) {
         url: 'https://mey-beauty.com/soin visage (2).PNG',
       },
     },
-    url: `https://mey-beauty.com/#blog/${post.slug || post.id}`,
+    url: `https://mey-beauty.com/#blog-detail/${post.slug || post.id}`,
   };
 }

@@ -157,6 +157,50 @@ export async function deletePost(id) {
   await deleteDoc(doc(db, 'posts', id));
 }
 
+// Migrate all posts to add slug field
+export async function migratePostsWithSlugs(posts) {
+  const results = { updated: 0, skipped: 0, errors: [] };
+  const list = Array.isArray(posts) ? posts : [];
+  
+  for (const post of list) {
+    try {
+      // Skip if already has slug
+      if (post.slug && post.slug.trim()) {
+        results.skipped++;
+        continue;
+      }
+      
+      // Generate slug from title
+      const title = (post.title || '').trim();
+      if (!title) {
+        results.errors.push({ id: post.id, reason: 'Missing title' });
+        continue;
+      }
+      
+      // Generate slug
+      const slug = title
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+      
+      await upsertPost({
+        ...post,
+        slug,
+        updatedAt: serverTimestamp(),
+      });
+      results.updated++;
+    } catch (e) {
+      results.errors.push({ id: post.id, reason: e.message });
+    }
+  }
+  
+  return results;
+}
+
 // Promotions
 export function listenPromotions(onData, onError) {
   const q = query(collection(db, 'promotions'), orderBy('createdAt', 'desc'));
