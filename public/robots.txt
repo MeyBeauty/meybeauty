@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://mey-beauty.com/sitemap.xml
+
+# Disallow admin routes
+Disallow: /admin
+Disallow: /cart
+
+# Crawl delay for bots
+Crawl-delay: 1
