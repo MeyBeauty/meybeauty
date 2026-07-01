@@ -32,16 +32,7 @@ const TESTIMONIALS = [
     avatar:
       'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=200&q=80',
   },
-  {
-    id: 4,
-    text:
-      "« J'ai decouvert Mey Beauty a Viry-Chatillon et je ne vais plus ailleurs. Epilation, soins du visage et conseils produits : tout est professionnel, chaleureux et adapte a mes besoins. »",
-    name: 'Jessica L.',
-    role: 'Cliente fidele',
-    stars: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
-  },
+
 ];
 
 function Stars({ value }) {
