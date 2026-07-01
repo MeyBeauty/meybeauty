@@ -19,12 +19,6 @@ export default function ShopPage() {
   const [priceRange, setPriceRange] = useState(130);
 
   useEffect(() => {
-    if (priceBounds.max > 0 && priceRange !== priceBounds.max) {
-      setPriceRange(priceBounds.max);
-    }
-  }, [priceBounds.max]);
-
-  useEffect(() => {
     const onHash = () => setSearch(parseSearchFromHash(window.location.hash || ''));
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
