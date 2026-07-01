@@ -90,7 +90,7 @@ Notre mission est de vous offrir une expérience sur mesure à travers des soins
               <div className="about-badge-icon" aria-hidden="true">
                 <Star size={18} />
               </div>
-              Note 5/5 (9 avis)
+              Note 5/5 (200+ avis)
             </div>
             <div className="about-badge">
               <div className="about-badge-icon" aria-hidden="true">
@@ -113,8 +113,8 @@ Notre mission est de vous offrir une expérience sur mesure à travers des soins
                 <PhoneCall size={18} />
               </div>
               <div className="about-contact-text">
-                <div className="about-contact-label">Chat Us Anytime</div>
-                <div className="about-contact-value">+00 123 456 789</div>
+                <div className="about-contact-label">Contactez-nous</div>
+                <a className="about-contact-value" href="tel:+33749226801">+33 7 49 22 68 01</a>
               </div>
             </div>
           </div>
@@ -152,7 +152,7 @@ Notre mission est de vous offrir une expérience sur mesure à travers des soins
           </div>
           <div className="about-stat">
             <div className="about-stat-icon" aria-hidden="true"><BadgeCheck size={18} /></div>
-            <div className="about-stat-number">9</div>
+            <div className="about-stat-number">200+</div>
             <div className="about-stat-label">Avis clients</div>
           </div>
           <div className="about-stat">

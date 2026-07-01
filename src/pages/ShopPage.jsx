@@ -16,6 +16,8 @@ export default function ShopPage() {
   const [page, setPage] = useState(1);
   const pageSize = 6;
   const [search, setSearch] = useState(() => parseSearchFromHash(window.location.hash || ''));
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
 
   useEffect(() => {
     const onHash = () => setSearch(parseSearchFromHash(window.location.hash || ''));
@@ -47,8 +49,16 @@ export default function ShopPage() {
         return hay.includes(q);
       });
     }
+    const min = Number(minPrice);
+    const max = Number(maxPrice);
+    if (!isNaN(min) && min > 0) {
+      list = list.filter((p) => (p.priceCents || 0) >= min * 100);
+    }
+    if (!isNaN(max) && max > 0) {
+      list = list.filter((p) => (p.priceCents || 0) <= max * 100);
+    }
     return list;
-  }, [activeCategory, search]);
+  }, [activeCategory, search, minPrice, maxPrice]);
 
   const totalPages = useMemo(() => Math.max(1, Math.ceil(products.length / pageSize)), [products.length]);
   const pageProducts = useMemo(() => {
@@ -120,13 +130,37 @@ export default function ShopPage() {
 
           <div>
             <div className="shop-sidebar-title">Filtrer par prix</div>
-            <div className="price-slider-wrap">
-              <div className="price-track">
-                <div className="price-fill" />
+            <div className="price-filter">
+              <div className="price-inputs">
+                <input
+                  type="number"
+                  min="0"
+                  placeholder="Min €"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                  aria-label="Prix minimum"
+                />
+                <span>-</span>
+                <input
+                  type="number"
+                  min="0"
+                  placeholder="Max €"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                  aria-label="Prix maximum"
+                />
               </div>
+              <button
+                className="btn-filter"
+                type="button"
+                onClick={() => {
+                  setMinPrice('');
+                  setMaxPrice('');
+                }}
+              >
+                Réinitialiser
+              </button>
             </div>
-            <div className="price-label">Prix : 0 € - 50 €</div>
-            <button className="btn-filter" type="button">Filtrer</button>
           </div>
 
           <div>

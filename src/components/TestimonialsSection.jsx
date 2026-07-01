@@ -5,7 +5,7 @@ const TESTIMONIALS = [
   {
     id: 1,
     text:
-      "« Apres 6 seances d'LPG, ma peau est visiblement plus lisse et tonique. Les zones rebelles de cellulite sont nettement attenuees. Je me sens super bien dans mon corps. »",
+      "« Apres 6 seances d'LPG, ma peau est visiblement plus lisse et tonique. Les zones rebelles de cellulite sont nettement attenuées. Je me sens super bien dans mon corps. »",
     name: 'Sarah M.',
     role: 'Cliente soins corps',
     stars: 5,
@@ -25,7 +25,7 @@ const TESTIMONIALS = [
   {
     id: 3,
     text:
-      "« Mon visage est lumineux depuis les soins personnalises Mey Beauty. Les imperfections sont attenuees, ma peau est repulpee. Un vrai moment de detente et d'efficacite. »",
+      "« Mon visage est lumineux depuis les soins personnalises Mey Beauty. Les imperfections sont attenuées, ma peau est repulpée. Un vrai moment de détente et d'efficacité. »",
     name: 'Amina D.',
     role: 'Cliente soins visage',
     stars: 5,
