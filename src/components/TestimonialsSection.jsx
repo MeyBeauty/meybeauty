@@ -5,9 +5,9 @@ const TESTIMONIALS = [
   {
     id: 1,
     text:
-      '« La qualité des produits Mey Beauty Paris est absolument remarquable. Ma peau est transformée depuis que j\'utilise le sérum Vitamine C. »',
-    name: 'Lucetta Birgitta',
-    role: 'Artiste',
+      "« Apres 6 seances d'LPG, ma peau est visiblement plus lisse et tonique. Les zones rebelles de cellulite sont nettement attenuees. Je me sens super bien dans mon corps. »",
+    name: 'Sarah M.',
+    role: 'Cliente soins corps',
     stars: 5,
     avatar:
       'https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=crop&w=200&q=80',
@@ -15,9 +15,9 @@ const TESTIMONIALS = [
   {
     id: 2,
     text:
-      "« Des textures luxueuses et des parfums subtils. Le fond de teint couvrance totale tient toute la journée sans s'oxyder. Je suis conquise. »",
-    name: 'Ondina Flavia',
-    role: 'Danseuse',
+      "« Les cremes LPG que je reprends regulierement a l'institut ont change ma peau. L'hydratation est intense et les resultats sont progressifs mais durables. Je recommande a 100 %. »",
+    name: 'Karine B.',
+    role: 'Cliente boutique',
     stars: 5,
     avatar:
       'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80',
@@ -25,12 +25,22 @@ const TESTIMONIALS = [
   {
     id: 3,
     text:
-      "« Je recommande vivement la gamme Mey Beauty à toutes mes étudiantes. Des produits éthiques, efficaces et d'une élégance parisienne incomparable. »",
-    name: 'Dagny Amélia',
-    role: 'Professeur',
+      "« Mon visage est lumineux depuis les soins personnalises Mey Beauty. Les imperfections sont attenuees, ma peau est repulpee. Un vrai moment de detente et d'efficacite. »",
+    name: 'Amina D.',
+    role: 'Cliente soins visage',
     stars: 5,
     avatar:
       'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=200&q=80',
+  },
+  {
+    id: 4,
+    text:
+      "« J'ai decouvert Mey Beauty a Viry-Chatillon et je ne vais plus ailleurs. Epilation, soins du visage et conseils produits : tout est professionnel, chaleureux et adapte a mes besoins. »",
+    name: 'Jessica L.',
+    role: 'Cliente fidele',
+    stars: 5,
+    avatar:
+      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
   },
 ];
 
