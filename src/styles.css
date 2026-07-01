@@ -3656,30 +3656,41 @@ a { text-decoration: none; color: inherit; }
 
 .shop-page .shop-search button:hover { color: var(--brun); }
 
-.shop-page .price-slider-wrap { padding: 4px 0; }
+.shop-page .price-filter { display: flex; flex-direction: column; gap: 12px; }
 
-.shop-page .price-track {
-  position: relative;
-  height: 4px;
-  background: var(--gris-border);
-  border-radius: 2px;
-  margin-bottom: 10px;
+.shop-page .price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.shop-page .price-fill {
-  position: absolute;
-  left: 0;
-  width: 50%;
-  top: 0;
-  height: 4px;
-  background: var(--brun);
-  border-radius: 2px;
+.shop-page .price-inputs input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid var(--gris-border);
+  border-radius: 6px;
+  font-family: var(--font-corps);
+  font-size: 13px;
+  color: var(--noir);
+  background: var(--blanc);
 }
 
-.shop-page .price-label {
-  font-size: 12.5px;
-  color: rgba(26,20,16,0.55);
-  margin-bottom: 14px;
+.shop-page .price-inputs input:focus {
+  outline: none;
+  border-color: var(--brun);
+}
+
+.shop-page .price-inputs input::-webkit-outer-spin-button,
+.shop-page .price-inputs input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.shop-page .price-inputs span {
+  color: var(--noir);
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .shop-page .btn-filter {
@@ -3891,16 +3902,14 @@ a { text-decoration: none; color: inherit; }
     font-size: 13px;
     white-space: nowrap;
   }
-  .shop-page .price-slider-wrap {
+  .shop-page .price-filter {
     width: 100%;
-    padding: 8px 0;
   }
-  .shop-page .price-label {
-    font-size: 14px;
+  .shop-page .price-inputs input {
+    font-size: 16px;
   }
   .shop-page .btn-filter {
     width: 100%;
-    margin-top: 12px;
   }
   .shop-page .shop-main {
     padding: 24px 16px 40px;
