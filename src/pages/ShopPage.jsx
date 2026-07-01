@@ -37,6 +37,12 @@ export default function ShopPage() {
     };
   }, [allProducts]);
 
+  useEffect(() => {
+    if (priceBounds.max > 0 && priceRange !== priceBounds.max) {
+      setPriceRange(priceBounds.max);
+    }
+  }, [priceBounds.max]);
+
   const products = useMemo(() => {
     let list = allProducts || [];
     if (activeCategory) list = list.filter((p) => p.category === activeCategory);
