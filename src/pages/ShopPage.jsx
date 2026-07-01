@@ -16,8 +16,13 @@ export default function ShopPage() {
   const [page, setPage] = useState(1);
   const pageSize = 6;
   const [search, setSearch] = useState(() => parseSearchFromHash(window.location.hash || ''));
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+  const [priceRange, setPriceRange] = useState(130);
+
+  useEffect(() => {
+    if (priceBounds.max > 0 && priceRange !== priceBounds.max) {
+      setPriceRange(priceBounds.max);
+    }
+  }, [priceBounds.max]);
 
   useEffect(() => {
     const onHash = () => setSearch(parseSearchFromHash(window.location.hash || ''));
@@ -28,6 +33,14 @@ export default function ShopPage() {
   const categories = useMemo(() => {
     const set = new Set((allProducts || []).map((p) => p.category).filter(Boolean));
     return Array.from(set);
+  }, [allProducts]);
+
+  const priceBounds = useMemo(() => {
+    const prices = (allProducts || []).map((p) => (p.priceCents || 0) / 100);
+    return {
+      min: Math.floor(Math.min(...prices, 0)),
+      max: Math.ceil(Math.max(...prices, 130)),
+    };
   }, [allProducts]);
 
   const products = useMemo(() => {
@@ -49,16 +62,12 @@ export default function ShopPage() {
         return hay.includes(q);
       });
     }
-    const min = Number(minPrice);
-    const max = Number(maxPrice);
-    if (!isNaN(min) && min > 0) {
-      list = list.filter((p) => (p.priceCents || 0) >= min * 100);
-    }
+    const max = Number(priceRange);
     if (!isNaN(max) && max > 0) {
       list = list.filter((p) => (p.priceCents || 0) <= max * 100);
     }
     return list;
-  }, [activeCategory, search, minPrice, maxPrice]);
+  }, [activeCategory, search, priceRange]);
 
   const totalPages = useMemo(() => Math.max(1, Math.ceil(products.length / pageSize)), [products.length]);
   const pageProducts = useMemo(() => {
@@ -130,37 +139,32 @@ export default function ShopPage() {
 
           <div>
             <div className="shop-sidebar-title">Filtrer par prix</div>
-            <div className="price-filter">
-              <div className="price-inputs">
-                <input
-                  type="number"
-                  min="0"
-                  placeholder="Min €"
-                  value={minPrice}
-                  onChange={(e) => setMinPrice(e.target.value)}
-                  aria-label="Prix minimum"
-                />
-                <span>-</span>
-                <input
-                  type="number"
-                  min="0"
-                  placeholder="Max €"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(e.target.value)}
-                  aria-label="Prix maximum"
+            <div className="price-slider-wrap">
+              <div className="price-track">
+                <div
+                  className="price-fill"
+                  style={{ width: `${((priceRange - priceBounds.min) / Math.max(1, priceBounds.max - priceBounds.min)) * 100}%` }}
                 />
               </div>
-              <button
-                className="btn-filter"
-                type="button"
-                onClick={() => {
-                  setMinPrice('');
-                  setMaxPrice('');
-                }}
-              >
-                Réinitialiser
-              </button>
+              <input
+                type="range"
+                className="price-range-input"
+                min={priceBounds.min}
+                max={priceBounds.max}
+                step="1"
+                value={priceRange}
+                onChange={(e) => setPriceRange(Number(e.target.value))}
+                aria-label="Prix maximum"
+              />
             </div>
+            <div className="price-label">Prix : 0 € - {priceRange} €</div>
+            <button
+              className="btn-filter"
+              type="button"
+              onClick={() => setPriceRange(priceBounds.max)}
+            >
+              Filtrer
+            </button>
           </div>
 
           <div>

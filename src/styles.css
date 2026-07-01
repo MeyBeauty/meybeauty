@@ -3656,41 +3656,76 @@ a { text-decoration: none; color: inherit; }
 
 .shop-page .shop-search button:hover { color: var(--brun); }
 
-.shop-page .price-filter { display: flex; flex-direction: column; gap: 12px; }
-
-.shop-page .price-inputs {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.shop-page .price-slider-wrap {
+  position: relative;
+  padding: 8px 0 12px;
 }
 
-.shop-page .price-inputs input {
-  flex: 1;
-  min-width: 0;
-  padding: 9px 10px;
-  border: 1px solid var(--gris-border);
-  border-radius: 6px;
-  font-family: var(--font-corps);
-  font-size: 13px;
-  color: var(--noir);
-  background: var(--blanc);
+.shop-page .price-track {
+  position: relative;
+  height: 4px;
+  background: var(--gris-border);
+  border-radius: 2px;
 }
 
-.shop-page .price-inputs input:focus {
-  outline: none;
-  border-color: var(--brun);
+.shop-page .price-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 4px;
+  background: var(--brun);
+  border-radius: 2px;
+  transition: width 0.15s ease;
 }
 
-.shop-page .price-inputs input::-webkit-outer-spin-button,
-.shop-page .price-inputs input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+.shop-page .price-range-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
-.shop-page .price-inputs span {
-  color: var(--noir);
-  font-size: 13px;
-  font-weight: 600;
+.shop-page .price-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--brun);
+  cursor: pointer;
+  margin-top: -6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
+
+.shop-page .price-range-input::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--brun);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
+
+.shop-page .price-range-input::-webkit-slider-runnable-track {
+  height: 4px;
+  background: transparent;
+}
+
+.shop-page .price-range-input::-moz-range-track {
+  height: 4px;
+  background: transparent;
+}
+
+.shop-page .price-label {
+  font-size: 12.5px;
+  color: rgba(26,20,16,0.55);
+  margin-bottom: 14px;
 }
 
 .shop-page .btn-filter {
@@ -3902,11 +3937,12 @@ a { text-decoration: none; color: inherit; }
     font-size: 13px;
     white-space: nowrap;
   }
-  .shop-page .price-filter {
+  .shop-page .price-slider-wrap {
     width: 100%;
+    padding: 8px 0 12px;
   }
-  .shop-page .price-inputs input {
-    font-size: 16px;
+  .shop-page .price-label {
+    font-size: 14px;
   }
   .shop-page .btn-filter {
     width: 100%;
