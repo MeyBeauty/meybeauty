@@ -122,9 +122,6 @@ export default function PrivacyPage() {
             <br />Nous faisons appel à des prestataires techniques qualifiés agissant en tant que sous-traitants :
             <br />- <strong>Hébergement :</strong> Firebase (Google Cloud) - USA (garanties RGPD via clauses contractuelles)
             <br />- <strong>Paiement :</strong> Stripe et PayPal - USA/UE (certifiés PCI-DSS niveau 1)
-            <br />- <strong>Newsletter :</strong> [À préciser] - pour l'envoi d'emails marketing
-            <br />- <strong>Analyse :</strong> [À préciser] - pour la mesure d'audience (si applicable)
-            <br />- <strong>Support client :</strong> [À préciser] - pour la gestion des tickets
             <br />
             <br /><strong>5.3 Transferts internationaux</strong>
             <br />Certains prestataires (Firebase, Stripe, PayPal) peuvent traiter des données en dehors de l'UE.

@@ -52,7 +52,12 @@ export function CardPaymentForm({ amount, isProcessing, setIsProcessing, setErro
             ? `${customerInfo.firstName} ${customerInfo.lastName}`
             : 'Client Mey Beauty',
           email: customerInfo?.email || '',
-          phone: customerInfo?.phone || ''
+          phone: customerInfo?.phone || '',
+          address: {
+            line1: customerInfo?.address || '',
+            city: customerInfo?.city || '',
+            postal_code: customerInfo?.postalCode || ''
+          }
         }
       });
 

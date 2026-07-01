@@ -96,6 +96,9 @@ export default function AdminOrders() {
       'Nom': `${order.customer?.firstName || ''} ${order.customer?.lastName || ''}`.trim(),
       'Email': order.customer?.email || '',
       'Téléphone': order.customer?.phone || '',
+      'Adresse': order.customer?.address || '',
+      'Ville': order.customer?.city || '',
+      'Code postal': order.customer?.postalCode || '',
       'Produits': order.items?.map(i => `${i.name} (x${i.quantity})`).join(', ') || '',
       'Montant total': formatPriceEUR(order.totalAmountCents || 0),
       'Méthode de paiement': order.paymentMethod === 'stripe' ? 'Carte (Stripe)' : order.paymentMethod === 'paypal' ? 'PayPal' : order.paymentMethod,
@@ -330,6 +333,7 @@ export default function AdminOrders() {
                 <p><strong>Nom:</strong> {selectedOrder.customer?.firstName} {selectedOrder.customer?.lastName}</p>
                 <p><strong>Email:</strong> {selectedOrder.customer?.email}</p>
                 <p><strong>Téléphone:</strong> {selectedOrder.customer?.phone || '-'}</p>
+                <p><strong>Adresse:</strong> {[selectedOrder.customer?.address, selectedOrder.customer?.postalCode, selectedOrder.customer?.city].filter(Boolean).join(', ') || '-'}</p>
               </div>
               <div className="detail-section">
                 <h4><ShoppingBag size={16} /> Articles</h4>

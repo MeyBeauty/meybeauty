@@ -20,7 +20,10 @@ export default function CartPage() {
     firstName: '',
     lastName: '',
     email: '',
-    phone: ''
+    phone: '',
+    address: '',
+    city: '',
+    postalCode: ''
   });
 
   // Build cart lines with correct pricing
@@ -76,6 +79,9 @@ export default function CartPage() {
           lastName: customerInfo.lastName || '',
           email: customerInfo.email || '',
           phone: customerInfo.phone || '',
+          address: customerInfo.address || '',
+          city: customerInfo.city || '',
+          postalCode: customerInfo.postalCode || ''
         },
         items: lines.map(line => ({
           productId: line.product.id,
@@ -295,6 +301,30 @@ export default function CartPage() {
                     className="cart-form-input"
                   />
                 </div>
+                <div className="cart-form-row">
+                  <input
+                    type="text"
+                    placeholder="Adresse"
+                    value={customerInfo.address}
+                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, address: e.target.value }))}
+                    className="cart-form-input"
+                    style={{ flex: 2 }}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Ville"
+                    value={customerInfo.city}
+                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, city: e.target.value }))}
+                    className="cart-form-input"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Code postal"
+                    value={customerInfo.postalCode}
+                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, postalCode: e.target.value }))}
+                    className="cart-form-input"
+                  />
+                </div>
               </div>
 
               <Elements stripe={stripePromise}>
@@ -340,7 +370,7 @@ function PaymentSection({ amount, totalSavings, onSuccess, isProcessing, setIsPr
   // Check if customer form is valid
   const isCustomerFormValid = () => {
     const info = customerInfoRef.current;
-    return info && info.firstName?.trim() && info.lastName?.trim() && info.email?.trim() && info.phone?.trim();
+    return info && info.firstName?.trim() && info.lastName?.trim() && info.email?.trim() && info.phone?.trim() && info.address?.trim() && info.city?.trim() && info.postalCode?.trim();
   };
 
   // Load PayPal SDK and render button
@@ -429,7 +459,7 @@ function PaymentSection({ amount, totalSavings, onSuccess, isProcessing, setIsPr
         onClick: (data, actions) => {
           // Validate before opening PayPal popup
           if (!isCustomerFormValid()) {
-            setErrorMsg('Veuillez remplir vos informations client (prénom, nom, email, téléphone) avant de payer avec PayPal.');
+            setErrorMsg('Veuillez remplir vos informations client (prénom, nom, email, téléphone, adresse, ville, code postal) avant de payer avec PayPal.');
             return actions.reject();
           }
           return actions.resolve();
@@ -460,7 +490,7 @@ function PaymentSection({ amount, totalSavings, onSuccess, isProcessing, setIsPr
           console.log('[PayPal] onApprove called, orderID:', data.orderID);
           // Check if customer form is filled
           if (!isCustomerFormValid()) {
-            setErrorMsg('Veuillez remplir vos informations client (prénom, nom, email, téléphone) avant de payer.');
+            setErrorMsg('Veuillez remplir vos informations client (prénom, nom, email, téléphone, adresse, ville, code postal) avant de payer.');
             return;
           }
           setIsProcessing(true);
@@ -573,7 +603,7 @@ function PaymentSection({ amount, totalSavings, onSuccess, isProcessing, setIsPr
           fontSize: '12px',
           marginBottom: '10px'
         }}>
-          ⚠️ Veuillez remplir vos informations client (prénom, nom, email, téléphone) pour accéder au paiement.
+          ⚠️ Veuillez remplir vos informations client (prénom, nom, email, téléphone, adresse, ville, code postal) pour accéder au paiement.
         </div>
       )}
 
