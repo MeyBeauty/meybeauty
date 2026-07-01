@@ -3817,17 +3817,25 @@ a { text-decoration: none; color: inherit; }
 }
 
 .shop-page .shop-product-card:hover {
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
   transform: translateY(-4px);
 }
 
+.shop-page .product-img-wrap,
 .shop-page .shop-product-img-wrap {
-  background: #f8f5f2;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.shop-page .product-img-wrap::after,
+.shop-page .shop-product-img-wrap::after {
+  background: none;
+}
+
+.shop-page .shop-product-img-wrap {
   height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
 .shop-page .shop-product-img {
