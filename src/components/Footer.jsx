@@ -9,7 +9,7 @@ export default function Footer() {
             </a>
           </div>
           <p className="footer-tagline">
-            Des cosmétiques d'exception conçus à Paris pour sublimer chaque carnation avec élégance et raffinement.
+            Votre expert beauté à Viry-Châtillon : soins personnalisés, produits LPG et moments de détente pour révéler votre éclat naturel avec élégance.
           </p>
         </div>
 
