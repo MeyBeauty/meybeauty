@@ -26,8 +26,13 @@ export default function BlogPage() {
 
   const filtered = useMemo(() => {
     const q = String(query || '').trim().toLowerCase();
-    if (!q) return items;
-    return items.filter((p) => {
+    const list = [...items].sort((a, b) => {
+      const da = new Date(a.date || 0).getTime();
+      const db = new Date(b.date || 0).getTime();
+      return db - da;
+    });
+    if (!q) return list;
+    return list.filter((p) => {
       const hay = [p.title, p.excerpt, p.category, p.author, p.dateLabel, p.date]
         .filter(Boolean)
         .join(' ')

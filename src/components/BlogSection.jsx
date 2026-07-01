@@ -4,7 +4,9 @@ import { useBlog } from '../context/BlogContext.jsx';
 export default function BlogSection() {
   useRevealOnScroll('.reveal');
   const { posts, loading, error } = useBlog();
-  const items = (posts || []).slice(0, 3);
+  const items = (posts || [])
+    .sort((a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime())
+    .slice(0, 3);
 
   return (
     <section className="blog-section reveal">
