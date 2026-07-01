@@ -3,6 +3,7 @@ import { useCatalog } from '../context/CatalogContext.jsx';
 
 const PEOPLE = ['Inès', 'Sofia', 'Maya', 'Emma', 'Lina', 'Nora', 'Sarah', 'Aya', 'Clara', 'Yasmine', 'Leïla', 'Mina', 'Jade', 'Camille', 'Aïcha', 'Noémie', 'Mélissa', 'Hana', 'Lola', 'Salomé'];
 const CITIES = ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Nice', 'Toulouse', 'Nantes', 'Montpellier', 'Lille', 'Strasbourg', 'Rennes', 'Grenoble', 'Dijon', 'Reims', 'Rouen', 'Tours', 'Aix-en-Provence', 'Metz', 'Avignon', 'Angers'];
+const SERVICE_CITIES = ['Viry-Châtillon', 'Évry', 'Ris-Orangis', 'Viry-Châtillon', 'Viry-Châtillon', 'Évry'];
 
 const SERVICES = [
   { title: 'Soin du visage', image: '/soin%20visage%20(1).PNG' },
@@ -38,7 +39,6 @@ export default function RecentPurchaseToast() {
 
   const nextEvent = () => {
     const who = pick(PEOPLE);
-    const city = pick(CITIES);
     const minutesAgo = randomMinutesAgo();
 
     const canUseProducts = productPool.length > 0;
@@ -49,7 +49,7 @@ export default function RecentPurchaseToast() {
       setEvent({
         type: 'product',
         who,
-        city,
+        city: pick(CITIES),
         minutesAgo,
         title: p?.name || 'Produit',
         image: getProductImage(p),
@@ -61,7 +61,7 @@ export default function RecentPurchaseToast() {
     setEvent({
       type: 'service',
       who,
-      city,
+      city: pick(SERVICE_CITIES),
       minutesAgo,
       title: s?.title || 'Prestation',
       image: s?.image || '/mey-beauty (1).jpeg',
