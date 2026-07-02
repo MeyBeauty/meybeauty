@@ -301,15 +301,16 @@ export default function CartPage() {
                     className="cart-form-input"
                   />
                 </div>
-                <div className="cart-form-row">
+                <div className="cart-form-row cart-form-row-address">
                   <input
                     type="text"
-                    placeholder="Adresse"
+                    placeholder="Ex : 19 Rue Albert Rémy"
                     value={customerInfo.address}
                     onChange={(e) => setCustomerInfo(prev => ({ ...prev, address: e.target.value }))}
                     className="cart-form-input"
-                    style={{ flex: 2 }}
                   />
+                </div>
+                <div className="cart-form-row cart-form-row-city">
                   <input
                     type="text"
                     placeholder="Ville"

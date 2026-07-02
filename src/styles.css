@@ -1448,7 +1448,7 @@ a { text-decoration: none; color: inherit; }
 }
 .product-img-wrap {
   position: relative;
-  background: var(--gris-card);
+  background: #ffffff;
   aspect-ratio: 3/4;
   overflow: hidden;
   margin-bottom: 16px;
@@ -1459,7 +1459,7 @@ a { text-decoration: none; color: inherit; }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(30,16,8,0.22) 100%);
+  background: none;
   pointer-events: none;
   z-index: 1;
 }
@@ -2255,15 +2255,29 @@ a { text-decoration: none; color: inherit; }
 .about-intro {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 80px;
   max-width: 1200px;
   margin: 92px auto;
   padding: 0 40px;
   align-items: center;
+  justify-items: center;
+  text-align: left;
+}
+
+.about-intro .about-text {
+  max-width: 520px;
+}
+
+.about-intro .about-text p {
+  max-width: 520px;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .about-collage {
   position: relative;
+  width: 100%;
+  max-width: 540px;
   height: 520px;
 }
 
@@ -2334,6 +2348,7 @@ a { text-decoration: none; color: inherit; }
   line-height: 1.85;
   margin-bottom: 32px;
   max-width: 520px;
+  text-align: justify;
 }
 
 .about-badges {
@@ -2433,6 +2448,131 @@ a { text-decoration: none; color: inherit; }
   font-family: var(--font-corps);
   font-size: 13px;
   color: #8A6E5A;
+}
+
+.about-instituts {
+  padding: 86px 60px 56px;
+  background: var(--blanc);
+}
+
+.about-instituts-header {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.about-instituts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.about-institut-card {
+  background: var(--blanc);
+  border: 1px solid var(--gris-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 22px rgba(82, 58, 40, 0.05);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.about-institut-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(82, 58, 40, 0.08);
+}
+
+.about-institut-img {
+  height: 180px;
+  overflow: hidden;
+}
+
+.about-institut-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.about-institut-card:hover .about-institut-img img {
+  transform: scale(1.04);
+}
+
+.about-institut-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.about-institut-body h3 {
+  font-family: var(--font-titre);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--brun-dark);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.about-institut-meta {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-corps);
+  font-size: 13px;
+  color: #8A6E5A;
+}
+
+.about-institut-meta li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.about-institut-meta svg {
+  color: var(--brun-medium);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.about-institut-phone {
+  color: #8A6E5A;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.about-institut-phone:hover {
+  color: var(--brun);
+}
+
+.about-institut-rdv {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sc);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 2px;
+  background: var(--brun);
+  color: var(--blanc);
+  border: 1.5px solid var(--brun);
+  transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+  margin-top: 4px;
+  align-self: flex-start;
+}
+
+.about-institut-rdv:hover {
+  background: var(--brun-dark);
+  border-color: var(--brun-dark);
+  transform: translateY(-1px);
 }
 
 .about-stat-icon {
@@ -3784,10 +3924,26 @@ a { text-decoration: none; color: inherit; }
   text-transform: uppercase;
 }
 
-.shop-page .product-tag:hover {
+.shop-page .product-tag:hover,
+.shop-page .product-tag.active {
   background: var(--brun);
   color: var(--blanc);
   border-color: var(--brun);
+}
+
+.shop-tags-mobile {
+  display: none;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--gris-border);
+}
+
+.shop-tags-mobile-title {
+  font-family: var(--font-titre);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--brun-dark);
+  margin-bottom: 14px;
 }
 
 .shop-page .shop-main {
@@ -3960,6 +4116,12 @@ a { text-decoration: none; color: inherit; }
     width: 100%;
     overflow-x: hidden;
   }
+  .shop-page .shop-sidebar-tags {
+    display: none;
+  }
+  .shop-tags-mobile {
+    display: block;
+  }
   .shop-page .shop-products-grid {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -4014,6 +4176,14 @@ a { text-decoration: none; color: inherit; }
     width: 32px;
     height: 32px;
     font-size: 13px;
+  }
+  .shop-tags-mobile .product-tags-wrap {
+    gap: 6px;
+  }
+  .shop-tags-mobile .product-tag {
+    padding: 4px 9px;
+    font-size: 9px;
+    letter-spacing: 0.05em;
   }
   
   /* Legal et Privacy pages extra small */
@@ -6690,10 +6860,36 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 12px;
 }
 
+.cart-form-row-address,
+.cart-form-row-city {
+  margin-bottom: 16px;
+}
+
+.cart-form-row-address input,
+.cart-form-row-city input {
+  padding: 12px 14px;
+}
+
+.cart-form-row-city input:first-child {
+  flex: 2;
+}
+
+.cart-form-row-city input:last-child {
+  flex: 1;
+  max-width: 140px;
+}
+
 @media (max-width: 480px) {
   .cart-form-row {
     flex-direction: column;
     gap: 8px;
+  }
+  .cart-form-row-address,
+  .cart-form-row-city {
+    margin-bottom: 12px;
+  }
+  .cart-form-row-city input:last-child {
+    max-width: 100%;
   }
   .cart-customer-form {
     padding: 12px;
@@ -7027,6 +7223,8 @@ a { text-decoration: none; color: inherit; }
   }
 
   .about-intro { grid-template-columns: 1fr; gap: 40px; }
+  .about-instituts { padding: 64px 24px; }
+  .about-instituts-grid { grid-template-columns: 1fr; max-width: 520px; }
   .about-collage { height: 480px; }
   .about-services-grid { grid-template-columns: repeat(2, 1fr); }
   .about-team-grid { grid-template-columns: repeat(2, 1fr); }
@@ -8508,4 +8706,268 @@ a { text-decoration: none; color: inherit; }
 
 .skeleton-error {
   background: linear-gradient(135deg, #f5f0eb 0%, #e8e0d8 100%);
+}
+
+/* ============================================================
+   PAGE NOS INSTITUTS
+============================================================ */
+.nos-instituts-page {
+  background: var(--nude-lighter);
+  padding-bottom: 80px;
+}
+
+.instituts-intro {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  text-align: left;
+}
+
+.instituts-intro-content {
+  max-width: 720px;
+  margin: 0;
+}
+
+.instituts-intro-title {
+  font-family: var(--font-titre);
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--brun-dark);
+  margin-bottom: 18px;
+  line-height: 1.2;
+}
+
+.instituts-intro-text {
+  font-family: var(--font-corps);
+  font-size: 17px;
+  line-height: 1.8;
+  color: rgba(26, 20, 16, 0.75);
+  text-align: justify;
+  margin: 0;
+}
+
+.instituts-list {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+}
+
+.institut-card {
+  background: var(--blanc);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(82, 58, 40, 0.06);
+  border: 1px solid var(--gris-border);
+}
+
+.institut-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 320px;
+}
+
+.institut-image {
+  overflow: hidden;
+  min-height: 320px;
+}
+
+.institut-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition);
+}
+
+.institut-card:hover .institut-image img {
+  transform: scale(1.03);
+}
+
+.institut-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 46px;
+  background: var(--nude-light);
+}
+
+.institut-info h2 {
+  font-family: var(--font-titre);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--brun-dark);
+  margin: 0 0 20px;
+  line-height: 1.2;
+}
+
+.institut-meta {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--font-corps);
+  font-size: 14px;
+  color: rgba(26, 20, 16, 0.7);
+}
+
+.institut-meta li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.institut-meta svg {
+  color: var(--brun-medium);
+  flex-shrink: 0;
+}
+
+.btn-rdv,
+.btn-rdv-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-sc);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 12px 22px;
+  border-radius: 2px;
+  transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+  cursor: pointer;
+  border: 1.5px solid var(--brun);
+}
+
+.btn-rdv {
+  background: var(--brun);
+  color: var(--blanc);
+  align-self: flex-start;
+}
+
+.btn-rdv:hover {
+  background: var(--brun-dark);
+  border-color: var(--brun-dark);
+  transform: translateY(-1px);
+}
+
+.btn-rdv-outline {
+  background: transparent;
+  color: var(--brun);
+  margin-top: auto;
+}
+
+.btn-rdv-outline:hover {
+  background: var(--brun);
+  color: var(--blanc);
+  transform: translateY(-1px);
+}
+
+.institut-services {
+  padding: 46px 50px 54px;
+}
+
+.institut-services h3 {
+  font-family: var(--font-titre);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--brun-dark);
+  margin: 0 0 30px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--gris-border);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.service-card {
+  background: var(--gris-card);
+  border: 1px solid var(--gris-border);
+  border-radius: 10px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.service-card:hover {
+  box-shadow: 0 8px 24px rgba(82, 58, 40, 0.06);
+  transform: translateY(-2px);
+}
+
+.service-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.service-card-head h4 {
+  font-family: var(--font-titre);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--brun-dark);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.service-price {
+  font-family: var(--font-corps);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brun-medium);
+  white-space: nowrap;
+  padding-top: 2px;
+}
+
+.service-description {
+  font-family: var(--font-corps);
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(26, 20, 16, 0.68);
+  margin: 0;
+}
+
+@media (max-width: 980px) {
+  .institut-header {
+    grid-template-columns: 1fr;
+  }
+  .institut-info {
+    padding: 32px 28px;
+  }
+  .institut-services {
+    padding: 32px 28px 40px;
+  }
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .instituts-intro {
+    padding: 44px 20px 30px;
+    font-size: 15px;
+  }
+  .instituts-list {
+    padding: 0 16px 44px;
+    gap: 48px;
+  }
+  .institut-info h2 {
+    font-size: 26px;
+  }
+  .institut-services h3 {
+    font-size: 21px;
+  }
+  .service-card {
+    padding: 20px;
+  }
 }

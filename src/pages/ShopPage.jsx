@@ -13,6 +13,7 @@ function parseSearchFromHash(hash) {
 export default function ShopPage() {
   const { products: allProducts } = useCatalog();
   const [activeCategory, setActiveCategory] = useState('');
+  const [activeTag, setActiveTag] = useState('');
   const [page, setPage] = useState(1);
   const pageSize = 6;
   const [search, setSearch] = useState(() => parseSearchFromHash(window.location.hash || ''));
@@ -27,6 +28,16 @@ export default function ShopPage() {
   const categories = useMemo(() => {
     const set = new Set((allProducts || []).map((p) => p.category).filter(Boolean));
     return Array.from(set);
+  }, [allProducts]);
+
+  const tags = useMemo(() => {
+    const set = new Set();
+    (allProducts || []).forEach((p) => {
+      (Array.isArray(p.tags) ? p.tags : []).forEach((t) => {
+        if (t) set.add(String(t).trim());
+      });
+    });
+    return Array.from(set).sort();
   }, [allProducts]);
 
   const priceBounds = useMemo(() => {
@@ -46,6 +57,9 @@ export default function ShopPage() {
   const products = useMemo(() => {
     let list = allProducts || [];
     if (activeCategory) list = list.filter((p) => p.category === activeCategory);
+    if (activeTag) {
+      list = list.filter((p) => Array.isArray(p.tags) && p.tags.some((t) => String(t).trim() === activeTag));
+    }
     if (search) {
       const q = search.toLowerCase();
       list = list.filter((p) => {
@@ -67,7 +81,7 @@ export default function ShopPage() {
       list = list.filter((p) => (p.priceCents || 0) <= max * 100);
     }
     return list;
-  }, [activeCategory, search, priceRange]);
+  }, [activeCategory, activeTag, search, priceRange]);
 
   const totalPages = useMemo(() => Math.max(1, Math.ceil(products.length / pageSize)), [products.length]);
   const pageProducts = useMemo(() => {
@@ -191,13 +205,22 @@ export default function ShopPage() {
             </ul>
           </div>
 
-          <div>
+          <div className="shop-sidebar-tags">
             <div className="shop-sidebar-title">Tags</div>
             <div className="product-tags-wrap">
-              <span className="product-tag">Éclat</span>
-              <span className="product-tag">Hydratation</span>
-              <span className="product-tag">Relaxation</span>
-              <span className="product-tag">Bien‑être</span>
+              {tags.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  className={`product-tag${activeTag === tag ? ' active' : ''}`}
+                  onClick={() => {
+                    setActiveTag((prev) => (prev === tag ? '' : tag));
+                    setPage(1);
+                  }}
+                >
+                  {tag}
+                </button>
+              ))}
             </div>
           </div>
         </aside>
@@ -248,6 +271,25 @@ export default function ShopPage() {
             >
               →
             </button>
+          </div>
+
+          <div className="shop-tags-mobile">
+            <div className="shop-tags-mobile-title">Tags</div>
+            <div className="product-tags-wrap">
+              {tags.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  className={`product-tag${activeTag === tag ? ' active' : ''}`}
+                  onClick={() => {
+                    setActiveTag((prev) => (prev === tag ? '' : tag));
+                    setPage(1);
+                  }}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>

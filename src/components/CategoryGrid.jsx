@@ -14,7 +14,7 @@ const CATS = [
     id: 'cat-2',
     className: 'cat-item cat-2',
     kicker: 'Silhouette',
-    title: 'Minceur &\nRemodelage',
+    title: 'Minceur',
     cta: '— Réserver maintenant —',
     video: 'https://www.pexels.com/fr-fr/download/video/32828416/',
     image: 'soin-minceur.PNG',

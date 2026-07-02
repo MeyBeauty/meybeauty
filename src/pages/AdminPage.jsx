@@ -88,6 +88,281 @@ function seedAdminPosts() {
   const img = (p) => encodeURI(p);
   return [
     {
+      id: 'post-7',
+      title: 'Vajacial : Le soin intime tendance pour une peau saine et sans imperfections',
+      author: 'Mey Beauty',
+      category: 'Soins intimes',
+      status: 'published',
+      date: '2026-07-01',
+      excerpt:
+        'Le vajacial, contraction de "vagin" et "facial", est le soin esthétique entièrement dédié à la zone du maillot. Découvrez ses bienfaits et son déroulement.',
+      image: img('/soin%20spa%20(1).JPG'),
+      contentHtml: `
+<h1 class="blog-article-h2">Vajacial : Le soin intime tendance pour une peau saine et sans imperfections</h1>
+<p class="blog-article-p">Le bien-être et la beauté ne s'arrêtent plus au soin du visage. Depuis quelques saisons, un nouveau rituel fait fureur dans les instituts de beauté spécialisés : le vajacial. Contraction de "vagin" et "facial", ce soin esthétique entièrement dédié à la zone du maillot s'impose comme le secret incontournable pour prendre soin de son intimité. Mais qu’est-ce que le vajacial exactement ? Quels sont ses réels bienfaits pour la peau et comment se déroule une séance professionnelle ? Découvrez tout ce qu’il faut savoir sur ce soin intime révolutionnaire.</p>
+<h2 class="blog-article-h2">Qu'est-ce qu'un Vajacial et à qui s'adresse-t-il ?</h2>
+<p class="blog-article-p">Contrairement aux idées reçues, le vajacial n’est pas un soin interne. Il s’agit exclusivement d’un traitement dermo-esthétique topique, prodigué sur le pubis, les grandes lèvres et le haut des cuisses. Son objectif principal est de traiter la peau de la zone vulvaire externe, souvent malmenée par les frottements des vêtements, la transpiration, les variations hormonales et les méthodes d'épilation agressives.</p>
+<p class="blog-article-p">Ce soin s'adresse à toutes les femmes qui font face à des désagréments cutanés localisés :</p>
+<ul class="blog-article-list">
+<li>Poils incarnés douloureux et récurrents.</li>
+<li>Boutons, rougeurs et irritations post-épilation.</li>
+<li>Hyperpigmentation et taches sombres au niveau de l'entrejambe.</li>
+<li>Peau sèche ou déshydratée sur la zone du maillot.</li>
+</ul>
+<p class="blog-article-p">En éliminant les cellules mortes et en purifiant les pores en profondeur, le vajacial redonne à la peau de votre intimité toute sa douceur et sa clarté.</p>
+<h2 class="blog-article-h2">Les incroyables bienfaits du Vajacial pour la zone intime</h2>
+<p class="blog-article-p">Intégrer le vajacial dans sa routine de soin corporelle offre des résultats visibles dès la première séance. Les esthéticiennes professionnelles le recommandent pour ses multiples vertus thérapeutiques et esthétiques.</p>
+<h3 class="blog-article-h2">1. Élimination et prévention des poils incarnés</h3>
+<p class="blog-article-p">Le rasage et l’épilation brisent parfois le poil sous la peau, provoquant des inflammations appelées folliculites. Le vajacial intègre une exfoliation ciblée qui libère les poils bloqués sous l'épiderme et affine le grain de peau pour faciliter la repousse future.</p>
+<h3 class="blog-article-h2">2. Réduction des taches d'hyperpigmentation</h3>
+<p class="blog-article-p">Le frottement continu des sous-vêtements ou l'utilisation répétée du rasoir peuvent stimuler la production de mélanine, créant des zones plus sombres au niveau du maillot. Grâce à des actifs éclaircissants doux et naturels (comme la vitamine C ou l'acide kojique), le vajacial aide à uniformiser le teint de la peau.</p>
+<h3 class="blog-article-h2">3. Hydratation intense et apaisement cutané</h3>
+<p class="blog-article-p">La peau de la zone intime est fine et sensible. L'application de masques hydroplastiques spécifiques permet de calmer instantanément le feu du rasoir, d'atténuer les rougeurs et de restaurer le film hydrolipidique de la peau.</p>
+<h2 class="blog-article-h2">Comment se déroule une séance de Vajacial en institut ?</h2>
+<p class="blog-article-p">Une séance de vajacial dure généralement entre 45 et 60 minutes. Elle se déroule dans une ambiance relaxante et respecte un protocole strict pour garantir une hygiène irréprochable et un confort absolu.</p>
+<h3 class="blog-article-h2">Étape 1 : Le nettoyage purifiant</h3>
+<p class="blog-article-p">L'esthéticienne commence par nettoyer la zone à l'aide d'un gel nettoyant doux, antibactérien et au pH équilibré pour éliminer les impuretés sans agresser les muqueuses.</p>
+<h3 class="blog-article-h2">Étape 2 : L'exfoliation et la vapeur</h3>
+<p class="blog-article-p">Un gommage enzymatique doux est appliqué pour éliminer les cellules mortes. L'utilisation d'un bain de vapeur (Vapozone) permet d'ouvrir les pores de la peau, de l'assouplir et de préparer l'étape suivante.</p>
+<h3 class="blog-article-h2">Étape 3 : L'extraction des comédons et poils incarnés</h3>
+<p class="blog-article-p">Une fois les pores dilatés, la praticienne procède à l’extraction délicate des points noirs, des comédons et des poils incarnés à l'aide d'une pince à épiler stérilisée. Cette étape se fait avec minutie pour ne pas créer de cicatrices.</p>
+<h3 class="blog-article-h2">Étape 4 : La haute fréquence (désinfection)</h3>
+<p class="blog-article-p">Pour refermer les pores et éliminer les bactéries responsables des boutons, on utilise souvent un appareil à haute fréquence. Le passage de l'électrode génère de l'ozone, ce qui offre une action antibactérienne et cicatrisante immédiate.</p>
+<h3 class="blog-article-h2">Étape 5 : La pose du masque hydrojelly</h3>
+<p class="blog-article-p">C'est le moment le plus relaxant du soin. Un masque hydrogel (souvent enrichi en aloe vera, camomille ou or) est appliqué sur l'ensemble du maillot. Il apporte une sensation de fraîcheur intense, décongestionne et hydrate la peau en profondeur.</p>
+<h3 class="blog-article-h2">Étape 6 : L'hydratation finale</h3>
+<p class="blog-article-p">Le soin se termine par l'application d'un sérum ciblé ou d'une crème apaisante et nourrissante pour protéger la peau.</p>
+<h2 class="blog-article-h2">Quand faire un soin Vajacial ?</h2>
+<p class="blog-article-p">Pour maximiser les effets du soin, le timing est essentiel. Il est fortement conseillé de réaliser un vajacial <strong>7 à 10 jours après une épilation à la cire</strong> ou un rasage. À ce moment précis, la peau a eu le temps de cicatriser, et les nouveaux poils s'apprêtent à pointer sous la peau : c'est le moment idéal pour les guider correctement et éviter qu'ils ne s'incarnent.</p>
+<p class="blog-article-p">*Note : Le vajacial ne peut pas être réalisé immédiatement après une épilation, car la peau est trop sensibilisée. Il est également déconseillé pendant la période des menstruations pour des raisons évidentes de confort et d'hygiène.*</p>
+<h2 class="blog-article-h2">Nos conseils d'expertes pour entretenir votre maillot à la maison</h2>
+<p class="blog-article-p">Pour prolonger les bienfaits de votre soin en institut, adoptez de bonnes habitudes au quotidien :</p>
+<ul class="blog-article-list">
+<li><strong>Exfoliez en douceur</strong> : Utilisez un gommage adapté une à deux fois par semaine, à distance des jours d'épilation.</li>
+<li><strong>Hydratez quotidiennement</strong> : Appliquez une huile sèche naturelle (comme l'huile de jojoba) ou une crème hydratante sans parfum.</li>
+<li><strong>Portez du coton</strong> : Privilégiez les sous-vêtements en fibres naturelles pour limiter la transpiration et les frottements irritants.</li>
+</ul>
+      `,
+    },
+    {
+      id: 'post-8',
+      title: 'Le guide complet du Drainage Lymphatique : Silhouette, santé et vitalité',
+      author: 'Mey Beauty',
+      category: 'Massage',
+      status: 'published',
+      date: '2026-07-01',
+      excerpt:
+        'Se sentir légère, éliminer les toxines et sculpter son corps naturellement : voilà la promesse du drainage lymphatique.',
+      image: img('/massage-corps%20(2).jpg'),
+      contentHtml: `
+<h1 class="blog-article-h2">Le guide complet du Drainage Lymphatique : Silhouette, santé et vitalité</h1>
+<p class="blog-article-p">Se sentir légère, éliminer les toxines et sculpter son corps naturellement : voilà la promesse du drainage lymphatique. Cette technique de massage thérapeutique et esthétique connaît un succès grandissant en institut de beauté. Utilisé aussi bien pour réduire la cellulite que pour améliorer le bien-être général, le drainage lymphatique agit directement sur le système circulatoire le plus secret de notre corps : la lymphe. Qu’est-ce que la lymphe ? Pourquoi son blocage fatigue-t-il l’organisme et comment le drainage manuel peut-il transformer votre silhouette ? En route pour une détox globale.</p>
+<h2 class="blog-article-h2">Comprendre le système lymphatique : Le filtre de notre organisme</h2>
+<p class="blog-article-p">Pour comprendre l’efficacité du drainage lymphatique, il faut d’abord comprendre le rôle de la lymphe. La lymphe est un liquide incolore qui circule dans tout le corps via un réseau de vaisseaux parallèles aux veines. Contrairement au sang, qui est propulsé par le cœur, la lymphe ne possède pas de pompe naturelle. Sa circulation dépend uniquement des mouvements musculaires et de la respiration.</p>
+<p class="blog-article-p">Le rôle de la lymphe est capital :</p>
+<ul class="blog-article-list">
+<li>Elle transporte les déchets cellulaires, les toxines et les excès de liquides.</li>
+<li>Elle filtre ces éléments à travers les ganglions lymphatiques pour les éliminer.</li>
+<li>Elle joue un rôle majeur dans le système immunitaire en transportant les globules blancs.</li>
+</ul>
+<p class="blog-article-p">Lorsque la circulation lymphatique est paresseuse (à cause de la sédentarité, d'une mauvaise alimentation ou du stress), les toxines s'accumulent. C'est là qu'apparaissent les sensations de jambes lourdes, la rétention d'eau et la cellulite aqueuse.</p>
+<h2 class="blog-article-h2">Les différents bienfaits du Drainage Lymphatique Manuel</h2>
+<p class="blog-article-p">Le drainage lymphatique est bien plus qu'un simple massage bien-être. C'est une cure de jouvence pour le corps, aux bénéfices multiples et scientifiquement prouvés.</p>
+<h3 class="blog-article-h2">1. Action anti-rétention d'eau et jambes légères</h3>
+<p class="blog-article-p">Si vous souffrez de gonflements au niveau des chevilles, des mollets ou des mains, le drainage lymphatique est la solution idéale. En stimulant les ganglions, le massage relance l'évacuation des liquides stockés en excès dans les tissus. Dès la fin de la séance, la sensation de légèreté est immédiate.</p>
+<h3 class="blog-article-h2">2. Réduction de la cellulite et remodelage de la silhouette</h3>
+<p class="blog-article-p">La cellulite aqueuse est directement liée à une mauvaise circulation de la lymphe et à un engorgement des cellules graisseuses. Le drainage manuel permet de désinfiltrer les tissus, de lisser la peau d'orange et de redessiner les contours de la silhouette, notamment au niveau des cuisses, des hanches et du ventre.</p>
+<h3 class="blog-article-h2">3. Détoxification et renforcement immunitaire</h3>
+<p class="blog-article-p">En accélérant l'élimination des déchets et des toxines, le drainage lymphatique purifie l'organisme de l'intérieur. Il donne un coup de boost remarquable au système immunitaire et améliore visiblement la qualité de la peau, qui devient plus lumineuse et moins sujette aux imperfections.</p>
+<h3 class="blog-article-h2">4. Récupération musculaire et post-opératoire</h3>
+<p class="blog-article-p">Très prisé par les athlètes, ce massage élimine l'acide lactique et réduit les courbatures. Il est également recommandé par le corps médical après certaines interventions de chirurgie esthétique (comme une liposuccion) pour réduire les œdèmes et accélérer la cicatrisation.</p>
+<h2 class="blog-article-h2">Les deux grandes méthodes : Vodder vs Renata França</h2>
+<p class="blog-article-p">Il existe deux manières principales de pratiquer le drainage lymphatique en institut, chacune répondant à des besoins spécifiques.</p>
+<h3 class="blog-article-h2">La méthode classique (Méthode Vodder)</h3>
+<p class="blog-article-p">Créée dans les années 1930 par le Dr Emil Vodder, cette méthode repose sur des mouvements extrêmement doux, lents et rythmés, effectuant des pressions circulaires en forme de vagues. Très relaxante, elle respecte scrupuleusement la physiologie du corps et est idéale pour les personnes très sensibles, les femmes enceintes ou en post-chirurgie.</p>
+<h3 class="blog-article-h2">La méthode moderne (Style Renata França)</h3>
+<p class="blog-article-p">Révolutionnée par la célèbre praticienne brésilienne Renata França, cette technique se distingue par un rythme beaucoup plus rapide et des pressions fermes. Elle combine le drainage lymphatique traditionnel à des mouvements de modelage exclusifs. Le résultat est spectaculaire : un effet "lifting" et une silhouette immédiatement galbée et affinée dès la première séance.</p>
+<h2 class="blog-article-h2">Comment se déroule une séance en institut ?</h2>
+<p class="blog-article-p">Une séance de drainage lymphatique dure entre 1h et 1h30. Installée confortablement sur une table de massage, la cliente reçoit le soin directement sur la peau, généralement sans huile (ou avec une quantité très limitée) pour permettre une bonne adhérence des doigts de la praticienne.</p>
+<p class="blog-article-p">Le massage commence toujours par l'<strong>évacuation des ganglions principaux</strong> (situés au niveau du cou, des aisselles, du nombril et de l'aine) par de légères pressions répétées. Ensuite, le praticien effectue des mouvements de pompage et de lissage en partant des extrémités (pieds, mains) vers les centres ganglionnaires pour faire remonter le flux lymphatique.</p>
+<p class="blog-article-p">Après la séance, il est fréquent de ressentir une envie pressante d'uriner : c'est le signe indéniable que votre corps commence déjà à éliminer les toxines accumulées !</p>
+<h2 class="blog-article-h2">À quelle fréquence faut-il planifier ses séances ?</h2>
+<p class="blog-article-p">Pour obtenir des résultats durables sur la silhouette et la cellulite, la régularité est la clé de la réussite. </p>
+<ul class="blog-article-list">
+<li><strong>En cure d'attaque</strong> : Il est conseillé de réaliser 5 à 10 séances, à raison d'une à deux fois par semaine.</li>
+<li><strong>En entretien</strong> : Une séance mensuelle suffit ensuite pour maintenir les bénéfices et garder un corps tonique et léger toute l'année.</li>
+</ul>
+<p class="blog-article-p">*Contre-indications importantes : Le drainage lymphatique est déconseillé en cas d'infections aiguës, de fièvre, de phlébite déclarée ou de tumeurs malignes sans avis médical préalable.*</p>
+      `,
+    },
+    {
+      id: 'post-9',
+      title: 'Épilation à la cire vs Épilation définitive : Quelle méthode choisir pour une peau douce ?',
+      author: 'Mey Beauty',
+      category: 'Épilation',
+      status: 'published',
+      date: '2026-07-01',
+      excerpt:
+        'Avantages, inconvénients, budget et douleur : ce guide comparatif complet vous aide à choisir la méthode idéale pour votre profil.',
+      image: img('/beaut%C3%A9%20regard%20(2).jpg'),
+      contentHtml: `
+<h1 class="blog-article-h2">Épilation à la cire vs Épilation définitive : Quelle méthode choisir pour une peau douce ?</h1>
+<p class="blog-article-p">Avoir une peau parfaitement lisse, nette et sans poils tout au long de l'année est un objectif partagé par de nombreuses personnes. Pour y parvenir, deux grandes philosophies s'affrontent dans le monde de la beauté : l'épilation traditionnelle à la cire et les technologies d'épilation définitive (laser et lumière pulsée). Si l'une séduit par son accessibilité immédiate, l'autre révolutionne le quotidien par sa promesse de liberté à long terme. Avantages, inconvénients, budget et douleur : ce guide comparatif complet vous aide à choisir la méthode idéale pour votre profil.</p>
+<h2 class="blog-article-h2">L'Épilation à la cire : Le classique indémodable de l'institut</h2>
+<p class="blog-article-p">L'épilation à la cire reste la prestation reine en institut de beauté. Elle consiste à arracher le poil avec sa racine, ce qui ralentit considérablement la repousse par rapport au rasage.</p>
+<h3 class="blog-article-h2">Les différents types de cire professionnels</h3>
+<ul class="blog-article-list">
+<li><strong>La cire chaude (sans bandes)</strong> : Idéale pour les zones sensibles et délicates comme le maillot, les aisselles ou le visage. La chaleur dilate les pores, ce qui rend l'arrachage moins douloureux et capture parfaitement les poils courts et drus.</li>
+<li><strong>La cire tiède (avec bandes)</strong> : Utilisée pour les grandes zones comme les jambes ou les bras. Appliquée en couche ultra-fine à l'aide d'un roll-on ou d'une spatule, elle s'enlève d'un geste vif à l'aide d'une bande de tissu.</li>
+</ul>
+<h3 class="blog-article-h2">Les avantages de la cire</h3>
+<ul class="blog-article-list">
+<li><strong>Résultat immédiat</strong> : Vous ressortez de l’institut avec une peau douce pour 3 à 4 semaines.</li>
+<li><strong>Affinement du poil</strong> : Au fil des séances, la racine s'affaiblit. Le poil repousse plus fin, plus clair et moins nombreux.</li>
+<li><strong>Exfoliation naturelle</strong> : En se retirant, la cire élimine les cellules mortes en surface, rendant la peau douce.</li>
+</ul>
+<h2 class="blog-article-h2">L'Épilation définitive : La révolution technologique au service de votre temps</h2>
+<p class="blog-article-p">L'épilation définitive regroupe des techniques qui détruisent la racine du poil par la chaleur pour empêcher définitivement sa repousse. En institut ou centre spécialisé, on distingue principalement deux technologies : le Laser et la Lumière Pulsée (IPL).</p>
+<h3 class="blog-article-h2">Épilation Laser vs Lumière Pulsée (IPL) : Quelle différence ?</h3>
+<ul class="blog-article-list">
+<li><strong>Le Laser</strong> émet un faisceau lumineux unique et ultra-concentré. C'est une méthode médicale ou dermo-esthétique de haute précision, extrêmement puissante, qui cible directement la mélanine du poil. Elle est très efficace sur presque tous les types de peau.</li>
+<li><strong>La Lumière Pulsée (IPL)</strong> utilise un spectre lumineux plus large. Elle est idéale pour les poils foncés sur peaux claires et offre d'excellents résultats en un nombre de séances légèrement supérieur.</li>
+</ul>
+<h3 class="blog-article-h2">Les avantages de l'épilation définitive</h3>
+<ul class="blog-article-list">
+<li><strong>Une liberté totale</strong> : Après un protocole complet, plus de 85% des poils sont définitivement éliminés. Quelques séances de retouche annuelles suffisent.</li>
+<li><strong>Finis les poils incarnés</strong> : En détruisant le follicule pileux, cette méthode supprime radicalement les problèmes de boutons et de poils incarnés douloureux au maillot ou aux jambes.</li>
+<li><strong>Économie à long terme</strong> : Bien que l'investissement initial soit élevé, il est rentabilisé en quelques années par rapport au coût cumulé d'une vie d'épilation à la cire.</li>
+</ul>
+<h2 class="blog-article-h2">Tableau comparatif : Faire le bon choix en un coup d'œil</h2>
+<p class="blog-article-p">Pour vous guider, voici un récapitulatif des critères essentiels pour faire votre choix :</p>
+<p class="blog-article-p">| Critères | Épilation à la Cire | Épilation Définitive (Laser / IPL) |</p>
+<p class="blog-article-p">| :--- | :--- | :--- |</p>
+<p class="blog-article-p">| <strong>Durée des résultats</strong> | 3 à 4 semaines | Permanente (à plus de 85%) |</p>
+<p class="blog-article-p">| <strong>Nombre de séances</strong> | À répéter toute la vie | 6 à 10 séances selon la zone |</p>
+<p class="blog-article-p">| <strong>Niveau de douleur</strong> | Vive mais instantanée | Sensation de picotement ou coup d'élastique |</p>
+<p class="blog-article-p">| <strong>Type de poil / peau</strong> | Tous types de peaux et poils | Idéal sur poils foncés (limité sur poils blancs/roux) |</p>
+<p class="blog-article-p">| <strong>Saison recommandée</strong> | Toute l'année | Automne / Hiver (éviter l'exposition au soleil) |</p>
+<h2 class="blog-article-h2">Comment préparer sa peau avant et après votre séance ?</h2>
+<p class="blog-article-p">Quelle que soit la méthode choisie, le secret d'une épilation réussie réside dans la préparation de la peau.</p>
+<h3 class="blog-article-h2">Pour l'épilation à la cire :</h3>
+<ul class="blog-article-list">
+<li><strong>Avant</strong> : Faites un gommage 24 heures avant pour libérer les poils sous peau. N'appliquez pas d'huile ou de crème corporelle le jour J.</li>
+<li><strong>Après</strong> : Appliquez une lotion apaisante à l'aloe vera. Évitez le soleil et le chlore de la piscine pendant 24 heures.</li>
+</ul>
+<h3 class="blog-article-h2">Pour l'épilation définitive :</h3>
+<ul class="blog-article-list">
+<li><strong>Avant</strong> : Rasez la zone de traitement la veille de la séance (ne surtout pas arracher le poil à la cire, car le laser a besoin de la racine pour détruire le bulbe). Zéro exposition solaire ou autobronzant durant les 4 semaines précédentes.</li>
+<li><strong>Après</strong> : Hydratez généreusement avec une crème réparatrice et appliquez impérativement un écran solaire SPF 50 sur les zones exposées.</li>
+</ul>
+<h2 class="blog-article-h2">Conclusion : Quelle méthode adopter ?</h2>
+<p class="blog-article-p">Optez pour la <strong>cire</strong> si vous cherchez une solution économique à court terme, si vos poils sont très clairs (blonds, roux, blancs) ou si vous aimez votre rendez-vous mensuel en institut. Choisissez l'<strong>épilation définitive</strong> si vous souhaitez vous débarrasser définitivement de la corvée des poils, si vous souffrez de poils incarnés et si vous êtes prête à investir dans votre confort quotidien.</p>
+      `,
+    },
+    {
+      id: 'post-10',
+      title: 'Manucure Japonaise : Le soin détox révolutionnaire pour des ongles sains et brillants',
+      author: 'Mey Beauty',
+      category: 'Ongles',
+      status: 'published',
+      date: '2026-07-01',
+      excerpt:
+        'La manucure japonaise, rituel ancestral venu d’Asie, soigne l’ongle en profondeur pour lui redonner son éclat naturel.',
+      image: img('/mey-beauty%20(3).jpeg'),
+      contentHtml: `
+<h1 class="blog-article-h2">Manucure Japonaise : Le soin détox révolutionnaire pour des ongles sains et brillants</h1>
+<p class="blog-article-p">À l'ère des vernis semi-permanents, des extensions en gel et des poses de faux ongles à répétition, nos ongles finissent souvent par saturer. Fragilisés, dédoublés, mous ou jaunis, ils réclament une pause. C’est précisément ici qu’intervient un rituel ancestral tout droit venu d'Asie : la manucure japonaise. Véritable cure de détoxication esthétique, ce soin unique ne dissimule pas les imperfections sous des couches de vernis, mais soigne l'ongle en profondeur pour lui redonner son éclat naturel. Zoom sur la manucure japonaise, le secret ultime pour des ongles forts et naturellement brillants.</p>
+<h2 class="blog-article-h2">Qu'est-ce que la Manucure Japonaise ?</h2>
+<p class="blog-article-p">La manucure japonaise est un soin de beauté des mains holistique, vieux de plusieurs siècles, qui était autrefois le secret des aristocrates japonaises pour afficher des mains parfaites. Contrairement aux manucures traditionnelles, elle n'utilise aucun vernis, aucune base chimique, ni aucune lampe UV.</p>
+<p class="blog-article-p">Son concept repose sur l'<strong>inoculation d'actifs nutritifs directement dans la plaque cornée de l'ongle</strong> grâce à un polissage minutieux à base de pâtes et de poudres naturelles. C'est l'équivalent d'un masque de soin ultra-nourrissant pour le visage, mais appliqué exclusivement à l'ongle. Après une séance, les ongles affichent une brillance miroir spectaculaire, si nette qu'on dirait qu'une couche de top coat transparent vient d'être posée.</p>
+<h2 class="blog-article-h2">La composition magique des produits utilisés</h2>
+<p class="blog-article-p">Le succès de la manucure japonaise réside dans la formulation ultra-clean et naturelle des produits professionnels utilisés au cours du soin. On y retrouve des ingrédients précieux issus de la pharmacopée traditionnelle :</p>
+<ul class="blog-article-list">
+<li><strong>La cire d'abeille</strong> : Nourrit intensément l'ongle, comble les stries de surface et crée une barrière protectrice naturelle.</li>
+<li><strong>La terre de diatomée (ou silice)</strong> : Reconnue pour ses propriétés reminéralisantes extraordinaires, elle fortifie la structure de l'ongle.</li>
+<li><strong>Le squalane et l'huile de jojoba</strong> : Hydratent l'ongle et assouplissent les cuticules.</li>
+<li><strong>La poudre de perle d'eau douce</strong> : Riche en acides aminés, elle blanchit naturellement l'ongle et booste son éclat.</li>
+</ul>
+<h2 class="blog-article-h2">Les étapes clés d'un soin détox en institut</h2>
+<p class="blog-article-p">Réalisée par une prothésiste ongulaire qualifiée, une séance de manucure japonaise dure environ 45 minutes et suit un protocole relaxant et précis.</p>
+<h3 class="blog-article-h2">Étape 1 : La préparation de l'ongle</h3>
+<p class="blog-article-p">L'esthéticienne nettoie et désinfecte les mains. Les ongles sont limés selon la forme souhaitée (arrondis, carrés). Les cuticules sont ensuite repoussées avec délicatesse après l'application d'une huile émolliente.</p>
+<h3 class="blog-article-h2">Étape 2 : L'ouverture des écailles</h3>
+<p class="blog-article-p">À l'aide d'une lime polissoir au grain très fin, la praticienne vient polir légèrement la surface de l'ongle. Cette étape permet de lisser les reliefs incommodes, mais surtout d'ouvrir les écailles de kératine pour que les soins pénètrent de façon optimale.</p>
+<h3 class="blog-article-h2">Étape 3 : L'application de la pâte nutritive</h3>
+<p class="blog-article-p">C'est le cœur du traitement. À l'aide d'un bloc polissoir en peau de chamois véritable, l'esthéticienne fait pénétrer une pâte verte et dense, riche en cire d'abeille et nutriments. Le mouvement de va-et-vient active la microcirculation sanguine de l'ongle et fait infuser les actifs.</p>
+<h3 class="blog-article-h2">Étape 4 : La fixation et la brillance (La poudre)</h3>
+<p class="blog-article-p">Pour sceller les nutriments et apporter cette brillance miroir iconique, on applique ensuite une poudre fine à base de perles. Polie à nouveau avec un polissoir propre en peau de daim, elle vient fixer la cire et imperméabiliser l'ongle, le protégeant des agressions extérieures (eau, produits ménagers).</p>
+<h3 class="blog-article-h2">Étape 5 : Le massage final</h3>
+<p class="blog-article-p">Le soin se clôture par un massage relaxant des mains et des cuticules à l'aide d'une crème nourrissante ou d'une huile végétale précieuse.</p>
+<h2 class="blog-article-h2">Pourquoi adopter la Manucure Japonaise ? (Les bienfaits)</h2>
+<p class="blog-article-p">Ce traitement de soin présente de nombreux bénéfices :</p>
+<ul class="blog-article-list">
+<li><strong>Fortification immédiate</strong> : Les ongles mous et cassants retrouvent instantanément de la rigidité et de la force. Ils cessent de se dédoubler.</li>
+<li><strong>Brillance longue durée</strong> : La brillance obtenue n'est pas éphémère. Elle résiste à l'eau et reste visible entre <strong>2 et 3 semaines</strong>.</li>
+<li><strong>Stimulation de la croissance</strong> : Le massage répété de la matrice stimule la pousse de l'ongle, qui grandit plus vite et en meilleure santé.</li>
+<li><strong>Une pause saine</strong> : Idéale pour détoxifier vos mains entre deux poses de gel ou de résine, afin d'éviter le jaunissement et l'amincissement de l'ongle.</li>
+</ul>
+<h2 class="blog-article-h2">À quelle fréquence faire ce soin ?</h2>
+<p class="blog-article-p">La manucure japonaise peut être pratiquée de deux façons :</p>
+<ul class="blog-article-list">
+<li><strong>En traitement de secours</strong> : Une séance unique dès que vos ongles fatiguent ou après la dépose de faux ongles pour réparer les dégâts.</li>
+<li><strong>En cure intensive</strong> : Pour les ongles extrêmement abîmés, planifiez 3 séances espacées de deux semaines pour régénérer complètement la plaque de l'ongle.</li>
+</ul>
+<p class="blog-article-p">Si vous cherchez une alternative saine, élégante et naturelle pour sublimer vos mains sans utiliser de produits chimiques, la manucure japonaise est le rituel beauté indispensable à tester sans attendre.</p>
+      `,
+    },
+    {
+      id: 'post-11',
+      title: 'Tatouage semi-permanent : Le secret d\'une mise en beauté durable et naturelle',
+      author: 'Mey Beauty',
+      category: 'Maquillage',
+      status: 'published',
+      date: '2026-07-01',
+      excerpt:
+        'Se réveiller chaque matin avec des sourcils parfaitement dessinés ou des lèvres subtilement teintées : découvrez le maquillage semi-permanent.',
+      image: img('/mey-beauty%20(2).jpeg'),
+      contentHtml: `
+<h1 class="blog-article-h2">Tatouage semi-permanent : Le secret d'une mise en beauté durable et naturelle</h1>
+<p class="blog-article-p">Se réveiller chaque matin avec des sourcils parfaitement dessinés, un regard ténébreux ou des lèvres subtilement teintées sans passer par la case maquillage : c'est le rêve de beaucoup d'entre nous. Grâce aux avancées incroyables du tatouage semi-permanent, ce rêve est désormais à portée de main. Loin des techniques de dermopigmentation d'autrefois qui viraient de couleur, le maquillage semi-permanent moderne offre des résultats d'une finesse et d'un naturel bluffants. Découvrez les techniques phares du moment, le déroulement d'une séance en institut et nos astuces pour faire durer votre mise en beauté.</p>
+<h2 class="blog-article-h2">Qu'est-ce que le Tatouage Semi-Permanent ou Maquillage Permanent ?</h2>
+<p class="blog-article-p">Le tatouage semi-permanent (aussi appelé dermopigmentation) consiste à implanter des pigments biosourcés dans les couches superficielles de l'épiderme, juste au-dessus du derme. À la différence d'un tatouage artistique corporel traditionnel qui est définitif, le maquillage semi-permanent s'estompe naturellement avec les années à cause du renouvellement cellulaire de la peau du visage.</p>
+<p class="blog-article-p">Sa durée de vie varie généralement entre <strong>1 et 3 ans</strong>, ce qui permet de réajuster le tracé et l'intensité de la couleur en fonction du vieillissement naturel des traits du visage et des tendances de beauté.</p>
+<h2 class="blog-article-h2">Les 3 prestations stars du Tatouage Semi-Permanent en institut</h2>
+<p class="blog-article-p">La dermopigmentation moderne se décline sur plusieurs zones du visage pour corriger une asymétrie, densifier un manque ou apporter de la couleur.</p>
+<h3 class="blog-article-h2">1. La dermo-pigmentation des sourcils : Microblading vs Microshading</h3>
+<p class="blog-article-p">Les sourcils structurent l'ensemble de l'expression du visage. Deux techniques phares dominent le marché :</p>
+<ul class="blog-article-list">
+<li><strong>Le Microblading</strong> : Idéal pour un effet ultra-naturel. À l'aide d'une lame fine, la technicienne dessine les poils un à un pour imiter la chevelure naturelle. C'est parfait pour combler des sourcils clairsemés.</li>
+<li><strong>Le Microshading</strong> : Offre un effet poudré, semblable à l'application d'un fard à sourcils ou d'un crayon. Réalisé par de petits points d'ombrage, il apporte de l'intensité et de la profondeur, idéal pour les peaux mixtes à grasses.</li>
+</ul>
+<h3 class="blog-article-h2">2. Le Candy Lips (Dermopigmentation des lèvres)</h3>
+<p class="blog-article-p">Le Candy Lips permet de redessiner le contour des lèvres parfois flou, de corriger une légère asymétrie et de redonner de la couleur à des lèvres trop pâles. Le résultat donne un effet "lèvres mordues" ou baume teinté ultra-frais et lumineux. Plus besoin de rouge à lèvres au quotidien !</p>
+<h3 class="blog-article-h2">3. Le Liner permanent ou Ras-de-cils</h3>
+<p class="blog-article-p">Pour intensifier le regard sans avoir à tracer son trait d'eyeliner tous les matins, la dermopigmentation des yeux est magique. Le <strong>ras-de-cils</strong> consiste à insérer des points pigmentés noirs ou bruns foncés à la racine des cils pour donner l'illusion de cils plus denses et d'un regard instantanément plus réveillé.</p>
+<h2 class="blog-article-h2">Le déroulement d'une séance : Un protocole sur-mesure et sécurisé</h2>
+<p class="blog-article-p">Une séance de tatouage semi-permanent dure entre 1h30 et 2h30. Elle requiert une écoute attentive et une hygiène médicale stricte.</p>
+<h3 class="blog-article-h2">Étape 1 : La consultation et le dessin préparatoire</h3>
+<p class="blog-article-p">La dermo-praticienne commence par étudier la morphologie de votre visage et le ton de votre peau. Elle réalise un tracé précis au crayon de la future forme. Cette étape est cruciale : le tatouage ne commence que lorsque la cliente a validé à 100% le dessin prévisionnel.</p>
+<h3 class="blog-article-h2">Étape 2 : Le choix de la couleur</h3>
+<p class="blog-article-p">Grâce à une large palette de pigments minéraux ou organiques certifiés et stériles, l'experte crée une nuance sur-mesure qui s'harmonisera parfaitement avec la couleur naturelle de vos cheveux et de votre carnation.</p>
+<h3 class="blog-article-h2">Étape 3 : La pigmentation</h3>
+<p class="blog-article-p">À l'aide d'un dermographe électrique muni d'une aiguille stérile à usage unique (ou d'un stylet manuel pour le microblading), les pigments sont insérés en douceur dans l'épiderme. La sensation s'apparente à de légers picotements ou des gratouilles, mais reste tout à fait supportable.</p>
+<h3 class="blog-article-h2">Étape 4 : La séance de retouche (Obligatoire)</h3>
+<p class="blog-article-p">Après la première séance, la peau rejette naturellement une partie des pigments (environ 30 à 50% de l'intensité s'estompe en quelques jours). Une séance de retouche fixatrice, planifiée <strong>4 à 6 semaines plus tard</strong>, est indispensable pour finaliser le travail, combler les petits manques et sceller la couleur.</p>
+<h2 class="blog-article-h2">Le processus de cicatrisation : Ce qu'il faut savoir</h2>
+<p class="blog-article-p">La semaine suivant la séance de pigmentation demande de la rigueur :</p>
+<ul class="blog-article-list">
+<li><strong>Ne touchez pas aux petites croûtes</strong> : Des petites pellicules de peau vont se former, c'est tout à fait normal. Laissez-les tomber d'elles-mêmes sous peine de retirer le pigment.</li>
+<li><strong>Hydratez intensément</strong> : Appliquez de la vaseline ou une crème cicatrisante recommandée par votre technicienne plusieurs fois par jour.</li>
+<li><strong>Évitez l'eau et la chaleur</strong> : Pas de piscine, de sauna, de hammam ou de séances de sport intensives entraînant de la sudation pendant 7 à 10 jours.</li>
+<li><strong>Protection solaire</strong> : Pas d'exposition au soleil directe durant un mois, et appliquez toujours un stick SPF 50 pour protéger les pigments des UV.</li>
+</ul>
+<h2 class="blog-article-h2">Un maquillage semi-permanent réussi commence par le choix de votre institut</h2>
+<p class="blog-article-p">Le maquillage semi-permanent est un acte de précision. Pour garantir votre sécurité esthétique et sanitaire, veillez à choisir un institut certifié, affichant son attestation de formation "Hygiène et Salubrité", et utilisant du matériel jetable à usage unique. Offrez-vous le confort d'un visage sublimé à chaque instant, sans effort !</p>
+      `,
+    },
+    {
       id: 'post-1',
       title: 'Beauté & Spa : rituels bien‑être à adopter',
       author: 'Mey Beauty',
@@ -628,15 +903,17 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
   const [form, setForm] = useState({
     brand: '',
     name: '',
-    sku: '',
+    reference: '',
     category: '',
     priceEuros: '',
     stock: 0,
     status: 'active',
     image: '',
     description: '',
-    netQuantitiesText: '',
-    skinTypesText: '',
+    details: '',
+    delivery: '',
+    netQuantity: '',
+    skinType: '',
     specsText: '',
   });
 
@@ -646,30 +923,41 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
       setForm({
         brand: editing.brand || '',
         name: editing.name || '',
-        sku: editing.sku || '',
+        reference: editing.reference || editing.id || '',
         category: editing.category || '',
         priceEuros: ((Number(editing.priceCents) || 0) / 100).toFixed(2),
         stock: editing.stock || 0,
         status: editing.status || 'active',
         image: editing.image || '',
         description: editing.description || '',
-        netQuantitiesText: Array.isArray(editing.netQuantities) ? editing.netQuantities.join(', ') : '',
-        skinTypesText: Array.isArray(editing.skinTypes) ? editing.skinTypes.join(', ') : '',
-        specsText: Array.isArray(editing.specs) ? editing.specs.map((s) => `${s?.label || ''}:${s?.value || ''}`).join('\n') : '',
+        details: editing.details || '',
+        delivery: editing.delivery || '',
+        netQuantity: editing.netQuantity || '',
+        skinType: editing.skinType || '',
+        specsText: Array.isArray(editing.specs) && editing.specs.length
+          ? editing.specs.map((s) => `${s?.label || ''}:${s?.value || ''}`).join('\n')
+          : [
+              editing.brand ? `Marque: ${editing.brand}` : '',
+              editing.category ? `Catégorie: ${editing.category}` : '',
+              editing.netQuantity ? `Quantité nette: ${editing.netQuantity}` : '',
+              editing.skinType ? `Type de peau: ${editing.skinType}` : '',
+            ].filter(Boolean).join('\n'),
       });
     } else {
       setForm({
         brand: '',
         name: '',
-        sku: '',
+        reference: '',
         category: '',
         priceEuros: '',
         stock: 0,
         status: 'active',
         image: '',
         description: '',
-        netQuantitiesText: '',
-        skinTypesText: '',
+        details: '',
+        delivery: '',
+        netQuantity: '',
+        skinType: '',
         specsText: '',
       });
     }
@@ -724,12 +1012,6 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
       return Math.max(0, Math.round(n * 100));
     };
 
-    const splitList = (s) =>
-      String(s || '')
-        .split(',')
-        .map((x) => x.trim())
-        .filter(Boolean);
-
     const parseSpecs = (s) => {
       const lines = String(s || '')
         .split('\n')
@@ -751,7 +1033,7 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
       id: editingId || uid('prod'),
       brand: form.brand.trim() || 'Mey Beauty',
       name: form.name.trim() || 'Produit',
-      sku: form.sku.trim() || (editingId || uid('SKU')),
+      reference: form.reference.trim() || editingId || uid('prod'),
       category: form.category.trim() || '-',
       priceCents: parseEurosToCents(form.priceEuros),
       stock: Math.max(0, Number(form.stock) || 0),
@@ -759,8 +1041,10 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
       image: form.image.trim(),
       images: form.image.trim() ? [form.image.trim()] : [],
       description: form.description,
-      netQuantities: splitList(form.netQuantitiesText),
-      skinTypes: splitList(form.skinTypesText),
+      details: form.details,
+      delivery: form.delivery,
+      netQuantity: form.netQuantity,
+      skinType: form.skinType,
       specs: parseSpecs(form.specsText),
     };
 
@@ -823,7 +1107,7 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
                         <img className="admin-product-img" src={p.image || p.images?.[0] || '/produits/produit (1).webp'} alt={p.name} />
                         <div>
                           <div className="admin-product-name">{p.name}</div>
-                          <div className="admin-product-sku">Réf : {p.sku}</div>
+                          <div className="admin-product-sku">Réf : {p.reference || p.id}</div>
                         </div>
                       </div>
                     </button>
@@ -903,8 +1187,8 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
             <input value={form.name} onChange={(e) => setForm((s) => ({ ...s, name: e.target.value }))} />
           </div>
           <div className="admin-form-group">
-            <label>Référence (SKU)</label>
-            <input value={form.sku} onChange={(e) => setForm((s) => ({ ...s, sku: e.target.value }))} />
+            <label>Référence</label>
+            <input value={form.reference} onChange={(e) => setForm((s) => ({ ...s, reference: e.target.value }))} />
           </div>
           <div className="admin-form-group">
             <label>Catégorie</label>
@@ -972,20 +1256,30 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
           </div>
 
           <div className="admin-form-group admin-form-full">
-            <label>Quantité nette (options, séparées par des virgules)</label>
-            <input
-              value={form.netQuantitiesText}
-              onChange={(e) => setForm((s) => ({ ...s, netQuantitiesText: e.target.value }))}
-              placeholder="ex: 50ml, 100ml, 150ml"
-            />
+            <label>Détails complémentaires</label>
+            <textarea value={form.details} onChange={(e) => setForm((s) => ({ ...s, details: e.target.value }))} rows={3} />
           </div>
 
           <div className="admin-form-group admin-form-full">
-            <label>Type de peau (options, séparées par des virgules)</label>
+            <label>Livraison & retours</label>
+            <textarea value={form.delivery} onChange={(e) => setForm((s) => ({ ...s, delivery: e.target.value }))} rows={3} />
+          </div>
+
+          <div className="admin-form-group">
+            <label>Quantité nette</label>
             <input
-              value={form.skinTypesText}
-              onChange={(e) => setForm((s) => ({ ...s, skinTypesText: e.target.value }))}
-              placeholder="ex: Grasse, Sèche, Normale, Tous types"
+              value={form.netQuantity}
+              onChange={(e) => setForm((s) => ({ ...s, netQuantity: e.target.value }))}
+              placeholder="ex: 200ml"
+            />
+          </div>
+
+          <div className="admin-form-group">
+            <label>Type de peau</label>
+            <input
+              value={form.skinType}
+              onChange={(e) => setForm((s) => ({ ...s, skinType: e.target.value }))}
+              placeholder="ex: Tout type de peau"
             />
           </div>
 
@@ -1635,6 +1929,40 @@ function AdminMaintenanceSection() {
     }
   };
 
+  const runForceSyncProducts = async () => {
+    if (seedBusy) return;
+    setSeedMsg('');
+    setSeedBusy(true);
+    try {
+      const seedProducts = catalogProducts.map((p) => ({
+        id: p.id,
+        reference: p.reference || p.id || '',
+        brand: p.brand || 'LPG',
+        category: p.category || '-',
+        name: p.name,
+        description: p.description || '',
+        details: p.details || '',
+        delivery: p.delivery || '',
+        netQuantity: p.netQuantity || '',
+        skinType: p.skinType || '',
+        priceCents: p.priceCents || 0,
+        currency: p.currency || 'EUR',
+        images: Array.isArray(p.images) ? p.images : [],
+        image: p.images?.[0] || '',
+        status: 'active',
+        tags: Array.isArray(p.tags) ? p.tags : [],
+      }));
+
+      const res = await syncAllProducts(seedProducts);
+      setSeedMsg(`Synchronisation produits: ${res.count} produits`);
+    } catch (e) {
+      setSeedMsg(e?.message || 'Sync impossible');
+    } finally {
+      setSeedBusy(false);
+      setTimeout(() => setSeedMsg(''), 4000);
+    }
+  };
+
   return (
     <div className="admin-section">
       <div className="admin-section-header">
@@ -1663,6 +1991,18 @@ function AdminMaintenanceSection() {
           <div>
             <div className="admin-mini-card-title">Sync articles</div>
             <div className="admin-mini-card-sub">Synchroniser avec le seed</div>
+          </div>
+        </button>
+        <button
+          type="button"
+          className="admin-mini-card"
+          onClick={runForceSyncProducts}
+          disabled={seedBusy}
+        >
+          <RefreshCw size={18} />
+          <div>
+            <div className="admin-mini-card-title">Sync produits</div>
+            <div className="admin-mini-card-sub">Synchroniser le catalogue depuis le fichier seed</div>
           </div>
         </button>
       </div>
@@ -1840,34 +2180,6 @@ export default function AdminPage() {
 
       const res = await seedPostsMerge(seedPosts);
       setSeedMsg(`Synchronisation articles: ${res.count}`);
-    } catch (e) {
-      setSeedMsg(e?.message || 'Sync impossible');
-    } finally {
-      setSeedBusy(false);
-      setTimeout(() => setSeedMsg(''), 4000);
-    }
-  };
-
-  const runForceSyncProducts = async () => {
-    if (seedBusy) return;
-    setSeedMsg('');
-    setSeedBusy(true);
-    try {
-      const seedProducts = catalogProducts.map((p) => ({
-        id: p.id,
-        brand: p.brand || 'LPG',
-        category: p.category || '-',
-        name: p.name,
-        description: p.description || '',
-        priceCents: p.priceCents || 0,
-        currency: p.currency || 'EUR',
-        images: Array.isArray(p.images) ? p.images : [],
-        image: p.images?.[0] || '',
-        status: 'active',
-      }));
-
-      const res = await syncAllProducts(seedProducts);
-      setSeedMsg(`Synchronisation produits: ${res.count} produits`);
     } catch (e) {
       setSeedMsg(e?.message || 'Sync impossible');
     } finally {

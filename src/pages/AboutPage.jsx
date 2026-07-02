@@ -7,9 +7,11 @@ import {
   Flower,
   Heart,
   Leaf,
+  MapPin,
   Paintbrush,
   PhoneCall,
   Play,
+  Scissors,
   Sparkles,
   Star,
   Timer,
@@ -45,78 +47,193 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="about-intro" aria-label="Présentation">
-        <div className="about-collage" aria-hidden="true">
-          <div className="about-img about-img-main">
-            <img src="/mey-beauty%20(1).jpeg" alt="Mey Beauty — Institut" />
+<section className="about-intro" aria-label="Présentation">
+  <div className="about-collage" aria-hidden="true">
+    <div className="about-img about-img-main">
+      <img src="/mey-beauty%20(1).jpeg" alt="Mey Beauty — Institut" />
+    </div>
+    <div className="about-img about-img-top">
+      <img src="/mey-beauty%20(5).jpeg" alt="Mey Beauty — Soins" />
+    </div>
+    <div className="about-img about-img-bottom">
+      <img src="/mey-beauty%20(6).jpeg" alt="Mey Beauty — Détails" />
+    </div>
+  </div>
+
+  <div className="about-text">
+    <div className="about-label">À propos de nous</div>
+    <h2>Votre institut à Viry‑Châtillon dédié à votre éclat naturel</h2>
+    <p>
+      Fondé avec la passion de l’excellence, Mey Beauty s’est construit autour d’une promesse simple : révéler l’éclat naturel de chaque femme grâce à une synergie parfaite entre technologies de pointe et rituels sensoriels.
+      <br /><br />
+      Nous croyons que la beauté ne réside pas dans l’artifice, mais dans la santé et la vitalité de votre peau, le galbe naturel de votre silhouette et la précision d’un regard sublimé.
+      <br /><br />
+      C’est pourquoi nous sélectionnons rigoureusement des protocoles d’avant-garde et des partenaires de renom mondial — comme les technologies de pointe LPG — pour garantir des résultats visibles dès la première séance, sans jamais faire de compromis sur votre moment de détente.
+      <br /><br />
+      Retrouvez-nous au 6 Place des Martyrs de Châteaubriand, 91170 Viry‑Châtillon, pour un instant de beauté et de sérénité.
+    </p>
+
+    <div className="about-badges" aria-label="Engagements">
+      <div className="about-badge">
+        <div className="about-badge-icon" aria-hidden="true">
+          <Heart size={18} />
+        </div>
+        Détente & bien‑être
+      </div>
+      <div className="about-badge">
+        <div className="about-badge-icon" aria-hidden="true">
+          <BadgeCheck size={18} />
+        </div>
+        Soins personnalisés
+      </div>
+      <div className="about-badge">
+        <div className="about-badge-icon" aria-hidden="true">
+          <CalendarClock size={18} />
+        </div>
+        Réservation 24h/24
+      </div>
+      <div className="about-badge">
+        <div className="about-badge-icon" aria-hidden="true">
+          <Star size={18} />
+        </div>
+        Note 5/5 (200+ avis)
+      </div>
+      <div className="about-badge">
+        <div className="about-badge-icon" aria-hidden="true">
+          <Sparkles size={18} />
+        </div>
+        Multi‑expertises
+      </div>
+      <div className="about-badge">
+        <div className="about-badge-icon" aria-hidden="true">
+          <Clock size={18} />
+        </div>
+        Horaires adaptés
+      </div>
+    </div>
+
+    <div className="about-cta-row">
+      <a className="btn-cta" href="#contact">Réserver maintenant</a>
+      <div className="about-contact">
+        <div className="about-contact-icon" aria-hidden="true">
+          <PhoneCall size={18} />
+        </div>
+        <div className="about-contact-text">
+          <div className="about-contact-label">Contactez-nous</div>
+          <a className="about-contact-value" href="tel:+33749226801">+33 7 49 22 68 01</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section className="about-instituts" aria-label="Nos instituts">
+        <div className="about-instituts-header">
+          <span className="section-kicker">Nos adresses</span>
+          <h2 className="section-title">Deux instituts à Viry-Châtillon</h2>
+        </div>
+        <div className="about-instituts-grid">
+          <div className="about-institut-card">
+            <div className="about-institut-img">
+              <img src="/mey-beauty%20(1).jpeg" alt="Mey Beauty — Place du Marché" />
+            </div>
+            <div className="about-institut-body">
+              <h3>Institut – Place du Marché</h3>
+              <ul className="about-institut-meta">
+                <li>
+                  <MapPin size={16} aria-hidden="true" />
+                  <span>6 Place des Martyrs de Châteaubriand, 91170 Viry‑Châtillon</span>
+                </li>
+                <li>
+                  <Clock size={16} aria-hidden="true" />
+                  <span>Lundi – Samedi : 9h30 – 19h30</span>
+                </li>
+                <li>
+                  <PhoneCall size={16} aria-hidden="true" />
+                  <a className="about-institut-phone" href="tel:+33749226801">+33 7 49 22 68 01</a>
+                </li>
+              </ul>
+              <a
+                className="about-institut-rdv"
+                href="https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Prendre rendez-vous
+              </a>
+            </div>
           </div>
-          <div className="about-img about-img-top">
-            <img src="/mey-beauty%20(5).jpeg" alt="Mey Beauty — Soins" />
-          </div>
-          <div className="about-img about-img-bottom">
-            <img src="/mey-beauty%20(6).jpeg" alt="Mey Beauty — Détails" />
+
+          <div className="about-institut-card">
+            <div className="about-institut-img">
+              <img src="/mey-beauty%20(5).jpeg" alt="Mey Beauty — Boulevard Gabriel Péri" />
+            </div>
+            <div className="about-institut-body">
+              <h3>Institut – Boulevard Gabriel Péri</h3>
+              <ul className="about-institut-meta">
+                <li>
+                  <MapPin size={16} aria-hidden="true" />
+                  <span>Boulevard Gabriel Péri, 91170 Viry‑Châtillon</span>
+                </li>
+                <li>
+                  <Clock size={16} aria-hidden="true" />
+                  <span>Lundi – Samedi : 9h30 – 19h30</span>
+                </li>
+                <li>
+                  <PhoneCall size={16} aria-hidden="true" />
+                  <a className="about-institut-phone" href="tel:+33749226801">+33 7 49 22 68 01</a>
+                </li>
+              </ul>
+              <a
+                className="about-institut-rdv"
+                href="https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Prendre rendez-vous
+              </a>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div className="about-text">
-          <div className="about-label">À propos de nous</div>
-          <h2>Votre institut à Viry‑Châtillon dédié à votre éclat naturel</h2>
-          <p>
- Situé au 6 Place des Martyrs de Châteaubriand 91170 à Viry-Chatillon, Mey Beauty vous accueille dans un institut raffiné, pensé comme un véritable écrin de beauté, de bien-être et de détente.
-<br />
-Notre mission est de vous offrir une expérience sur mesure à travers des soins d’exception, conçus pour sublimer votre beauté, révéler l’éclat naturel de votre peau, intensifier votre regard et mettre en valeur votre silhouette
-          </p>
+      <section className="about-services" id="about-services" aria-label="Services">
+        <div className="about-services-header">
+          <span className="section-kicker">Nos expertises</span>
+          <h2 className="section-title">Des soins sur mesure pour sublimer votre beauté</h2>
+        </div>
 
-          <div className="about-badges" aria-label="Engagements">
-            <div className="about-badge">
-              <div className="about-badge-icon" aria-hidden="true">
-                <Heart size={18} />
-              </div>
-              Détente & bien‑être
-            </div>
-            <div className="about-badge">
-              <div className="about-badge-icon" aria-hidden="true">
-                <BadgeCheck size={18} />
-              </div>
-              Soins personnalisés
-            </div>
-            <div className="about-badge">
-              <div className="about-badge-icon" aria-hidden="true">
-                <CalendarClock size={18} />
-              </div>
-              Réservation 24h/24
-            </div>
-            <div className="about-badge">
-              <div className="about-badge-icon" aria-hidden="true">
-                <Star size={18} />
-              </div>
-              Note 5/5 (200+ avis)
-            </div>
-            <div className="about-badge">
-              <div className="about-badge-icon" aria-hidden="true">
-                <Sparkles size={18} />
-              </div>
-              Multi‑expertises
-            </div>
-            <div className="about-badge">
-              <div className="about-badge-icon" aria-hidden="true">
-                <Clock size={18} />
-              </div>
-              Horaires adaptés
-            </div>
+        <div className="about-services-grid">
+          <div className="about-service-card">
+            <div className="about-service-icon" aria-hidden="true"><Heart size={18} /></div>
+            <h3>Soin intime</h3>
+            <p>Des soins délicats et personnalisés pour votre confort et votre bien-être intime.</p>
           </div>
-
-          <div className="about-cta-row">
-            <a className="btn-cta" href="#contact">Réserver maintenant</a>
-            <div className="about-contact">
-              <div className="about-contact-icon" aria-hidden="true">
-                <PhoneCall size={18} />
-              </div>
-              <div className="about-contact-text">
-                <div className="about-contact-label">Contactez-nous</div>
-                <a className="about-contact-value" href="tel:+33749226801">+33 7 49 22 68 01</a>
-              </div>
-            </div>
+          <div className="about-service-card">
+            <div className="about-service-icon" aria-hidden="true"><Scissors size={18} /></div>
+            <h3>Épilation à la cire</h3>
+            <p>Une épilation précise et adaptée à toutes les zones pour une peau lisse et nette.</p>
+          </div>
+          <div className="about-service-card">
+            <div className="about-service-icon" aria-hidden="true"><Sparkles size={18} /></div>
+            <h3>Épilation définitive</h3>
+            <p>Technologie laser et lumière pulsée pour réduire durablement la repousse des poils.</p>
+          </div>
+          <div className="about-service-card">
+            <div className="about-service-icon" aria-hidden="true"><Leaf size={18} /></div>
+            <h3>Minceur</h3>
+            <p>LPG, drainage lymphatique et madérothérapie pour affiner et raffermir la silhouette.</p>
+          </div>
+          <div className="about-service-card">
+            <div className="about-service-icon" aria-hidden="true"><Droplets size={18} /></div>
+            <h3>Soin visage personnalisé</h3>
+            <p>Rituel nettoyant, hydratant ou anti-âge adapté à votre type de peau et à vos besoins.</p>
+          </div>
+          <div className="about-service-card">
+            <div className="about-service-icon" aria-hidden="true"><Paintbrush size={18} /></div>
+            <h3>Onglerie</h3>
+            <p>Manucure, vernis classique ou semi-permanent, et nail care pour des mains sublimées.</p>
           </div>
         </div>
       </section>
@@ -169,46 +286,6 @@ Notre mission est de vous offrir une expérience sur mesure à travers des soins
             <div className="about-stat-icon" aria-hidden="true"><Sparkles size={18} /></div>
             <div className="about-stat-number">6</div>
             <div className="about-stat-label">Pôles</div>
-          </div>
-        </div>
-      </section>
-
-      <section className="about-services" id="about-services" aria-label="Services">
-        <div className="about-services-header">
-          <span className="section-kicker">Nos services</span>
-          <h2 className="section-title">Une expertise complète, pensée pour vous</h2>
-        </div>
-
-        <div className="about-services-grid">
-          <div className="about-service-card">
-            <div className="about-service-icon" aria-hidden="true"><Droplets size={18} /></div>
-            <h3>Soin du visage</h3>
-            <p>Nettoyage, peau neuve, soin du dos et rituels éclat pour une peau lumineuse.</p>
-          </div>
-          <div className="about-service-card">
-            <div className="about-service-icon" aria-hidden="true"><Leaf size={18} /></div>
-            <h3>Minceur & remodelage</h3>
-            <p>LPG Cellu M6, drainage lymphatique, madérothérapie — cures & séances.</p>
-          </div>
-          <div className="about-service-card">
-            <div className="about-service-icon" aria-hidden="true"><Flower size={18} /></div>
-            <h3>Épilation</h3>
-            <p>Classique ou IPL (épilation définitive) avec bilan obligatoire avant traitement.</p>
-          </div>
-          <div className="about-service-card">
-            <div className="about-service-icon" aria-hidden="true"><Eye size={18} /></div>
-            <h3>Beauté du regard</h3>
-            <p>Rehaussement, teinture, brow lift, microblading et powder brows.</p>
-          </div>
-          <div className="about-service-card">
-            <div className="about-service-icon" aria-hidden="true"><Paintbrush size={18} /></div>
-            <h3>Onglerie</h3>
-            <p>Manucure, semi‑permanent mains/pieds, réparation ongle, nail care.</p>
-          </div>
-          <div className="about-service-card">
-            <div className="about-service-icon" aria-hidden="true"><Sparkles size={18} /></div>
-            <h3>Blanchiment dentaire</h3>
-            <p>Sans peroxyde, activation LED — express 20min ou séance complète 1h.</p>
           </div>
         </div>
       </section>

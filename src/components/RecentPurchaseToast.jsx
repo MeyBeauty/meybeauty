@@ -2,8 +2,16 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useCatalog } from '../context/CatalogContext.jsx';
 
 const PEOPLE = ['Inès', 'Sofia', 'Maya', 'Emma', 'Lina', 'Nora', 'Sarah', 'Aya', 'Clara', 'Yasmine', 'Leïla', 'Mina', 'Jade', 'Camille', 'Aïcha', 'Noémie', 'Mélissa', 'Hana', 'Lola', 'Salomé'];
-const CITIES = ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Nice', 'Toulouse', 'Nantes', 'Montpellier', 'Lille', 'Strasbourg', 'Rennes', 'Grenoble', 'Dijon', 'Reims', 'Rouen', 'Tours', 'Aix-en-Provence', 'Metz', 'Avignon', 'Angers'];
-const SERVICE_CITIES = ['Viry-Châtillon', 'Évry', 'Ris-Orangis', 'Viry-Châtillon', 'Viry-Châtillon', 'Évry'];
+const LOCAL_CITIES = [
+  'Viry-Châtillon', 'Draveil', 'Juvisy-sur-Orge', 'Savigny-sur-Orge', 'Athis-Mons',
+  'Ris-Orangis', 'Évry', 'Grigny', 'Vigneux-sur-Seine', 'Montgeron', 'Yerres', 'Brunoy',
+  'Épinay-sur-Orge', 'Morsang-sur-Orge', 'Orly', 'Paray-Vieille-Poste', 'Villebon-sur-Yvette',
+  'Palaiseau', 'Massy', 'Chilly-Mazarin', 'Longjumeau', 'Morangis', 'Wissous',
+  'Sainte-Geneviève-des-Bois', 'Saint-Michel-sur-Orge', 'Brétigny-sur-Orge', 'Saintry-sur-Seine',
+  'Ballancourt-sur-Essonne', 'Linas', 'Montlhéry', 'Marcoussis', 'Nozay'
+];
+const CITIES = LOCAL_CITIES;
+const SERVICE_CITIES = LOCAL_CITIES;
 
 const SERVICES = [
   { title: 'Soin du visage', image: '/soin%20visage%20(1).PNG' },
@@ -73,7 +81,7 @@ export default function RecentPurchaseToast() {
     const intervalId = setInterval(() => {
       nextEvent();
       setShowPopup(true);
-    }, 15000);
+    }, 20 * 60 * 1000);
 
     return () => {
       clearInterval(intervalId);

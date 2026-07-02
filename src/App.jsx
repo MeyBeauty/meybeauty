@@ -16,6 +16,7 @@ const ContactPage = lazy(() => import('./pages/ContactPage.jsx'));
 const BlogPage = lazy(() => import('./pages/BlogPage.jsx'));
 const BlogDetailPage = lazy(() => import('./pages/BlogDetailPage.jsx'));
 const ShopPage = lazy(() => import('./pages/ShopPage.jsx'));
+const NosInstitutsPage = lazy(() => import('./pages/NosInstitutsPage.jsx'));
 const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage.jsx'));
 const CartPage = lazy(() => import('./pages/CartPage.jsx'));
 const AdminPage = lazy(() => import('./pages/AdminPage.jsx'));
@@ -34,7 +35,7 @@ export default function App() {
       const isAdminHash = next.startsWith('#admin');
       document.documentElement.style.zoom = isAdminHash ? '100%' : '100%';
 
-      if (next === '#home' || next === '#about' || next === '#legal' || next === '#privacy' || next === '#contact' || next === '#blog' || next.startsWith('#blog-detail') || next.startsWith('#shop') || next === '#cart' || next.startsWith('#product') || next.startsWith('#admin')) {
+      if (next === '#home' || next === '#about' || next === '#legal' || next === '#privacy' || next === '#contact' || next === '#blog' || next.startsWith('#blog-detail') || next.startsWith('#shop') || next === '#instituts' || next === '#cart' || next.startsWith('#product') || next.startsWith('#admin')) {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       }
     };
@@ -51,6 +52,7 @@ export default function App() {
   if (hash === '#blog') page = 'blog';
   if (hash.startsWith('#blog-detail')) page = 'blog-detail';
   if (hash.startsWith('#shop')) page = 'shop';
+  if (hash === '#instituts') page = 'instituts';
   if (hash === '#cart') page = 'cart';
   if (hash.startsWith('#product')) page = 'product';
   if (hash.startsWith('#admin')) page = 'admin';
@@ -77,6 +79,8 @@ export default function App() {
           <BlogDetailPage />
         ) : page === 'shop' ? (
           <ShopPage />
+        ) : page === 'instituts' ? (
+          <NosInstitutsPage />
         ) : page === 'cart' ? (
           <CartPage />
         ) : page === 'product' ? (
