@@ -320,9 +320,10 @@ export default function NosInstitutsPage() {
           {/* Accroche */}
           <div className="nos-instituts-list-header">
             <p className="section-kicker">Nos espaces</p>
-            <h2 className="section-title">Choisissez votre institut</h2>
+            <h2 className="section-title">Deux adresses.<br />Un seul niveau d'exigence.</h2>
             <p className="nos-instituts-list-intro">
-              Cliquez sur une prestation pour découvrir tous les détails et réserver directement.
+              Chaque soin est pensé pour vous faire vivre quelque chose - pas juste vous faire sortir plus belle, mais vous faire vous sentir à votre meilleur.
+
             </p>
           </div>
 

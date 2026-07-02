@@ -891,71 +891,11 @@ a { text-decoration: none; color: inherit; }
   display: none;
 }
 
-.hero-flower-top {
-  display: block;
-  width: 154px;
-  height: auto;
-  margin: 0 auto 18px;
-  filter: drop-shadow(0 10px 22px rgba(82,58,40,0.10));
-  animation: heroFloatTop 4.6s ease-in-out infinite;
-}
-
-.hero-flower-top-left {
-  position: absolute;
-  top: 26px;
-  left: 18px;
-  width: 64px;
-  height: auto;
-  pointer-events: none;
-  filter: drop-shadow(0 10px 22px rgba(82,58,40,0.10));
-  opacity: 0.95;
-  z-index: 2;
-}
-
-.hero-flower-bottom-left,
-.hero-flower-bottom-right {
-  position: absolute;
-  top: 50%;
-  pointer-events: none;
-  height: auto;
-  filter: drop-shadow(0 12px 24px rgba(82,58,40,0.10));
-  transform: translateY(-50%);
-}
-
-.hero-flower-bottom-left {
-  left: 0;
-  width: 59px;
-  opacity: 0.95;
-  animation: heroFloatBL 5.2s ease-in-out infinite;
-}
-
-.hero-flower-bottom-right {
-  right: 0;
-  width: 89px;
-  opacity: 0.95;
-  animation: heroFloatBR 5.6s ease-in-out infinite 0.5s;
-}
-
 .hero-dots-area {
   position: relative;
   width: 100%;
   max-width: 420px;
   margin-top: 32px;
-}
-
-@keyframes heroFloatTop {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes heroFloatBL {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes heroFloatBR {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-9px); }
 }
 
 .hero-kicker {
@@ -1061,16 +1001,6 @@ a { text-decoration: none; color: inherit; }
 
 .hero-slide-regard .hero-subtitle {
   max-width: 320px;
-}
-
-.hero-slide-flower {
-  position: absolute;
-  top: -26px;
-  left: -14px;
-  width: 76px;
-  height: auto;
-  pointer-events: none;
-  filter: drop-shadow(0 10px 22px rgba(82,58,40,0.14));
 }
 
 /* ============================================================
@@ -7292,10 +7222,6 @@ a { text-decoration: none; color: inherit; }
   }
   .hero-title { font-size: 34px; }
   .hero-subtitle { max-width: 320px; }
-  .hero-petal-1,
-  .hero-petal-2 {
-    display: none;
-  }
 
   .hero-dots {
     margin-top: 26px;
@@ -7314,21 +7240,9 @@ a { text-decoration: none; color: inherit; }
     border-color: rgba(82,58,40,0.9);
   }
 
-  .hero-flower-top {
-    display: none;
-  }
-
   .hero-dots-area {
     max-width: 360px;
     margin-top: 26px;
-  }
-
-  .hero-flower-bottom-left {
-    width: 46px;
-  }
-
-  .hero-flower-bottom-right {
-    width: 74px;
   }
   .products-section, .lookbook-section, .testimonials-section, .blog-section { padding: 64px 16px; }
   .products-grid {

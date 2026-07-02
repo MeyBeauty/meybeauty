@@ -128,20 +128,6 @@ export default function Hero() {
 
       <div className="hero-col hero-center">
 
-        <img
-          className="hero-flower-top-left"
-          src="/Amiy-Slider-Flower-Bottom-Left-Img.webp"
-          alt=""
-          aria-hidden="true"
-        />
-
-        <img
-          className="hero-flower-top"
-          src="/Amiy-Slider-Flower-Top-Img.webp"
-          alt=""
-          aria-hidden="true"
-        />
-
         <div className="hero-mobile-image">
           <img className="hero-photo" src={slide.leftImage} alt="Photo mise en avant" />
         </div>
@@ -154,12 +140,6 @@ export default function Hero() {
 
         <a href="#about" className="btn-cta">Découvrir</a>
         <div className="hero-dots-area" aria-label="Navigation hero">
-          <img
-            className="hero-flower-bottom-left"
-            src="/Amiy-Slider-Flower-Bottom-Left-Img.webp"
-            alt=""
-            aria-hidden="true"
-          />
           <div className="hero-dots">
             {SLIDES.map((s, idx) => (
               <span
@@ -175,12 +155,6 @@ export default function Hero() {
               ></span>
             ))}
           </div>
-          <img
-            className="hero-flower-bottom-right"
-            src="/Amiy-Slider-Flower-Bottom-Right-Img.webp"
-            alt=""
-            aria-hidden="true"
-          />
         </div>
       </div>
 
