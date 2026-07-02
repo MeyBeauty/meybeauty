@@ -2257,7 +2257,7 @@ a { text-decoration: none; color: inherit; }
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   max-width: 1200px;
-  margin: 92px auto;
+  margin: 92px auto 46px;
   padding: 0 40px;
   align-items: center;
   justify-items: center;
@@ -2451,7 +2451,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .about-instituts {
-  padding: 86px 60px 56px;
+  padding: 26px 60px 56px;
   background: var(--blanc);
 }
 
@@ -2461,118 +2461,12 @@ a { text-decoration: none; color: inherit; }
 }
 
 .about-instituts-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   gap: 26px;
-  max-width: 760px;
-  margin: 0 auto;
-}
-
-.about-institut-card {
-  background: var(--blanc);
-  border: 1px solid var(--gris-border);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 22px rgba(82, 58, 40, 0.05);
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-
-.about-institut-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(82, 58, 40, 0.08);
-}
-
-.about-institut-img {
-  height: 180px;
-  overflow: hidden;
-}
-
-.about-institut-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
-}
-
-.about-institut-card:hover .about-institut-img img {
-  transform: scale(1.04);
-}
-
-.about-institut-body {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.about-institut-body h3 {
-  font-family: var(--font-titre);
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--brun-dark);
-  margin: 0;
-  line-height: 1.25;
-}
-
-.about-institut-meta {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-family: var(--font-corps);
-  font-size: 13px;
-  color: #8A6E5A;
-}
-
-.about-institut-meta li {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  line-height: 1.5;
-}
-
-.about-institut-meta svg {
-  color: var(--brun-medium);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.about-institut-phone {
-  color: #8A6E5A;
-  text-decoration: none;
-  transition: color var(--transition);
-}
-
-.about-institut-phone:hover {
-  color: var(--brun);
-}
-
-.about-institut-rdv {
-  display: inline-flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  font-family: var(--font-sc);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 12px 20px;
-  border-radius: 2px;
-  background: var(--brun);
-  color: var(--blanc);
-  border: 1.5px solid var(--brun);
-  transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
-  margin-top: 4px;
-  align-self: flex-start;
-}
-
-.about-institut-rdv:hover {
-  background: var(--brun-dark);
-  border-color: var(--brun-dark);
-  transform: translateY(-1px);
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .about-stat-icon {
@@ -2831,18 +2725,22 @@ a { text-decoration: none; color: inherit; }
 
 .about-events {
   padding: 100px 40px;
-  background: linear-gradient(135deg, #FDF8F5 0%, #F6F0EB 100%);
+  background: var(--blanc);
+  border-top: 1px solid var(--gris-border);
+  border-bottom: 1px solid var(--gris-border);
 }
 
 .about-events-inner {
-  max-width: 1100px;
+  max-width: 1160px;
   margin: 0 auto;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+  align-items: center;
 }
 
 .about-events-header {
-  max-width: 680px;
-  margin: 0 auto 56px;
+  text-align: left;
 }
 
 .about-events-header .section-kicker {
@@ -2857,11 +2755,11 @@ a { text-decoration: none; color: inherit; }
 
 .about-events-header .section-title {
   font-family: var(--font-titre);
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 500;
   color: var(--brun-dark);
-  margin-bottom: 20px;
-  line-height: 1.2;
+  margin-bottom: 22px;
+  line-height: 1.15;
 }
 
 .about-events-header p {
@@ -2869,62 +2767,8 @@ a { text-decoration: none; color: inherit; }
   font-size: 15px;
   line-height: 1.75;
   color: #8A6E5A;
-  text-align: center;
-}
-
-.about-events-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 44px;
-}
-
-.about-event-card {
-  background: var(--blanc);
-  border: 1px solid var(--gris-border);
-  border-radius: 12px;
-  padding: 36px 28px;
-  text-align: center;
-  box-shadow: 0 8px 28px rgba(82, 58, 40, 0.04);
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-
-.about-event-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 36px rgba(82, 58, 40, 0.08);
-}
-
-.about-event-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: var(--brun);
-  color: var(--blanc);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  transition: background var(--transition), color var(--transition);
-}
-
-.about-event-card:hover .about-event-icon {
-  background: var(--brun-dark);
-}
-
-.about-event-card h3 {
-  font-family: var(--font-titre);
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--brun-dark);
-  margin-bottom: 12px;
-}
-
-.about-event-card p {
-  font-family: var(--font-corps);
-  font-size: 14px;
-  line-height: 1.7;
-  color: #8A6E5A;
-  margin: 0;
+  text-align: left;
+  margin-bottom: 32px;
 }
 
 .about-events-cta {
@@ -2932,22 +2776,77 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   justify-content: center;
   font-family: var(--font-sc);
-  font-size: 12px;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 16px 32px;
+  padding: 14px 28px;
   border-radius: 2px;
-  background: var(--brun);
-  color: var(--blanc);
+  background: transparent;
+  color: var(--brun);
   border: 1.5px solid var(--brun);
   transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
 }
 
 .about-events-cta:hover {
-  background: var(--brun-dark);
-  border-color: var(--brun-dark);
+  background: var(--brun);
+  color: var(--blanc);
   transform: translateY(-1px);
+}
+
+.about-events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.about-event-card {
+  background: var(--gris-bg);
+  border: 1px solid var(--gris-border);
+  border-radius: 8px;
+  padding: 32px 24px;
+  text-align: left;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.about-event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(82, 58, 40, 0.06);
+  border-color: rgba(138, 110, 90, 0.35);
+}
+
+.about-event-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--brun);
+  color: var(--brun);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  transition: background var(--transition), color var(--transition);
+}
+
+.about-event-card:hover .about-event-icon {
+  background: var(--brun);
+  color: var(--blanc);
+}
+
+.about-event-card h3 {
+  font-family: var(--font-titre);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--brun-dark);
+  margin-bottom: 10px;
+}
+
+.about-event-card p {
+  font-family: var(--font-corps);
+  font-size: 13px;
+  line-height: 1.65;
+  color: #8A6E5A;
+  margin: 0;
 }
 
 .about-footer {
@@ -7345,8 +7244,11 @@ a { text-decoration: none; color: inherit; }
 
   .about-intro { grid-template-columns: 1fr; gap: 40px; }
   .about-instituts { padding: 64px 24px; }
-  .about-instituts-grid { grid-template-columns: 1fr; max-width: 520px; }
   .about-collage { height: 480px; }
+  .about-events-inner { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+  .about-events-header { text-align: center; }
+  .about-events-header p { text-align: center; }
+  .about-events-grid { grid-template-columns: repeat(2, 1fr); }
   .about-services-grid { grid-template-columns: repeat(2, 1fr); }
   .about-team-grid { grid-template-columns: repeat(2, 1fr); }
   .about-stats { grid-template-columns: repeat(3, 1fr); }
@@ -7503,6 +7405,12 @@ a { text-decoration: none; color: inherit; }
   .about-intro { margin: 64px auto; padding: 0 16px; }
   .about-collage { height: 420px; }
   .about-badges { grid-template-columns: 1fr; }
+  .about-events { padding: 64px 16px; }
+  .about-events-inner { grid-template-columns: 1fr; gap: 36px; }
+  .about-events-header { text-align: center; }
+  .about-events-header p { text-align: center; }
+  .about-events-header .section-title { font-size: 28px; }
+  .about-events-grid { grid-template-columns: 1fr; }
   .about-services { padding: 64px 16px; }
   .about-services-grid { grid-template-columns: 1fr; }
   .about-team { padding: 64px 16px 56px; }
@@ -8837,6 +8745,266 @@ a { text-decoration: none; color: inherit; }
   padding-bottom: 80px;
 }
 
+.nos-instituts-list {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+}
+
+.nos-instituts-list-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.nos-instituts-list-header .section-kicker {
+  font-family: var(--font-sc);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brun-medium);
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.nos-instituts-list-header .section-title {
+  font-family: var(--font-titre);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--brun-dark);
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.nos-instituts-list-intro {
+  font-family: var(--font-corps);
+  font-size: 15px;
+  color: rgba(26, 20, 16, 0.65);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.nos-instituts-columns {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ni-salon-card {
+  flex: 1 1 340px;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--gris-border);
+  background: var(--blanc);
+  box-shadow: 0 8px 32px rgba(82, 58, 40, 0.05);
+  transition: box-shadow var(--transition);
+}
+
+.ni-salon-card:hover {
+  box-shadow: 0 12px 40px rgba(82, 58, 40, 0.08);
+}
+
+.ni-salon-image {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.ni-salon-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ni-salon-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 8, 6, 0.72) 0%, transparent 55%);
+}
+
+.ni-salon-image-content {
+  position: absolute;
+  bottom: 20px;
+  left: 22px;
+  right: 22px;
+}
+
+.ni-salon-label {
+  font-family: var(--font-sc);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(10, 8, 6, 0.4);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.ni-salon-name {
+  font-family: var(--font-titre);
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(10, 8, 6, 0.45);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.ni-salon-info {
+  padding: 26px 28px;
+  border-bottom: 1px solid var(--gris-border);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.ni-salon-tagline {
+  font-family: var(--font-corps);
+  font-size: 14px;
+  font-style: italic;
+  color: var(--brun-medium);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.ni-salon-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.ni-salon-meta-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--font-corps);
+  font-size: 14px;
+  color: rgba(26, 20, 16, 0.75);
+  line-height: 1.5;
+}
+
+.ni-salon-meta-item svg {
+  color: var(--brun-medium);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ni-salon-rdv {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding: 12px 22px;
+  background: var(--brun);
+  color: var(--blanc);
+  border-radius: 2px;
+  font-family: var(--font-sc);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition);
+  align-self: flex-start;
+}
+
+.ni-salon-rdv:hover {
+  background: var(--brun-dark);
+  transform: translateY(-1px);
+}
+
+.ni-salon-services {
+  padding: 0 28px 28px;
+}
+
+.ni-salon-accordion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 0;
+  border: none;
+  background: none;
+  border-bottom: 1px solid var(--gris-border);
+  cursor: pointer;
+  font-family: var(--font-titre);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--brun-dark);
+  transition: color var(--transition);
+}
+
+.ni-salon-accordion svg {
+  color: var(--brun-medium);
+  transition: transform var(--transition);
+}
+
+.ni-salon-accordion-open svg {
+  transform: rotate(180deg);
+}
+
+.ni-salon-services-list {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.ni-salon-services-list-open {
+  grid-template-rows: 1fr;
+}
+
+.ni-salon-services-list > div {
+  overflow: hidden;
+}
+
+.ni-salon-service-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  background: none;
+  border-bottom: 1px solid var(--gris-border);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+}
+
+.ni-salon-service-item:last-child {
+  border-bottom: none;
+}
+
+.ni-salon-service-item:hover {
+  background: var(--gris-card);
+}
+
+.ni-salon-service-name {
+  font-family: var(--font-corps);
+  font-size: 14px;
+  color: var(--brun-dark);
+  font-weight: 500;
+}
+
+.ni-salon-service-action {
+  font-family: var(--font-sc);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brun-medium);
+  font-weight: 600;
+  transition: color var(--transition);
+}
+
+.ni-salon-service-item:hover .ni-salon-service-action {
+  color: var(--brun);
+}
+
 .instituts-intro {
   max-width: 1160px;
   margin: 0 auto;
@@ -9071,6 +9239,13 @@ a { text-decoration: none; color: inherit; }
   .services-grid {
     grid-template-columns: 1fr;
   }
+  .nos-instituts-columns {
+    gap: 28px;
+  }
+  .ni-salon-card {
+    flex: 1 1 100%;
+    max-width: 540px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -9090,5 +9265,31 @@ a { text-decoration: none; color: inherit; }
   }
   .service-card {
     padding: 20px;
+  }
+  .nos-instituts-list {
+    padding: 44px 16px 60px;
+  }
+  .nos-instituts-list-header .section-title {
+    font-size: 26px;
+  }
+  .ni-salon-info,
+  .ni-salon-services {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .ni-salon-name {
+    font-size: 20px;
+  }
+  .ni-salon-meta-item {
+    font-size: 13px;
+  }
+  .ni-salon-accordion {
+    font-size: 15px;
+  }
+  .ni-salon-service-item {
+    padding: 12px 0;
+  }
+  .ni-salon-service-name {
+    font-size: 13px;
   }
 }

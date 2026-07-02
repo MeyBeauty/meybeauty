@@ -136,28 +136,33 @@ export default function AboutPage() {
           <h2 className="section-title">Deux instituts à Viry-Châtillon</h2>
         </div>
         <div className="about-instituts-grid">
-          <div className="about-institut-card">
-            <div className="about-institut-img">
+          <div className="ni-salon-card">
+            <div className="ni-salon-image">
               <img src="/mey-beauty%20(1).jpeg" alt="Mey Beauty — Place du Marché" />
+              <div className="ni-salon-image-overlay" />
+              <div className="ni-salon-image-content">
+                <p className="ni-salon-label">Institut Mey Beauty</p>
+                <h2 className="ni-salon-name">Place du Marché</h2>
+              </div>
             </div>
-            <div className="about-institut-body">
-              <h3>Institut – Place du Marché</h3>
-              <ul className="about-institut-meta">
-                <li>
+            <div className="ni-salon-info">
+              <p className="ni-salon-tagline">Le soin du corps, porté à son sommet.</p>
+              <div className="ni-salon-meta">
+                <div className="ni-salon-meta-item">
                   <MapPin size={16} aria-hidden="true" />
                   <span>6 Place des Martyrs de Châteaubriand, 91170 Viry‑Châtillon</span>
-                </li>
-                <li>
+                </div>
+                <div className="ni-salon-meta-item">
                   <Clock size={16} aria-hidden="true" />
-                  <span>Lundi – Samedi : 9h30 – 19h30</span>
-                </li>
-                <li>
+                  <span>Lun – Sam : 9h30 – 19h30</span>
+                </div>
+                <div className="ni-salon-meta-item">
                   <PhoneCall size={16} aria-hidden="true" />
-                  <a className="about-institut-phone" href="tel:+33749226801">+33 7 49 22 68 01</a>
-                </li>
-              </ul>
+                  <a href="tel:+33749226801">+33 7 49 22 68 01</a>
+                </div>
+              </div>
               <a
-                className="about-institut-rdv"
+                className="ni-salon-rdv"
                 href="https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i"
                 target="_blank"
                 rel="noreferrer"
@@ -167,28 +172,33 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="about-institut-card">
-            <div className="about-institut-img">
+          <div className="ni-salon-card">
+            <div className="ni-salon-image">
               <img src="/mey-beauty%20(5).jpeg" alt="Mey Beauty — Boulevard Gabriel Péri" />
+              <div className="ni-salon-image-overlay" />
+              <div className="ni-salon-image-content">
+                <p className="ni-salon-label">Institut Mey Beauty</p>
+                <h2 className="ni-salon-name">Boulevard Gabriel Péri</h2>
+              </div>
             </div>
-            <div className="about-institut-body">
-              <h3>Institut – Boulevard Gabriel Péri</h3>
-              <ul className="about-institut-meta">
-                <li>
+            <div className="ni-salon-info">
+              <p className="ni-salon-tagline">L'art du détail. La précision au service de votre beauté.</p>
+              <div className="ni-salon-meta">
+                <div className="ni-salon-meta-item">
                   <MapPin size={16} aria-hidden="true" />
                   <span>Boulevard Gabriel Péri, 91170 Viry‑Châtillon</span>
-                </li>
-                <li>
+                </div>
+                <div className="ni-salon-meta-item">
                   <Clock size={16} aria-hidden="true" />
-                  <span>Lundi – Samedi : 9h30 – 19h30</span>
-                </li>
-                <li>
+                  <span>Lun – Sam : 9h30 – 19h30</span>
+                </div>
+                <div className="ni-salon-meta-item">
                   <PhoneCall size={16} aria-hidden="true" />
-                  <a className="about-institut-phone" href="tel:+33749226801">+33 7 49 22 68 01</a>
-                </li>
-              </ul>
+                  <a href="tel:+33749226801">+33 7 49 22 68 01</a>
+                </div>
+              </div>
               <a
-                className="about-institut-rdv"
+                className="ni-salon-rdv"
                 href="https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i"
                 target="_blank"
                 rel="noreferrer"
@@ -237,6 +247,44 @@ export default function AboutPage() {
             <h3>Onglerie</h3>
             <p>Manucure, vernis classique ou semi-permanent, et nail care pour des mains sublimées.</p>
           </div>
+        </div>
+      </section>
+
+      <section className="about-events" aria-label="Événements & Privatisation">
+        <div className="about-events-inner">
+          <div className="about-events-header">
+            <span className="section-kicker">Moments privilégiés</span>
+            <h2 className="section-title">Événements & Privatisation</h2>
+            <p>
+              Offrez-vous un moment d’exception entre amies ou en privatisant l’institut pour vos occasions spéciales. EVJF, anniversaires, ou simple envie de partager un rituel beauté : nous créons une expérience sur mesure, élégante et détendue.
+            </p>
+          </div>
+
+          <div className="about-events-grid">
+            <div className="about-event-card">
+              <div className="about-event-icon" aria-hidden="true">
+                <Users size={22} />
+              </div>
+              <h3>Entre amies</h3>
+              <p>EVJF, anniversaires ou sorties bien-être : profitez d’une ambiance exclusive et de soins adaptés à chacune.</p>
+            </div>
+            <div className="about-event-card">
+              <div className="about-event-icon" aria-hidden="true">
+                <Calendar size={22} />
+              </div>
+              <h3>Privatisation</h3>
+              <p>Réservez l’institut pour votre groupe et bénéficiez d’un accès privé, d’un service personnalisé et d’un moment inoubliable.</p>
+            </div>
+            <div className="about-event-card">
+              <div className="about-event-icon" aria-hidden="true">
+                <Sparkles size={22} />
+              </div>
+              <h3>Sur mesure</h3>
+              <p>Nous élaborons des forfaits personnalisés selon vos envies, votre budget et le nombre de participants.</p>
+            </div>
+          </div>
+
+          <a className="about-events-cta" href="#contact">Demander un devis personnalisé</a>
         </div>
       </section>
 
@@ -331,44 +379,6 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="about-events" aria-label="Événements & Privatisation">
-        <div className="about-events-inner">
-          <div className="about-events-header">
-            <span className="section-kicker">Moments privilégiés</span>
-            <h2 className="section-title">Événements & Privatisation</h2>
-            <p>
-              Offrez-vous un moment d’exception entre amies ou en privatisant l’institut pour vos occasions spéciales. EVJF, anniversaires, ou simple envie de partager un rituel beauté : nous créons une expérience sur mesure, élégante et détendue.
-            </p>
-          </div>
-
-          <div className="about-events-grid">
-            <div className="about-event-card">
-              <div className="about-event-icon" aria-hidden="true">
-                <Users size={22} />
-              </div>
-              <h3>Entre amies</h3>
-              <p>EVJF, anniversaires ou sorties bien-être : profitez d’une ambiance exclusive et de soins adaptés à chacune.</p>
-            </div>
-            <div className="about-event-card">
-              <div className="about-event-icon" aria-hidden="true">
-                <Calendar size={22} />
-              </div>
-              <h3>Privatisation</h3>
-              <p>Réservez l’institut pour votre groupe et bénéficiez d’un accès privé, d’un service personnalisé et d’un moment inoubliable.</p>
-            </div>
-            <div className="about-event-card">
-              <div className="about-event-icon" aria-hidden="true">
-                <Sparkles size={22} />
-              </div>
-              <h3>Sur mesure</h3>
-              <p>Nous élaborons des forfaits personnalisés selon vos envies, votre budget et le nombre de participants.</p>
-            </div>
-          </div>
-
-          <a className="about-events-cta" href="#contact">Demander un devis personnalisé</a>
         </div>
       </section>
 
