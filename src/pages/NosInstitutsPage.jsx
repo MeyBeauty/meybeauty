@@ -120,54 +120,6 @@ function GlobalKeyframes() {
 }
 
 /* ────────────────────────────────────────────────────
-   Bandeau de confiance
-──────────────────────────────────────────────────── */
-function TrustStrip() {
-  const stats = [
-    { num: '2', label: 'Instituts à Viry-Châtillon' },
-    { num: '4.9/5', label: 'Note moyenne clientes' },
-    { num: '12+', label: 'Prestations sur-mesure' },
-    { num: '6j/7', label: 'Sur rendez-vous' },
-  ];
-  return (
-    <section style={{ background: C.ink, color: C.bg }}>
-      <div style={{ maxWidth: 1180, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', textAlign: 'center' }}>
-        {stats.map((s, i) => (
-          <div key={s.label} style={{ padding: '26px 12px', borderLeft: i === 0 ? 'none' : '1px solid rgba(245,242,238,0.12)' }}>
-            <div style={{ fontFamily: FONT_SC, fontSize: 22, color: C.gold }}>{s.num}</div>
-            <div style={{ fontFamily: FONT_CORPS, fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.7, marginTop: 6 }}>{s.label}</div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ────────────────────────────────────────────────────
-   Philosophie
-──────────────────────────────────────────────────── */
-function Philosophy() {
-  return (
-    <section style={{ background: C.ink, color: C.bg, padding: '100px 32px' }}>
-      <div style={{ maxWidth: 1180, margin: '0 auto', display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 60, alignItems: 'start' }}>
-        <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontWeight: 600, fontSize: 'clamp(28px,3.6vw,42px)', lineHeight: 1.25 }}>
-          "Un soin n'est jamais qu'un geste technique. C'est le moment où vous vous retrouvez."
-        </p>
-        <div>
-          <div style={{ width: 44, height: 2, background: C.gold, marginBottom: 26 }} />
-          <p style={{ fontFamily: FONT_CORPS, fontSize: 15, lineHeight: 1.8, opacity: 0.88, marginBottom: 20 }}>
-            Chez Mey Beauty, chaque prestation est pensée comme une parenthèse — précise dans le geste, généreuse dans le temps qu'on vous accorde.
-          </p>
-          <p style={{ fontFamily: FONT_CORPS, fontSize: 15, lineHeight: 1.8, opacity: 0.88 }}>
-            Deux adresses, une seule exigence : vous faire sortir non pas simplement plus belle, mais plus vous-même.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ────────────────────────────────────────────────────
    Fiche beauté (signature)
 ──────────────────────────────────────────────────── */
 function Fiche({ service, index, onClick }) {
@@ -516,9 +468,6 @@ export default function NosInstitutsPage() {
             <span>Nos instituts</span>
           </div>
         </section>
-
-        <TrustStrip />
-        <Philosophy />
 
         <section style={{ padding: '50px 32px 20px' }}>
           <div style={{ maxWidth: 1180, margin: '0 auto 60px' }}>
