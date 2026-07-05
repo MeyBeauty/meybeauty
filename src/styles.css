@@ -2381,8 +2381,10 @@ a { text-decoration: none; color: inherit; }
 }
 
 .about-instituts {
-  padding: 26px 60px 56px;
-  background: var(--blanc);
+  padding: 90px 60px 100px;
+  background: var(--nude-light);
+  border-top: 1px solid var(--gris-border);
+  border-bottom: 1px solid var(--gris-border);
 }
 
 .about-instituts-header {
