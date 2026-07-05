@@ -9209,3 +9209,267 @@ a { text-decoration: none; color: inherit; }
     font-size: 13px;
   }
 }
+
+/* ────────────────────────────────────────────────────
+   Nos Instituts — responsive layout inline refactor
+──────────────────────────────────────────────────── */
+.ni-salon-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 6px;
+}
+
+.ni-salon-media {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  background: var(--brun-dark);
+}
+
+.ni-salon-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.ni-salon-media-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(26, 20, 8, 0) 55%, rgba(26, 20, 8, 0.6) 100%);
+}
+
+.ni-salon-media-content {
+  position: absolute;
+  left: 24px;
+  bottom: 22px;
+  color: var(--blanc);
+  z-index: 2;
+}
+
+.ni-salon-media-label {
+  font-family: var(--font-sc);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.ni-salon-media-name {
+  font-family: var(--font-titre);
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.ni-salon-info-block {
+  background: var(--blanc);
+  padding: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--gris-border);
+}
+
+.ni-salon-info-block .ni-salon-tagline {
+  font-family: var(--font-titre);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--brun-medium);
+  margin-bottom: 26px;
+  line-height: 1.4;
+}
+
+.ni-salon-info-block .ni-salon-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.ni-salon-info-block .ni-salon-meta-item {
+  font-family: var(--font-corps);
+  display: flex;
+  gap: 12px;
+  font-size: 13.5px;
+  color: var(--brun);
+  align-items: flex-start;
+}
+
+.ni-salon-info-block .ni-salon-meta-item svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--brun-medium);
+}
+
+.ni-fiches-title {
+  font-family: var(--font-sc);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brun);
+  opacity: 0.7;
+  padding: 30px 0 18px;
+  margin: 0;
+}
+
+.ni-fiches-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.ni-gallery {
+  padding: 30px 32px 40px;
+  background: var(--nude-lighter);
+}
+
+.ni-gallery-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.ni-gallery-kicker {
+  font-family: var(--font-sc);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brun-medium);
+  margin: 0 0 10px;
+}
+
+.ni-gallery-title {
+  font-family: var(--font-titre);
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 42px);
+  margin: 0 0 12px;
+  color: var(--brun-dark);
+  line-height: 1.2;
+}
+
+.ni-gallery-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  grid-template-rows: 220px 220px;
+  gap: 12px;
+}
+
+.ni-gallery-item {
+  position: relative;
+  overflow: hidden;
+  background: var(--brun-dark);
+  min-height: 220px;
+}
+
+.ni-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.ni-gallery-item-1 {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+.ni-gallery-item-2 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.ni-gallery-item-3 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.ni-gallery-item-4 {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.ni-gallery-item-5 {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+@media (max-width: 900px) {
+  .ni-salon-row {
+    grid-template-columns: 1fr;
+  }
+  .ni-salon-row.reverse .ni-salon-media,
+  .ni-salon-row.reverse .ni-salon-info-block {
+    order: 0 !important;
+  }
+  .ni-salon-media {
+    min-height: 320px;
+  }
+  .ni-salon-info-block {
+    padding: 36px 28px;
+  }
+  .ni-fiches-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ni-gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px 200px;
+  }
+  .ni-gallery-item-1 {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+  .ni-gallery-item-2 {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .ni-gallery-item-3 {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  .ni-gallery-item-4,
+  .ni-gallery-item-5 {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .ni-salon-media {
+    min-height: 260px;
+  }
+  .ni-salon-media-name {
+    font-size: 22px;
+  }
+  .ni-salon-info-block {
+    padding: 28px 22px;
+  }
+  .ni-salon-info-block .ni-salon-tagline {
+    font-size: 18px;
+  }
+  .ni-fiches-grid {
+    grid-template-columns: 1fr;
+  }
+  .ni-gallery {
+    padding: 24px 20px 32px;
+  }
+  .ni-gallery-title {
+    font-size: 26px;
+  }
+  .ni-gallery-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 180px);
+  }
+  .ni-gallery-item-1,
+  .ni-gallery-item-2,
+  .ni-gallery-item-3,
+  .ni-gallery-item-4,
+  .ni-gallery-item-5 {
+    display: block;
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .ni-gallery-item-4,
+  .ni-gallery-item-5 {
+    display: none;
+  }
+}

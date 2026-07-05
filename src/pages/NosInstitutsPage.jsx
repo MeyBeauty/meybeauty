@@ -224,23 +224,22 @@ function SalonRow({ salon, reverse, onServiceClick }) {
 
   return (
     <div style={{ marginBottom: 64 }}>
-      <div className={`ni-salon-row ${reverse ? 'reverse' : ''}`} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginBottom: 6 }}>
-        <div className="ni-salon-media" style={{ order: reverse ? 2 : 1, position: 'relative', minHeight: 420, overflow: 'hidden', background: C.ink }}>
-          <img src={salon.image} alt={salon.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0) 55%, rgba(26,20,8,0.6) 100%)' }} />
-          <div style={{ position: 'absolute', left: 24, bottom: 22, color: C.paper, zIndex: 2 }}>
-            <div style={{ fontFamily: FONT_SC, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.85 }}>Institut Mey Beauty</div>
-            <div style={{ fontFamily: FONT_SERIF, fontSize: 26, fontWeight: 700 }}>{salon.name}</div>
+      <div className={`ni-salon-row ${reverse ? 'reverse' : ''}`}>
+        <div className="ni-salon-media" style={{ order: reverse ? 2 : 1 }}>
+          <img src={salon.image} alt={salon.name} loading="lazy" />
+          <div className="ni-salon-media-overlay" />
+          <div className="ni-salon-media-content">
+            <div className="ni-salon-media-label">Institut Mey Beauty</div>
+            <div className="ni-salon-media-name">{salon.name}</div>
           </div>
         </div>
 
-        <div style={{ order: reverse ? 1 : 2, background: C.paper, padding: 56, display: 'flex', flexDirection: 'column', justifyContent: 'center', border: `1px solid ${C.line}` }}>
-          <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 20, color: C.muted, marginBottom: 26, lineHeight: 1.4 }}>{salon.tagline}</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 30 }}>
+        <div className="ni-salon-info-block" style={{ order: reverse ? 1 : 2 }}>
+          <p className="ni-salon-tagline">{salon.tagline}</p>
+          <div className="ni-salon-meta">
             {[{ Icon: MapPin, text: salon.address }, { Icon: Phone, text: salon.phone }, { Icon: Clock, text: salon.hours }].map(({ Icon, text }) => (
-              <div key={text} style={{ fontFamily: FONT_CORPS, display: 'flex', gap: 12, fontSize: 13.5, color: C.inkSoft, alignItems: 'flex-start' }}>
-                <Icon size={16} strokeWidth={1.75} style={{ flexShrink: 0, marginTop: 1, color: C.gold }} />
-                <span>{text}</span>
+              <div key={text} className="ni-salon-meta-item">
+                <Icon size={16} strokeWidth={1.75} /> <span>{text}</span>
               </div>
             ))}
           </div>
@@ -250,10 +249,8 @@ function SalonRow({ salon, reverse, onServiceClick }) {
         </div>
       </div>
 
-      <p style={{ fontFamily: FONT_SC, fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.inkSoft, opacity: 0.7, padding: '30px 0 18px' }}>
-        Fiches beauté — {salon.name}
-      </p>
-      <div className="ni-fiches-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
+      <p className="ni-fiches-title">Fiches beauté — {salon.name}</p>
+      <div className="ni-fiches-grid">
         {visible.map((s, i) => (
           <Fiche key={s.name} service={s} index={i} onClick={() => onServiceClick(s, i)} />
         ))}
@@ -279,14 +276,14 @@ function Gallery() {
     { img: '/mey-beauty%20(5).jpeg', cap: 'Accueil', col: 3, row: 2 },
   ];
   return (
-    <section style={{ padding: '30px 32px 40px' }}>
-      <div style={{ maxWidth: 1180, margin: '0 auto' }}>
-        <p style={{ fontFamily: FONT_SC, fontSize: 12, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.gold }}>L'expérience</p>
-        <h2 style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 'clamp(28px,4vw,42px)', marginTop: 10, color: C.ink }}>Un cadre pensé pour la détente.</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr 1fr', gridTemplateRows: '220px 220px', gap: 12, marginTop: 12 }}>
+    <section className="ni-gallery">
+      <div className="ni-gallery-inner">
+        <p className="ni-gallery-kicker">L'expérience</p>
+        <h2 className="ni-gallery-title">Un cadre pensé pour la détente.</h2>
+        <div className="ni-gallery-grid">
           {items.map((it, i) => (
-            <div key={i} style={{ gridColumn: it.col, gridRow: it.row, position: 'relative', overflow: 'hidden', background: C.ink, minHeight: 220 }}>
-              <img src={it.img} alt={it.cap} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
+            <div key={i} className={`ni-gallery-item ni-gallery-item-${i + 1}`}>
+              <img src={it.img} alt={it.cap} loading="lazy" />
             </div>
           ))}
         </div>

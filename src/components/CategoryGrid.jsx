@@ -6,7 +6,8 @@ const CATS = [
     className: 'cat-item cat-1',
     kicker: 'Éclat',
     title: 'Soin du visage\nSur‑mesure',
-    cta: '— Réserver maintenant —',
+    cta: '— Découvrir ce service —',
+    href: '#service/visage',
     video: 'https://www.pexels.com/fr-fr/download/video/9335813/',
     image: 'soin visage (2).PNG',
   },
@@ -15,7 +16,8 @@ const CATS = [
     className: 'cat-item cat-2',
     kicker: 'Silhouette',
     title: 'Minceur',
-    cta: '— Réserver maintenant —',
+    cta: '— Découvrir ce service —',
+    href: '#service/minceur',
     video: 'https://www.pexels.com/fr-fr/download/video/32828416/',
     image: 'soin-minceur.PNG',
   },
@@ -24,7 +26,8 @@ const CATS = [
     className: 'cat-item cat-3',
     kicker: 'Regard',
     title: 'Beauté du\nRegard',
-    cta: '— Réserver maintenant —',
+    cta: '— Découvrir ce service —',
+    href: '#service/regard',
     video: 'https://www.pexels.com/fr-fr/download/video/8502623/',
     image: 'mey-beauty (6).jpeg',
   },
@@ -33,7 +36,8 @@ const CATS = [
     className: 'cat-item cat-4',
     kicker: 'Mains',
     title: 'Onglerie\nPremium',
-    cta: '— Réserver maintenant —',
+    cta: '— Découvrir ce service —',
+    href: '#service/mains',
     video: '',
     imageOnly: true,
     image: 'meybeauty.jpg',
@@ -132,7 +136,7 @@ export default function CategoryGrid() {
             <h3 className="cat-title">
               <TitleWithBreaks text={cat.title} />
             </h3>
-            <a href="#contact" className="btn-cta-outline">{cat.cta}</a>
+            <a href={cat.href} className="btn-cta-outline">{cat.cta}</a>
           </div>
         </div>
       ))}
