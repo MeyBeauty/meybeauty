@@ -686,7 +686,8 @@ export default function ServiceDetailPage({ slug }) {
           .sd-faq { padding: 56px 24px; }
           .sd-final-cta { padding: 70px 24px; }
           .sd-others-grid { grid-template-columns: 1fr; }
-          .sd-trust-row { flex-direction: column; gap: 14px; }
+          .sd-trust-row { flex-direction: column; gap: 8px; }
+          .sd-trust-item { font-size: 13px; gap: 8px; }
         }
       `}</style>
     </>
