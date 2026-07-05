@@ -154,7 +154,7 @@ export default function AboutPage() {
                 </div>
                 <div className="ni-salon-meta-item">
                   <Clock size={16} aria-hidden="true" />
-                  <span>Lun – Sam : 9h30 – 19h30</span>
+                  <span>Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h</span>
                 </div>
                 <div className="ni-salon-meta-item">
                   <PhoneCall size={16} aria-hidden="true" />
@@ -185,7 +185,7 @@ export default function AboutPage() {
                 </div>
                 <div className="ni-salon-meta-item">
                   <Clock size={16} aria-hidden="true" />
-                  <span>Lun – Sam : 9h30 – 19h30</span>
+                  <span>Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h</span>
                 </div>
                 <div className="ni-salon-meta-item">
                   <PhoneCall size={16} aria-hidden="true" />

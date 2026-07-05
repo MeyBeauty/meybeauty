@@ -33,7 +33,7 @@ const salon1 = {
   tagline: 'Le soin du corps, porté à son sommet.',
   address: '6 Place des Martyrs de Châteaubriand, 91170 Viry-Châtillon',
   phone: '+33 7 49 22 68 01',
-  hours: 'Lun – Sam : 9h30 – 19h30',
+  hours: 'Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h',
   image: '/mey-beauty%20(1).jpeg',
   services: [
     { name: 'Épilation', price: 'À partir de 15 €', family: 'precision', image: '/epilation-a-la-cire.jpg', pitch: 'Peau lisse. Dès la première séance.', description: 'Cires douces adaptées à toutes les zones. Résultat impeccable, confort maximal.' },
@@ -55,7 +55,7 @@ const salon2 = {
   tagline: "L'art du détail. La précision au service de votre beauté.",
   address: 'Boulevard Gabriel Péri, 91170 Viry-Châtillon',
   phone: '+33 7 49 22 68 01',
-  hours: 'Lun – Sam : 9h30 – 19h30',
+  hours: 'Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h',
   image: '/mey-beauty%20(5).jpeg',
   services: [
     { name: 'Onglerie', price: 'À partir de 30 €', family: 'visage', image: '/meybeauty.jpg', pitch: 'Des mains sublimées, une finition parfaite.', description: "Manucure, vernis, semi-permanent et nail art pour des mains d'exception." },
