@@ -7,8 +7,13 @@ const SERVICES = {
     kicker: 'Éclat',
     title: 'Soin du visage Sur‑mesure',
     image: '/soin visage (2).PNG',
+    video: 'https://www.pexels.com/fr-fr/download/video/9335813/',
     intro: 'Chaque peau est une histoire. Nous analysons votre visage avant chaque soin pour choisir les actifs, les gestes et le temps de pause qui vous correspondent.',
-    description: 'Notre approche du soin visage combine diagnostic personnalisé, technologies douces et produits professionnels. Hydratation, anti-âge, purifiant ou éclat : chaque protocole est ajusté à votre morphologie et à vos objectifs du moment.',
+    paragraphs: [
+      'Notre approche du soin visage combine diagnostic personnalisé, technologies douces et produits professionnels.',
+      'Hydratation, anti-âge, purifiant ou éclat : chaque protocole est ajusté à votre morphologie et à vos objectifs du moment.',
+      'Vous repartez avec une peau visiblement plus lumineuse, reposée et prête à refléter votre meilleur éclat au quotidien.',
+    ],
     benefits: [
       'Diagnostic peau avant chaque soin',
       'Actifs concentrés adaptés à votre type de peau',
@@ -17,6 +22,11 @@ const SERVICES = {
     ],
     duration: '45 à 60 min',
     price: 'À partir de 55 €',
+    perks: [
+      { icon: '🌿', label: 'Actifs naturels' },
+      { icon: '✨', label: 'Éclat immédiat' },
+      { icon: '🧴', label: 'Sur-mesure' },
+    ],
     testimonials: [
       { name: 'Sophie', note: 5, quote: 'Ma peau respire enfin. Le diagnostic avant le soin change tout, on sent que rien n’est fait au hasard.' },
       { name: 'Laëtitia', note: 5, quote: 'Un moment suspendu, des gestes précis et un résultat visible dès la sortie de l’institut.' },
@@ -32,8 +42,13 @@ const SERVICES = {
     kicker: 'Silhouette',
     title: 'Minceur',
     image: '/soin-minceur.PNG',
+    video: 'https://www.pexels.com/fr-fr/download/video/32828416/',
     intro: 'Affiner, tonifier, retrouver du confort dans son corps : nos soins corps associent technologies professionnelles et protocoles sur-mesure.',
-    description: 'LPG Cellu M6, drainage lymphatique, enveloppements et soins ciblés : nous combinons les techniques les plus efficaces pour accompagner votre silhouette. Chaque séance débute par un bilan morphologique personnalisé.',
+    paragraphs: [
+      'LPG Cellu M6, drainage lymphatique, enveloppements et soins ciblés : nous combinons les techniques les plus efficaces pour accompagner votre silhouette.',
+      'Chaque séance débute par un bilan morphologique personnalisé afin de cibler vos zones de prédilection et vos objectifs.',
+      'Au fil des séances, retrouvez une silhouette plus lisse, une sensation de légèreté et un confort retrouvé.',
+    ],
     benefits: [
       'Bilan silhouette personnalisé',
       'Technologie LPG Cellu M6',
@@ -42,6 +57,11 @@ const SERVICES = {
     ],
     duration: '30 à 60 min',
     price: 'À partir de 45 €',
+    perks: [
+      { icon: '🔥', label: 'LPG Cellu M6' },
+      { icon: '🍃', label: 'Drainage' },
+      { icon: '📋', label: 'Bilan silhouette' },
+    ],
     testimonials: [
       { name: 'Nadia', note: 5, quote: 'Le bilan morphologique au démarrage m’a permis de comprendre ce qui allait vraiment m’aider.' },
       { name: 'Julie', note: 5, quote: 'Sensation de légèreté dès la première séance de drainage, je recommande le programme complet.' },
@@ -57,8 +77,13 @@ const SERVICES = {
     kicker: 'Regard',
     title: 'Beauté du Regard',
     image: '/mey-beauty (6).jpeg',
+    video: 'https://www.pexels.com/fr-fr/download/video/8502623/',
     intro: 'Intensifier le regard, sublimer le sourcil, allonger les cils : nos prestations de beauté du regard sont conçues pour donner du caractère à votre face.',
-    description: 'Extensions de cils, rehaussement, teinture de cils et sourcils, microblading et soins du contour de l’œil : chaque geste est précis, chaque résultat est pensé pour durer. Nous utilisons des produits adaptés aux yeux sensibles.',
+    paragraphs: [
+      'Extensions de cils, rehaussement, teinture de cils et sourcils, microblading et soins du contour de l’œil : chaque geste est précis.',
+      'Chaque résultat est pensé pour durer, avec des produits formulés pour les yeux sensibles et les porteuses de lentilles.',
+      'Vous repartez avec un regard structuré, naturel et expressif, sans effort au quotidien.',
+    ],
     benefits: [
       'Extensions de cils sur-mesure',
       'Sourcils structurés et naturels',
@@ -67,6 +92,11 @@ const SERVICES = {
     ],
     duration: '30 à 90 min',
     price: 'À partir de 35 €',
+    perks: [
+      { icon: '👁️', label: 'Regard sublimé' },
+      { icon: '🌿', label: 'Produits doux' },
+      { icon: '💧', label: 'Tenue longue' },
+    ],
     testimonials: [
       { name: 'Inès', note: 5, quote: 'Un regard transformé, très naturel, et une tenue impressionnante dans le temps.' },
       { name: 'Manon', note: 5, quote: 'J’ai les yeux sensibles et je n’ai eu aucune gêne pendant la pose.' },
@@ -82,8 +112,13 @@ const SERVICES = {
     kicker: 'Mains',
     title: 'Onglerie Premium',
     image: '/meybeauty.jpg',
+    video: '',
     intro: 'Des mains soignées, des ongles sublimés : notre onglerie premium allie esthétique, tenue et respect de la nature de l’ongle.',
-    description: 'Vernis semi-permanent, pose en gel, nail art, soins des mains et des pieds : chaque prestation est réalisée avec des produits professionnels et une attention particulière à l’hygiène. Nous protégeons votre ongle naturel pour une tenue impeccable.',
+    paragraphs: [
+      'Vernis semi-permanent, pose en gel, nail art, soins des mains et des pieds : chaque prestation est réalisée avec des produits professionnels.',
+      'Une attention particulière est portée à l’hygiène et à la protection de votre ongle naturel pour une tenue impeccable.',
+      'Vous repartez avec des mains soignées, des ongles sublimés et une pose qui tient dans la durée.',
+    ],
     benefits: [
       'Pose en gel et vernis semi-permanent',
       'Nail art sur mesure',
@@ -92,6 +127,11 @@ const SERVICES = {
     ],
     duration: '30 à 75 min',
     price: 'À partir de 30 €',
+    perks: [
+      { icon: '💅', label: 'Vernis semi-permanent' },
+      { icon: '🎨', label: 'Nail art sur mesure' },
+      { icon: '🛡️', label: 'Ongle préservé' },
+    ],
     testimonials: [
       { name: 'Aïcha', note: 5, quote: 'Une pose impeccable, mes ongles n’ont jamais été aussi solides entre deux rendez-vous.' },
       { name: 'Léa', note: 5, quote: 'Le nail art sur-mesure est bluffant de précision, exactement ce que j’avais en tête.' },
@@ -105,10 +145,10 @@ const SERVICES = {
 };
 
 const OTHERS = [
-  { slug: 'visage', kicker: 'Éclat', title: 'Soin du visage', image: '/soin visage (2).PNG' },
-  { slug: 'minceur', kicker: 'Silhouette', title: 'Minceur', image: '/soin-minceur.PNG' },
-  { slug: 'regard', kicker: 'Regard', title: 'Beauté du regard', image: '/mey-beauty (6).jpeg' },
-  { slug: 'mains', kicker: 'Mains', title: 'Onglerie premium', image: '/meybeauty.jpg' },
+  { slug: 'visage', kicker: 'Éclat', title: 'Soin du visage', image: '/soin visage (2).PNG', video: 'https://www.pexels.com/fr-fr/download/video/9335813/' },
+  { slug: 'minceur', kicker: 'Silhouette', title: 'Minceur', image: '/soin-minceur.PNG', video: 'https://www.pexels.com/fr-fr/download/video/32828416/' },
+  { slug: 'regard', kicker: 'Regard', title: 'Beauté du regard', image: '/mey-beauty (6).jpeg', video: 'https://www.pexels.com/fr-fr/download/video/8502623/' },
+  { slug: 'mains', kicker: 'Mains', title: 'Onglerie premium', image: '/meybeauty.jpg', video: '' },
 ];
 
 const TRUST_ITEMS = [
@@ -150,6 +190,24 @@ function TitleWithBreaks({ text }) {
   );
 }
 
+function VideoOrImage({ src, video, alt, className }) {
+  if (video) {
+    return (
+      <video
+        src={video}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className={className}
+        poster={src}
+        aria-label={alt}
+      />
+    );
+  }
+  return <img src={src} alt={alt} className={className} />;
+}
+
 export default function ServiceDetailPage({ slug }) {
   const service = SERVICES[slug] || SERVICES['visage'];
 
@@ -172,12 +230,22 @@ export default function ServiceDetailPage({ slug }) {
         <section className="sd-intro">
           <div className="sd-intro-grid">
             <div className="sd-intro-visual">
-              <img src={service.image} alt={service.title} className="sd-intro-img" />
+              <VideoOrImage src={service.image} video={service.video} alt={service.title} className="sd-intro-img" />
+              <div className="sd-intro-perks">
+                {service.perks?.map((p, i) => (
+                  <div key={i} className="sd-perk">
+                    <span className="sd-perk-icon">{p.icon}</span>
+                    <span className="sd-perk-label">{p.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="sd-intro-copy">
               <p className="sd-eyebrow">Le soin</p>
               <p className="sd-dropcap">{service.intro}</p>
-              <p className="sd-body-secondary">{service.description}</p>
+              {service.paragraphs.map((p, i) => (
+                <p key={i} className="sd-body-secondary">{p}</p>
+              ))}
               <div className="sd-chip-row">
                 <span className="sd-chip">Durée · {service.duration}</span>
                 <span className="sd-chip sd-chip-accent">{service.price}</span>
@@ -209,17 +277,27 @@ export default function ServiceDetailPage({ slug }) {
         </section>
 
         <section className="sd-reviews">
-          <p className="sd-eyebrow sd-center">Elles témoignent</p>
-          <h2 className="sd-h2 sd-center">Avis clientes</h2>
-          <div className="sd-reviews-grid">
-            {service.testimonials.map((t, i) => (
-              <div key={i} className="sd-review-card">
-                <StarRow count={t.note} />
-                <p className="sd-review-quote">« {t.quote} »</p>
-                <p className="sd-review-name">— {t.name}</p>
-              </div>
-            ))}
+          <div className="sd-reviews-header">
+            <p className="sd-eyebrow sd-center">Avis clientes</p>
+            <h2 className="sd-h2 sd-center">Ce qu'elles en disent.</h2>
           </div>
+          {[0, 1].map((r) => {
+            const row = [...service.testimonials, ...service.testimonials];
+            return (
+              <div
+                key={r}
+                className="sd-marquee-row"
+                style={{ animationDirection: r === 1 ? 'reverse' : 'normal' }}
+              >
+                {row.map((t, i) => (
+                  <div key={i} className="sd-review-card">
+                    <p className="sd-review-quote">"{t.quote}"</p>
+                    <div className="sd-review-name">{t.name}</div>
+                  </div>
+                ))}
+              </div>
+            );
+          })}
         </section>
 
         <section className="sd-others">
@@ -228,7 +306,7 @@ export default function ServiceDetailPage({ slug }) {
           <div className="sd-others-grid">
             {OTHERS.filter((o) => o.slug !== service.slug).map((o) => (
               <a key={o.slug} href={`#service/${o.slug}`} className="sd-other-card">
-                <img src={o.image} alt={o.title} className="sd-other-img" />
+                <VideoOrImage src={o.image} video={o.video} alt={o.title} className="sd-other-img" />
                 <div className="sd-other-scrim" />
                 <div className="sd-other-body">
                   <p className="sd-other-kicker">{o.kicker}</p>
@@ -269,28 +347,13 @@ export default function ServiceDetailPage({ slug }) {
       </main>
 
       <style>{`
-        .service-detail-page .about-hero {
-          background: var(--brun-dark);
-          color: var(--blanc);
-          padding: 100px 32px 60px;
-          text-align: center;
-        }
         .service-detail-page .about-hero h1 {
           font-family: var(--font-titre);
-          font-weight: 600;
-          font-size: clamp(32px, 4.5vw, 52px);
-          margin: 0 0 14px;
-          color: var(--blanc);
+          font-weight: 400;
+          font-size: clamp(38px, 5vw, 54px);
+          margin: 0 0 10px;
         }
-        .service-detail-page .about-breadcrumb {
-          display: flex;
-          gap: 8px;
-          justify-content: center;
-          font-family: var(--font-corps);
-          font-size: 13px;
-          color: #E6D4C1;
-        }
-        .service-detail-page .about-breadcrumb a { color: #E6D4C1; text-decoration: none; }
+        .service-detail-page .about-breadcrumb a { color: #8A6E5A; text-decoration: none; }
 
         .sd-eyebrow {
           font-family: var(--font-sc);
@@ -317,16 +380,49 @@ export default function ServiceDetailPage({ slug }) {
           display: grid;
           grid-template-columns: 0.9fr 1.1fr;
           gap: 56px;
-          align-items: center;
+          align-items: start;
         }
-        .sd-intro-visual { border-radius: 2px; overflow: hidden; }
-        .sd-intro-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+        .sd-intro-visual { border-radius: 2px; overflow: hidden; position: relative; }
+        .sd-intro-img, .sd-intro-visual video {
+          width: 100%;
+          aspect-ratio: 4/5;
+          object-fit: cover;
+          display: block;
+          border-radius: 2px;
+        }
+        .sd-intro-perks {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+          margin-top: 12px;
+        }
+        .sd-perk {
+          background: var(--blanc);
+          border: 1px solid var(--gris-border);
+          border-radius: 2px;
+          padding: 12px 8px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+        }
+        .sd-perk-icon { font-size: 22px; line-height: 1; }
+        .sd-perk-label {
+          font-family: var(--font-sc);
+          font-size: 10px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          color: #6B5344;
+          line-height: 1.25;
+        }
         .sd-dropcap {
           font-family: var(--font-corps);
           font-size: 18px;
           line-height: 1.75;
           color: #6B5344;
           margin: 0 0 18px;
+          text-align: justify;
         }
         .sd-dropcap::first-letter {
           font-family: var(--font-titre);
@@ -343,6 +439,7 @@ export default function ServiceDetailPage({ slug }) {
           line-height: 1.75;
           color: #8A6E5A;
           margin: 0 0 26px;
+          text-align: justify;
         }
         .sd-chip-row { display: flex; gap: 12px; flex-wrap: wrap; }
         .sd-chip {
@@ -350,12 +447,13 @@ export default function ServiceDetailPage({ slug }) {
           font-size: 11px;
           letter-spacing: 0.06em;
           text-transform: uppercase;
-          padding: 9px 14px;
-          border: 1px solid var(--gris-border);
-          color: #6B5344;
+          padding: 10px 16px;
           border-radius: 2px;
+          color: var(--blanc);
+          background: var(--brun-dark);
+          box-shadow: 0 4px 14px rgba(107, 83, 68, 0.18);
         }
-        .sd-chip-accent { color: var(--brun-medium); border-color: var(--brun-medium); }
+        .sd-chip-accent { background: var(--brun-medium); }
 
         .sd-ritual { padding: 80px 32px; background: var(--nude-light); }
         .sd-ritual-list {
@@ -397,6 +495,7 @@ export default function ServiceDetailPage({ slug }) {
           color: #6B5344;
           padding-top: 5px;
           margin: 0;
+          text-align: justify;
         }
 
         .sd-trust {
@@ -428,34 +527,53 @@ export default function ServiceDetailPage({ slug }) {
           font-size: 12px;
         }
 
-        .sd-reviews { padding: 80px 32px; background: var(--nude-light); }
-        .sd-reviews-grid {
-          max-width: 1080px;
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
+        .sd-reviews {
+          background: var(--brun-dark);
+          color: var(--nude-light);
+          padding: 80px 0;
+          overflow: hidden;
         }
+        .sd-reviews-header {
+          max-width: 1180px;
+          margin: 0 auto 40px;
+          padding: 0 32px;
+        }
+        .sd-reviews-header .sd-eyebrow { color: var(--brun-medium); }
+        .sd-reviews-header .sd-h2 { color: var(--blanc); margin-bottom: 0; }
+        .sd-marquee-row {
+          display: flex;
+          gap: 20px;
+          width: max-content;
+          animation: sd-marquee 42s linear infinite;
+          margin-top: 20px;
+        }
+        .sd-marquee-row:first-child { margin-top: 0; }
         .sd-review-card {
-          background: var(--blanc);
-          border: 1px solid var(--gris-border);
-          border-radius: 2px;
-          padding: 24px;
+          background: rgba(245, 242, 238, 0.06);
+          border: 1px solid rgba(245, 242, 238, 0.12);
+          padding: 26px;
+          width: 340px;
+          flex-shrink: 0;
         }
         .sd-review-quote {
-          font-family: var(--font-corps);
-          font-size: 14px;
-          line-height: 1.7;
-          color: #6B5344;
-          margin: 12px 0 14px;
+          font-family: var(--font-titre);
+          font-style: italic;
+          font-size: 16px;
+          line-height: 1.6;
+          color: var(--nude-light);
+          margin: 0 0 16px;
         }
         .sd-review-name {
           font-family: var(--font-sc);
-          font-size: 11px;
-          letter-spacing: 0.06em;
+          font-size: 12px;
+          opacity: 0.6;
+          color: var(--nude-light);
           text-transform: uppercase;
-          color: var(--brun-medium);
-          margin: 0;
+          letter-spacing: 0.06em;
+        }
+        @keyframes sd-marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
         }
 
         .sd-others { padding: 80px 32px; background: var(--blanc); }
@@ -475,7 +593,8 @@ export default function ServiceDetailPage({ slug }) {
           align-items: flex-end;
           text-decoration: none;
         }
-        .sd-other-card img {
+        .sd-other-card img,
+        .sd-other-card video {
           position: absolute;
           inset: 0;
           width: 100%;
@@ -483,7 +602,8 @@ export default function ServiceDetailPage({ slug }) {
           object-fit: cover;
           transition: transform .6s ease;
         }
-        .sd-other-card:hover img { transform: scale(1.05); }
+        .sd-other-card:hover img,
+        .sd-other-card:hover video { transform: scale(1.05); }
         .sd-other-scrim {
           position: absolute;
           inset: 0;
@@ -526,6 +646,7 @@ export default function ServiceDetailPage({ slug }) {
           line-height: 1.7;
           color: #8A6E5A;
           margin: 0;
+          text-align: justify;
         }
 
         .sd-final-cta { padding: 90px 32px; text-align: center; background: var(--blanc); }
@@ -536,6 +657,7 @@ export default function ServiceDetailPage({ slug }) {
           font-size: 14px;
           color: #8A6E5A;
           line-height: 1.7;
+          text-align: justify;
         }
         .sd-final-back { margin-top: 20px; }
         .sd-final-back a {
