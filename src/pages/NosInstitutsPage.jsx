@@ -141,10 +141,10 @@ function Fiche({ service, index, onClick }) {
         <span style={{ position: 'absolute', top: 12, left: 14, fontFamily: FONT_SC, fontSize: 11, letterSpacing: '0.06em', color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.35)' }}>{ref}</span>
       </div>
       <div style={{ padding: '18px 16px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <div style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 16.5, lineHeight: 1.25, color: C.ink, marginBottom: 8 }}>{service.name}</div>
+        <div style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 16.5, lineHeight: 1.25, color: 'var(--brun-dark)', marginBottom: 8 }}>{service.name}</div>
         <div style={{ fontFamily: FONT_CORPS, fontSize: 12.5, fontStyle: 'italic', color: C.muted, marginBottom: 16, flex: 1 }}>"{service.pitch}"</div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: `1px solid ${C.line}`, paddingTop: 12 }}>
-          <span style={{ fontFamily: FONT_SC, fontSize: 13, color: C.ink }}>{service.price}</span>
+          <span style={{ fontFamily: FONT_SC, fontSize: 13, color: 'var(--brun-dark)' }}>{service.price}</span>
           <span style={{ fontFamily: FONT_CORPS, fontSize: 13, color: C.label }}>↗</span>
         </div>
       </div>
@@ -191,18 +191,18 @@ function ServiceDrawer({ service, index, onClose }) {
           <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 19, color: C.gold, marginBottom: 18, lineHeight: 1.4 }}>
             "{service.pitch}"
           </p>
-          <p style={{ fontFamily: FONT_CORPS, fontSize: 14, lineHeight: 1.8, color: C.inkSoft, marginBottom: 28 }}>
+          <p style={{ fontFamily: FONT_CORPS, fontSize: 14, lineHeight: 1.8, color: 'var(--brun)', marginBottom: 28 }}>
             {service.description}
           </p>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, marginBottom: 26 }}>
             <div>
               <div style={{ fontFamily: FONT_CORPS, fontSize: 10.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.label, marginBottom: 4 }}>Tarif</div>
-              <div style={{ fontFamily: FONT_SC, fontSize: 20, color: C.ink }}>{service.price}</div>
+              <div style={{ fontFamily: FONT_SC, fontSize: 20, color: 'var(--brun-dark)' }}>{service.price}</div>
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontFamily: FONT_CORPS, fontSize: 10.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.label, marginBottom: 4 }}>Disponibilité</div>
-              <div style={{ fontFamily: FONT_CORPS, fontSize: 13, color: C.ink }}>Lun–Sam, 9h30–19h30</div>
+              <div style={{ fontFamily: FONT_CORPS, fontSize: 13, color: 'var(--brun-dark)' }}>Lun–Sam, 9h30–19h30</div>
             </div>
           </div>
 
@@ -278,8 +278,8 @@ function Gallery() {
   return (
     <section className="ni-gallery">
       <div className="ni-gallery-inner">
-        <p className="ni-gallery-kicker">L'expérience</p>
-        <h2 className="ni-gallery-title">Un cadre pensé pour la détente.</h2>
+        <p className="section-kicker">L'expérience</p>
+        <h2 className="section-title">Un cadre pensé pour la détente.</h2>
         <div className="ni-gallery-grid">
           {items.map((it, i) => (
             <div key={i} className={`ni-gallery-item ni-gallery-item-${i + 1}`}>
@@ -298,10 +298,10 @@ function Gallery() {
 function Testimonials() {
   const row = [...testimonials, ...testimonials];
   return (
-    <section style={{ background: C.ink, color: C.bg, padding: '80px 0', overflow: 'hidden' }}>
+    <section style={{ background: 'var(--brun-dark)', color: C.bg, padding: '80px 0', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 32px' }}>
-        <p style={{ fontFamily: FONT_SC, fontSize: 12, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.gold }}>Avis clientes</p>
-        <h2 style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 'clamp(28px,4vw,42px)', marginTop: 10, marginBottom: 40 }}>Ce qu'elles en disent.</h2>
+        <p className="section-kicker" style={{ color: C.gold }}>Avis clientes</p>
+        <h2 className="section-title" style={{ marginTop: 10, marginBottom: 40, color: C.bg }}>Ce qu'elles en disent.</h2>
       </div>
       {[0, 1].map(r => (
         <div
@@ -332,8 +332,8 @@ function WhySection() {
   return (
     <section style={{ padding: '100px 32px' }}>
       <div style={{ maxWidth: 1180, margin: '0 auto' }}>
-        <p style={{ fontFamily: FONT_SC, fontSize: 12, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.gold }}>Pourquoi Mey Beauty</p>
-        <h2 style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 'clamp(28px,4vw,42px)', marginTop: 10, color: C.ink }}>Ce qui nous distingue.</h2>
+        <p className="section-kicker">Pourquoi Mey Beauty</p>
+        <h2 className="section-title" style={{ marginTop: 10 }}>Ce qui nous distingue.</h2>
         <div className="ni-why-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginTop: 50 }}>
           {differentiators.map((d, i) => (
             <div
@@ -345,8 +345,8 @@ function WhySection() {
                 borderLeft: i % 2 === 1 ? `1px solid ${C.line}` : 'none',
               }}
             >
-              <h3 style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 21, marginBottom: 10, color: C.ink }}>{d.title}</h3>
-              <p style={{ fontFamily: FONT_CORPS, fontSize: 14, lineHeight: 1.7, color: C.inkSoft }}>{d.body}</p>
+              <h3 style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 21, marginBottom: 10, color: 'var(--brun-dark)' }}>{d.title}</h3>
+              <p style={{ fontFamily: FONT_CORPS, fontSize: 14, lineHeight: 1.7, color: 'var(--brun)' }}>{d.body}</p>
             </div>
           ))}
         </div>
@@ -363,13 +363,13 @@ function FaqItem({ item, isOpen, onToggle }) {
     <div style={{ borderTop: `1px solid ${C.line}` }}>
       <button
         onClick={onToggle}
-        style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', padding: '24px 4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', fontSize: 15.5, fontWeight: 600, color: C.ink }}
+        style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', padding: '24px 4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', fontSize: 15.5, fontWeight: 600, color: 'var(--brun-dark)' }}
       >
         <span>{item.q}</span>
         <Plus size={18} strokeWidth={2} style={{ color: C.gold, transform: isOpen ? 'rotate(45deg)' : 'rotate(0)', transition: 'transform .2s', flexShrink: 0 }} />
       </button>
       <div style={{ maxHeight: isOpen ? 300 : 0, overflow: 'hidden', transition: 'max-height .3s ease' }}>
-        <p style={{ fontFamily: FONT_CORPS, padding: '0 4px 24px', fontSize: 14, lineHeight: 1.75, color: C.inkSoft, maxWidth: 640 }}>{item.a}</p>
+        <p style={{ fontFamily: FONT_CORPS, padding: '0 4px 24px', fontSize: 14, lineHeight: 1.75, color: 'var(--brun)', maxWidth: 640 }}>{item.a}</p>
       </div>
     </div>
   );
@@ -380,8 +380,8 @@ function Faq() {
   return (
     <section style={{ padding: '0 32px 100px' }}>
       <div style={{ maxWidth: 1180, margin: '0 auto' }}>
-        <p style={{ fontFamily: FONT_SC, fontSize: 12, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.gold }}>Questions fréquentes</p>
-        <h2 style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 'clamp(28px,4vw,42px)', marginTop: 10, marginBottom: 30, color: C.ink }}>Avant de réserver.</h2>
+        <p className="section-kicker">Questions fréquentes</p>
+        <h2 className="section-title" style={{ marginTop: 10, marginBottom: 30 }}>Avant de réserver.</h2>
         <div style={{ borderBottom: `1px solid ${C.line}` }}>
           {faqs.map((f, i) => (
             <FaqItem key={f.q} item={f} isOpen={openIdx === i} onToggle={() => setOpenIdx(openIdx === i ? null : i)} />
@@ -397,9 +397,9 @@ function Faq() {
 ──────────────────────────────────────────────────── */
 function FinalCta() {
   return (
-    <section style={{ background: C.bg, color: C.ink, padding: '110px 32px', textAlign: 'center', borderTop: `1px solid ${C.line}` }}>
+    <section style={{ background: C.bg, color: 'var(--brun-dark)', padding: '110px 32px', textAlign: 'center', borderTop: `1px solid ${C.line}` }}>
       <div style={{ maxWidth: 1180, margin: '0 auto' }}>
-        <h2 style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 'clamp(32px,5vw,52px)', marginBottom: 22 }}>Votre rendez-vous vous attend.</h2>
+        <h2 className="section-title" style={{ fontSize: 'clamp(32px,5vw,52px)', marginBottom: 22 }}>Votre rendez-vous vous attend.</h2>
         <p style={{ fontFamily: FONT_CORPS, opacity: 0.8, fontSize: 15, marginBottom: 36 }}>Choisissez votre institut, votre créneau — on s'occupe du reste.</p>
         <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
           <a href={planityUrl} target="_blank" rel="noreferrer" className="btn-rdv">
@@ -419,7 +419,7 @@ function FinalCta() {
 ──────────────────────────────────────────────────── */
 function StickyMobileCta() {
   return (
-    <div className="ni-sticky-cta" style={{ display: 'none', position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 90, background: C.ink, padding: '12px 16px', gap: 10 }}>
+    <div className="ni-sticky-cta" style={{ display: 'none', position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 90, background: 'var(--brun-dark)', padding: '12px 16px', gap: 10 }}>
       <a href="tel:+33749226801" className="btn-rdv-outline" style={{ flex: 1, borderColor: 'rgba(245,242,238,0.3)', color: C.bg }}>
         Appeler
       </a>
@@ -468,8 +468,8 @@ export default function NosInstitutsPage() {
 
         <section style={{ padding: '50px 32px 20px' }}>
           <div style={{ maxWidth: 1180, margin: '0 auto 60px' }}>
-            <p style={{ fontFamily: FONT_SC, fontSize: 12, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.gold }}>Nos espaces</p>
-            <h2 style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 'clamp(28px,4vw,42px)', marginTop: 10, color: C.ink }}>
+            <p className="section-kicker">Nos espaces</p>
+            <h2 className="section-title" style={{ marginTop: 10 }}>
               Deux adresses.<br />Un seul niveau d'exigence.
             </h2>
           </div>
