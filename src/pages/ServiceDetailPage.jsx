@@ -1,5 +1,5 @@
 import SEO from '../components/SEO.jsx';
-import { ArrowLeft, Calendar } from 'lucide-react';
+import { ArrowLeft, Calendar, Search, Sparkles, ShieldCheck, MessageCircleHeart, Leaf, Flame, Wind, ClipboardList, Eye, Droplets, Paintbrush, Palette, Sliders } from 'lucide-react';
 
 const SERVICES = {
   visage: {
@@ -23,9 +23,9 @@ const SERVICES = {
     duration: '45 à 60 min',
     price: 'À partir de 55 €',
     perks: [
-      { icon: '🌿', label: 'Actifs naturels' },
-      { icon: '✨', label: 'Éclat immédiat' },
-      { icon: '🧴', label: 'Sur-mesure' },
+      { icon: Leaf, label: 'Actifs naturels' },
+      { icon: Sparkles, label: 'Éclat immédiat' },
+      { icon: Sliders, label: 'Sur-mesure' },
     ],
     testimonials: [
       { name: 'Sophie', note: 5, quote: 'Ma peau respire enfin. Le diagnostic avant le soin change tout, on sent que rien n’est fait au hasard.' },
@@ -58,9 +58,9 @@ const SERVICES = {
     duration: '30 à 60 min',
     price: 'À partir de 45 €',
     perks: [
-      { icon: '🔥', label: 'LPG Cellu M6' },
-      { icon: '🍃', label: 'Drainage' },
-      { icon: '📋', label: 'Bilan silhouette' },
+      { icon: Flame, label: 'LPG Cellu M6' },
+      { icon: Wind, label: 'Drainage' },
+      { icon: ClipboardList, label: 'Bilan silhouette' },
     ],
     testimonials: [
       { name: 'Nadia', note: 5, quote: 'Le bilan morphologique au démarrage m’a permis de comprendre ce qui allait vraiment m’aider.' },
@@ -93,9 +93,9 @@ const SERVICES = {
     duration: '30 à 90 min',
     price: 'À partir de 35 €',
     perks: [
-      { icon: '👁️', label: 'Regard sublimé' },
-      { icon: '🌿', label: 'Produits doux' },
-      { icon: '💧', label: 'Tenue longue' },
+      { icon: Eye, label: 'Regard sublimé' },
+      { icon: Leaf, label: 'Produits doux' },
+      { icon: Droplets, label: 'Tenue longue' },
     ],
     testimonials: [
       { name: 'Inès', note: 5, quote: 'Un regard transformé, très naturel, et une tenue impressionnante dans le temps.' },
@@ -128,9 +128,9 @@ const SERVICES = {
     duration: '30 à 75 min',
     price: 'À partir de 30 €',
     perks: [
-      { icon: '💅', label: 'Vernis semi-permanent' },
-      { icon: '🎨', label: 'Nail art sur mesure' },
-      { icon: '🛡️', label: 'Ongle préservé' },
+      { icon: Paintbrush, label: 'Vernis semi-permanent' },
+      { icon: Palette, label: 'Nail art sur mesure' },
+      { icon: ShieldCheck, label: 'Ongle préservé' },
     ],
     testimonials: [
       { name: 'Aïcha', note: 5, quote: 'Une pose impeccable, mes ongles n’ont jamais été aussi solides entre deux rendez-vous.' },
@@ -152,10 +152,10 @@ const OTHERS = [
 ];
 
 const TRUST_ITEMS = [
-  'Diagnostic personnalisé',
-  'Produits professionnels',
-  'Hygiène irréprochable',
-  'Clientes satisfaites',
+  { icon: Search, label: 'Diagnostic personnalisé' },
+  { icon: Sparkles, label: 'Produits professionnels' },
+  { icon: ShieldCheck, label: 'Hygiène irréprochable' },
+  { icon: MessageCircleHeart, label: 'Clientes satisfaites' },
 ];
 
 const PLANITY_URL = 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i';
@@ -234,7 +234,7 @@ export default function ServiceDetailPage({ slug }) {
               <div className="sd-intro-perks">
                 {service.perks?.map((p, i) => (
                   <div key={i} className="sd-perk">
-                    <span className="sd-perk-icon">{p.icon}</span>
+                    <span className="sd-perk-icon"><p.icon size={20} strokeWidth={1.5} /></span>
                     <span className="sd-perk-label">{p.label}</span>
                   </div>
                 ))}
@@ -271,7 +271,10 @@ export default function ServiceDetailPage({ slug }) {
         <section className="sd-trust">
           <div className="sd-trust-row">
             {TRUST_ITEMS.map((t, i) => (
-              <div key={i} className="sd-trust-item">{t}</div>
+              <div key={i} className="sd-trust-item">
+                <span className="sd-trust-icon"><t.icon size={28} strokeWidth={1.5} /></span>
+                <span className="sd-trust-label">{t.label}</span>
+              </div>
             ))}
           </div>
         </section>
@@ -407,7 +410,13 @@ export default function ServiceDetailPage({ slug }) {
           align-items: center;
           gap: 6px;
         }
-        .sd-perk-icon { font-size: 22px; line-height: 1; }
+        .sd-perk-icon {
+          color: var(--brun-medium);
+          line-height: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
         .sd-perk-label {
           font-family: var(--font-sc);
           font-size: 10px;
@@ -499,32 +508,41 @@ export default function ServiceDetailPage({ slug }) {
         }
 
         .sd-trust {
-          padding: 44px 32px;
-          background: var(--blanc);
-          border-top: 1px solid var(--gris-border);
-          border-bottom: 1px solid var(--gris-border);
+          padding: 32px 24px;
+          background: var(--brun-dark);
         }
         .sd-trust-row {
           max-width: 1080px;
           margin: 0 auto;
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          gap: 24px;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 12px;
         }
         .sd-trust-item {
-          flex: 1 1 200px;
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 2px;
+          padding: 18px 14px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 8px;
+        }
+        .sd-trust-icon {
+          color: var(--brun-medium);
+          line-height: 1;
           display: flex;
           align-items: center;
-          gap: 12px;
-          font-family: var(--font-corps);
-          font-size: 14px;
-          color: #6B5344;
+          justify-content: center;
         }
-        .sd-trust-item::before {
-          content: '◆';
-          color: var(--brun-medium);
-          font-size: 12px;
+        .sd-trust-label {
+          font-family: var(--font-sc);
+          font-size: 11px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          color: var(--nude-light);
+          line-height: 1.3;
         }
 
         .sd-reviews {
@@ -674,6 +692,7 @@ export default function ServiceDetailPage({ slug }) {
           .sd-intro-grid { grid-template-columns: 1fr; gap: 36px; }
           .sd-reviews-grid { grid-template-columns: 1fr; }
           .sd-others-grid { grid-template-columns: repeat(2, 1fr); }
+          .sd-trust-row { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 560px) {
@@ -686,8 +705,10 @@ export default function ServiceDetailPage({ slug }) {
           .sd-faq { padding: 56px 24px; }
           .sd-final-cta { padding: 70px 24px; }
           .sd-others-grid { grid-template-columns: 1fr; }
-          .sd-trust-row { flex-direction: column; gap: 8px; }
-          .sd-trust-item { font-size: 13px; gap: 8px; }
+          .sd-trust-row { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+          .sd-trust-item { padding: 14px 10px; }
+          .sd-trust-icon { font-size: 22px; }
+          .sd-trust-label { font-size: 10px; }
         }
       `}</style>
     </>
