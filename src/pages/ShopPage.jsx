@@ -41,10 +41,10 @@ export default function ShopPage() {
       'anti-âge',
       'hydratation',
       'sérum',
-      'lift',
       'masque',
       'contour des yeux',
-      'fermeté',
+      'lift',
+      'exfoliation',
     ]);
     const set = new Set();
     (allProducts || []).forEach((p) => {

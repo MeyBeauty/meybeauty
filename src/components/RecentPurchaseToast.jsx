@@ -34,6 +34,19 @@ function getProductImage(p) {
   return String(img || '').trim() || '/produits/produit (1).webp';
 }
 
+const FEATURED_PRODUCT_IDS = new Set([
+  'lpg-panty-minceur',
+  'lpg-corsaire-sculptant',
+  'lpg-concentre-brule-graisses',
+  'lpg-reducteur-appetit',
+  'lpg-collagene',
+  'lpg-stop-peau-orange',
+  'lpg-concentre-drainant',
+  'lpg-the-bio-minceur',
+  'lpg-capteur-sos',
+  'lpg-booster-vitalite',
+]);
+
 export default function RecentPurchaseToast() {
   const { products } = useCatalog();
   const [showPopup, setShowPopup] = useState(true);
@@ -42,7 +55,7 @@ export default function RecentPurchaseToast() {
 
   const productPool = useMemo(() => {
     const list = Array.isArray(products) ? products : [];
-    return list.filter((p) => p && p.id && (p.images?.[0] || p.image));
+    return list.filter((p) => p && FEATURED_PRODUCT_IDS.has(p.id) && (p.images?.[0] || p.image));
   }, [products]);
 
   const nextEvent = () => {
