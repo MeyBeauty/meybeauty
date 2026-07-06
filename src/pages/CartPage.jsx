@@ -304,7 +304,7 @@ export default function CartPage() {
                 <div className="cart-form-row cart-form-row-address">
                   <input
                     type="text"
-                    placeholder="Ex : 19 Rue Albert Rémy"
+                    placeholder="Adresse"
                     value={customerInfo.address}
                     onChange={(e) => setCustomerInfo(prev => ({ ...prev, address: e.target.value }))}
                     className="cart-form-input"
@@ -367,6 +367,13 @@ function PaymentSection({ amount, totalSavings, onSuccess, isProcessing, setIsPr
   useEffect(() => {
     customerInfoRef.current = customerInfo;
   }, [customerInfo]);
+
+  // Clear error message once the customer form becomes valid
+  useEffect(() => {
+    if (isCustomerFormValid() && errorMsg.includes('informations client')) {
+      setErrorMsg('');
+    }
+  }, [customerInfo, errorMsg]);
 
   // Check if customer form is valid
   const isCustomerFormValid = () => {

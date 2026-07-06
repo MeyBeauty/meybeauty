@@ -7025,6 +7025,11 @@ a { text-decoration: none; color: inherit; }
   border-color: var(--brun);
 }
 
+.cart-form-input::placeholder {
+  font-size: 12px;
+  color: #999;
+}
+
 @media (max-width: 420px) {
   .cart-form-row {
     flex-direction: column;
