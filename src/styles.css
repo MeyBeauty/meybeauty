@@ -1375,6 +1375,9 @@ a { text-decoration: none; color: inherit; }
 }
 .product-card {
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .product-img-wrap {
   position: relative;
@@ -1383,6 +1386,7 @@ a { text-decoration: none; color: inherit; }
   overflow: hidden;
   margin-bottom: 16px;
   border-radius: 2px;
+  flex-shrink: 0;
 }
 
 .product-img-wrap::after {
@@ -1462,6 +1466,47 @@ a { text-decoration: none; color: inherit; }
   background: var(--nude-lighter);
 }
 
+.product-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.product-card-add {
+  flex: 1 1 auto;
+  background: var(--brun);
+  color: var(--blanc);
+  border: 1px solid var(--brun);
+  font-family: var(--font-sc);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.product-card-add:hover {
+  background: var(--brun-dark);
+  border-color: var(--brun-dark);
+}
+.product-card-wish {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--gris-border);
+  color: var(--brun);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background var(--transition), border-color var(--transition);
+}
+.product-card-wish:hover {
+  background: var(--nude-lighter);
+  border-color: var(--brun);
+}
+
 /* Responsive product actions */
 @media (max-width: 480px) {
   .product-actions {
@@ -1497,6 +1542,12 @@ a { text-decoration: none; color: inherit; }
   color: var(--brun);
   margin-bottom: 6px;
   line-height: 1.3;
+  min-height: 2.6em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .product-price {
   font-family: var(--font-corps);
@@ -1504,6 +1555,10 @@ a { text-decoration: none; color: inherit; }
   font-weight: 300;
   color: #8A6E5A;
   letter-spacing: 0.02em;
+  margin-top: auto;
+}
+.product-price-container {
+  margin-top: auto;
 }
 
 .view-all-wrap {
@@ -1696,12 +1751,19 @@ a { text-decoration: none; color: inherit; }
 
 .testimonials-track {
   display: flex;
-  gap: 20px;
+  gap: 0;
   transition: transform 420ms ease;
 }
 
 .testi-card {
-  flex: 0 0 calc((100% - 40px) / 3);
+  flex: 0 0 calc(100% / 3);
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.testi-card-inner {
+  flex: 1 1 auto;
   background: var(--blanc);
   border: 1px solid var(--gris-border);
   border-radius: 4px;
@@ -1714,6 +1776,9 @@ a { text-decoration: none; color: inherit; }
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+}
+.testi-body .testi-stars {
+  margin-bottom: 14px;
 }
 .testi-text {
   font-family: var(--font-corps);
@@ -1742,7 +1807,7 @@ a { text-decoration: none; color: inherit; }
 .testi-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-top: auto;
   padding-top: 16px;
   border-top: 1px solid var(--gris-border);
@@ -4001,12 +4066,37 @@ a { text-decoration: none; color: inherit; }
   color: var(--noir);
   margin-bottom: 6px;
   line-height: 1.35;
+  min-height: 2.7em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .shop-page .shop-product-price {
   font-size: 13px;
   color: var(--brun-medium);
   font-weight: 600;
+  margin-top: auto;
+}
+
+.shop-page .product-price-container {
+  margin-top: auto;
+}
+
+.shop-page .product-card-actions {
+  margin-top: 12px;
+}
+
+.shop-page .product-card-add {
+  background: var(--brun);
+  color: var(--blanc);
+  border-color: var(--brun);
+}
+.shop-page .product-card-add:hover {
+  background: var(--brun-dark);
+  border-color: var(--brun-dark);
 }
 
 .shop-page .shop-pagination {
@@ -7469,7 +7559,11 @@ a { text-decoration: none; color: inherit; }
   .testi-card {
     flex: 0 0 100%;
     max-width: 100%;
-    margin: 0;
+    padding: 0 6px;
+  }
+  .testi-card-inner {
+    min-height: 220px;
+    padding: 22px 18px;
   }
   .testimonials-nav {
     justify-content: center;

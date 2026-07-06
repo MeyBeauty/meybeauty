@@ -96,28 +96,6 @@ export default function ProductCard({
           alt={product.name}
           aspectRatio="1/1"
         />
-        
-        {showAddToCart && (
-          <div className="product-actions">
-            {showWishlist && (
-              <button 
-                aria-label="Favori"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-              >
-                ♡
-              </button>
-            )}
-            <button
-              className="primary"
-              onClick={handleAddToCart}
-            >
-              Ajouter au Panier
-            </button>
-          </div>
-        )}
       </div>
 
       {showStars && <Stars value={5} />}
@@ -155,6 +133,31 @@ export default function ProductCard({
         </div>
       ) : (
         <div className="product-price">{formatPriceEUR(product.priceCents)}</div>
+      )}
+
+      {showAddToCart && (
+        <div className="product-card-actions">
+          <button
+            className="product-card-add"
+            type="button"
+            onClick={handleAddToCart}
+          >
+            Ajouter au Panier
+          </button>
+          {showWishlist && (
+            <button
+              className="product-card-wish"
+              type="button"
+              aria-label="Favori"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              ♡
+            </button>
+          )}
+        </div>
       )}
     </div>
   );

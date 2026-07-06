@@ -81,7 +81,7 @@ function Stars({ value }) {
   return (
     <div className="testi-stars">
       {Array.from({ length: 5 }).map((_, idx) => (
-        <span key={idx} className="star">
+        <span key={idx} className={`star${idx < value ? '' : ' empty'}`}>
           ★
         </span>
       ))}
@@ -121,10 +121,12 @@ function ReviewText({ text }) {
 export default function TestimonialsSection() {
   useRevealOnScroll('.reveal');
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(VISIBLE);
+  const [touchStart, setTouchStart] = useState(null);
 
   const items = useMemo(() => TESTIMONIALS, []);
-  const maxIndex = Math.max(0, items.length - VISIBLE);
+  const maxIndex = Math.max(0, items.length - visibleCount);
+  const safeIndex = Math.min(activeIndex, maxIndex);
 
   const goPrev = () => {
     setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
@@ -135,18 +137,20 @@ export default function TestimonialsSection() {
   };
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 760px)');
-    const sync = () => setIsMobile(mq.matches);
+    const sync = () => {
+      const w = window.innerWidth;
+      setVisibleCount(w <= 760 ? 1 : VISIBLE);
+    };
 
     sync();
-    if (mq.addEventListener) {
-      mq.addEventListener('change', sync);
-      return () => mq.removeEventListener('change', sync);
-    }
-
-    mq.addListener(sync);
-    return () => mq.removeListener(sync);
+    window.addEventListener('resize', sync);
+    return () => window.removeEventListener('resize', sync);
   }, []);
+
+  useEffect(() => {
+    const id = setInterval(goNext, 5000);
+    return () => clearInterval(id);
+  }, [items.length]);
 
   return (
     <section className="testimonials-section reveal">
@@ -181,22 +185,35 @@ export default function TestimonialsSection() {
           </div>
         </div>
 
-        <div className="testimonials-cards">
+        <div
+          className="testimonials-cards"
+          onTouchStart={(e) => setTouchStart(e.touches[0].clientX)}
+          onTouchEnd={(e) => {
+            if (touchStart == null) return;
+            const diff = touchStart - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 40) {
+              diff > 0 ? goNext() : goPrev();
+            }
+            setTouchStart(null);
+          }}
+        >
           <div
             className="testimonials-track"
-            style={{ transform: `translateX(-${Math.min(activeIndex, maxIndex) * (100 / VISIBLE)}%)` }}
+            style={{ transform: `translateX(-${safeIndex * (100 / visibleCount)}%)` }}
           >
             {items.map((t) => (
               <div key={t.id} className="testi-card">
-                <div className="testi-body">
-                  <ReviewText text={t.text} />
-                </div>
-                <div className="testi-footer">
-                  <div className="testi-author">
-                    <Avatar initials={t.initials} />
-                    <div className="testi-name">{t.name}</div>
+                <div className="testi-card-inner">
+                  <div className="testi-body">
+                    <Stars value={t.stars} />
+                    <ReviewText text={t.text} />
                   </div>
-                  <Stars value={t.stars} />
+                  <div className="testi-footer">
+                    <div className="testi-author">
+                      <Avatar initials={t.initials} />
+                      <div className="testi-name">{t.name}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
