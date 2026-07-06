@@ -95,13 +95,17 @@ function GlobalKeyframes() {
   return (
     <style>{`
       @keyframes ni-drawer-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
+      @keyframes ni-drawer-center { from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
       @keyframes ni-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+      .ni-drawer-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(26,20,8,0.55); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; }
+      .ni-drawer { position: fixed; top: 50%; left: 50%; width: min(400px, 85%); max-height: 78vh; transform: translate(-50%, -50%); background: ${C.paper}; display: flex; flex-direction: column; animation: ni-drawer-center .32s cubic-bezier(.4,0,.2,1); box-shadow: 0 20px 60px rgba(26,20,8,0.2); border-radius: 10px; overflow: hidden; }
       @media (prefers-reduced-motion: reduce) {
         .ni-marquee-row { animation: none !important; }
       }
       @media (max-width: 860px) {
         .ni-salon-row { grid-template-columns: 1fr !important; }
         .ni-salon-row.reverse .ni-salon-media { order: 0 !important; }
+        .ni-drawer { top: 0; left: auto; right: 0; height: 100%; max-height: 100vh; transform: translateX(0); border-radius: 0; animation: ni-drawer-in .32s cubic-bezier(.4,0,.2,1); box-shadow: -20px 0 60px rgba(26,20,8,0.2); }
       }
       @media (max-width: 960px) {
         .ni-fiches-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -161,16 +165,11 @@ function ServiceDrawer({ service, index, onClose }) {
   return (
     <div
       onClick={onClose}
-      style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(26,20,8,0.55)', backdropFilter: 'blur(4px)' }}
+      className="ni-drawer-overlay"
     >
       <div
         onClick={e => e.stopPropagation()}
-        style={{
-          position: 'fixed', top: 0, right: 0, height: '100%', width: 'min(460px, 100%)',
-          background: C.paper, display: 'flex', flexDirection: 'column',
-          animation: 'ni-drawer-in .32s cubic-bezier(.4,0,.2,1)',
-          boxShadow: '-20px 0 60px rgba(26,20,8,0.2)',
-        }}
+        className="ni-drawer"
       >
         <div style={{ height: 220, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', color: '#fff' }}>
           <img src={service.image} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
