@@ -2,7 +2,7 @@ import Hero from '../components/Hero.jsx';
 import HashtagBanner from '../components/HashtagBanner.jsx';
 import CategoryGrid from '../components/CategoryGrid.jsx';
 import ProductsSection from '../components/ProductsSection.jsx';
-import LookbookSection from '../components/LookbookSection.jsx';
+// import LookbookSection from '../components/LookbookSection.jsx';
 import TestimonialsSection from '../components/TestimonialsSection.jsx';
 import BlogSection from '../components/BlogSection.jsx';
 import InstagramSection from '../components/InstagramSection.jsx';
@@ -23,7 +23,7 @@ export default function HomePage() {
       <HashtagBanner />
       <CategoryGrid />
       <ProductsSection />
-      <LookbookSection />
+      {/* <LookbookSection /> */}
       <TestimonialsSection />
       <BlogSection />
       <InstagramSection />
