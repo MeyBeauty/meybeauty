@@ -2,20 +2,32 @@ import { collection, getDocs, limit, orderBy, query, where } from 'firebase/fire
 import { db } from './firebase.js';
 
 export async function fetchPublicProducts() {
-  const q = query(collection(db, 'products'), where('status', '==', 'active'), orderBy('updatedAt', 'desc'));
-  const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  try {
+    const q = query(collection(db, 'products'), where('status', '==', 'active'), orderBy('updatedAt', 'desc'));
+    const snap = await getDocs(q);
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  } catch {
+    const q = query(collection(db, 'products'), where('status', '==', 'active'));
+    const snap = await getDocs(q);
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  }
 }
 
 export async function fetchPopularProducts(max = 8) {
-  const q = query(
-    collection(db, 'products'),
-    where('status', '==', 'active'),
-    orderBy('updatedAt', 'desc'),
-    limit(max)
-  );
-  const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  try {
+    const q = query(
+      collection(db, 'products'),
+      where('status', '==', 'active'),
+      orderBy('updatedAt', 'desc'),
+      limit(max)
+    );
+    const snap = await getDocs(q);
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  } catch {
+    const q = query(collection(db, 'products'), where('status', '==', 'active'), limit(max));
+    const snap = await getDocs(q);
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  }
 }
 
 export async function fetchPublicPosts(max) {

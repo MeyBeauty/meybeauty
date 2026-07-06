@@ -18,6 +18,7 @@ import {
   Tag,
   RefreshCw,
   Database,
+  Power,
 } from 'lucide-react';
 import AdminPromotions from '../components/AdminPromotions.jsx';
 import AdminOrders from '../components/AdminOrders.jsx';
@@ -1069,6 +1070,18 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
     });
   };
 
+  const toggleStatus = (id) => {
+    const target = products.find((p) => p.id === id);
+    if (!target) return;
+    const nextStatus = target.status === 'active' ? 'archived' : 'active';
+    const payload = { ...target, status: nextStatus };
+    setProducts((prev) => prev.map((p) => (p.id === id ? payload : p)));
+    upsertProduct(payload).catch((e) => {
+      console.error('[Admin] toggleStatus error:', e);
+      window.alert('Erreur Firebase : le statut n\'a pas été sauvegardé.\n\n' + (e?.message || 'Erreur inconnue'));
+    });
+  };
+
   return (
     <div className="admin-page-view">
       <div className="admin-section">
@@ -1125,6 +1138,14 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
                       </button>
                       <button type="button" className="admin-action-btn" title="Modifier" onClick={() => openEdit(p.id)}>
                         <Pencil size={14} />
+                      </button>
+                      <button
+                        type="button"
+                        className={`admin-action-btn${p.status === 'active' ? ' active' : ' inactive'}`}
+                        title={p.status === 'active' ? 'Désactiver' : 'Activer'}
+                        onClick={() => toggleStatus(p.id)}
+                      >
+                        <Power size={14} />
                       </button>
                       <button type="button" className="admin-action-btn" title="Supprimer" onClick={() => remove(p.id)}>
                         <Trash2 size={14} />

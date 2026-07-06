@@ -17,8 +17,10 @@ export default function Footer() {
           <h4>Navigation</h4>
           <ul>
             <li><a href="#home">Accueil</a></li>
-            <li><a href="#about">À Propos</a></li>
+            <li><a href="#instituts">Nos Instituts</a></li>
+            <li><a href="#shop">Boutique</a></li>
             <li><a href="#blog">Blog</a></li>
+            <li><a href="#about">À Propos</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div>

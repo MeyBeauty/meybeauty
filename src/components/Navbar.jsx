@@ -73,10 +73,10 @@ export default function Navbar() {
         </div>
         <ul className="mobile-drawer-links">
           <li><a href="#home" onClick={() => setMobileOpen(false)}>Accueil</a></li>
-          <li><a href="#about" onClick={() => setMobileOpen(false)}>À Propos</a></li>
           <li><a href="#instituts" onClick={() => setMobileOpen(false)}>Nos Instituts</a></li>
           <li><a href="#shop" onClick={() => setMobileOpen(false)}>Boutique</a></li>
           <li><a href="#blog" onClick={() => setMobileOpen(false)}>Blog</a></li>
+          <li><a href="#about" onClick={() => setMobileOpen(false)}>À Propos</a></li>
           <li><a href="#contact" onClick={() => setMobileOpen(false)}>Contact</a></li>
         </ul>
       </aside>
@@ -87,10 +87,10 @@ export default function Navbar() {
         </a>
         <ul className="nav-menu">
           <li><a href="#home">Accueil</a></li>
-          <li><a href="#about">À Propos</a></li>
           <li><a href="#instituts">Nos Instituts</a></li>
           <li><a href="#shop">Boutique</a></li>
           <li><a href="#blog">Blog</a></li>
+          <li><a href="#about">À Propos</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <div className="nav-actions">

@@ -4,36 +4,78 @@ import { useEffect, useMemo, useState } from 'react';
 const TESTIMONIALS = [
   {
     id: 1,
-    text:
-      "« Apres 6 seances d'LPG, ma peau est visiblement plus lisse et tonique. Les zones rebelles de cellulite sont nettement attenuées. Je me sens super bien dans mon corps. »",
-    name: 'Sarah M.',
-    role: 'Cliente soins corps',
+    text: "Je vais voir Chloé tous les mois depuis presque un an, et c'est toujours un plaisir ! Son travail est impeccable et l'ambiance au top, c'est pour ça que je n'ai pas hésité à la suivre quand elle a changé de salon.",
+    name: 'Héloïse Dmy',
+    role: 'Local Guide · 7 avis',
+    service: 'Manucure',
+    date: "il y a 7 mois",
     stars: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=crop&w=200&q=80',
+    initials: 'HD',
   },
   {
     id: 2,
-    text:
-      "« Les cremes LPG que je reprends regulierement a l'institut ont change ma peau. L'hydratation est intense et les resultats sont progressifs mais durables. Je recommande a 100 %. »",
-    name: 'Karine B.',
-    role: 'Cliente boutique',
+    text: "Une expérience absolument parfaite ! J'ai fait mes ongles en pose américaine dans ce salon de manucure et le résultat est incroyable. La prothésiste ongulaire Chloé est très professionnelle, douce et attentive aux détails. La tenue est impeccable même après plusieurs semaines. Le design des ongles est magnifique, le nail art personnalisé est fait avec beaucoup de goût. Le lieu est propre et accueillant. Je recommande à 100 % cet institut de beauté spécialisé dans les ongles et les cils. Un vrai coup de cœur pour cette nail artist passionnée qui sait sublimer les mains avec élégance.",
+    name: 'Earine',
+    role: '4 avis · 1 photo',
+    service: 'Manucure',
+    date: "il y a 7 mois",
     stars: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80',
+    initials: 'E',
   },
   {
     id: 3,
-    text:
-      "« Mon visage est lumineux depuis les soins personnalises Mey Beauty. Les imperfections sont attenuées, ma peau est repulpée. Un vrai moment de détente et d'efficacité. »",
-    name: 'Amina D.',
-    role: 'Cliente soins visage',
+    text: "Franchement la meilleure prothésiste ongulaire de Viry-Châtillon (91) : Chloé alias beautybyc sans aucun doute !!! Elle me fait mes poses de Gel X, mon semi-permanent et mes nail arts (les plus fous) depuis un bon moment maintenant ! Elle prend toujours le temps d'écouter mes envies et elle arrive toujours à sublimer mes idées (même quand je pars loin). Un vrai moment de détente à chaque rendez-vous, dans une ambiance super agréable au salon. Si vous cherchez une pro en pose de gel et nail art dans le 91, foncez les yeux fermés !",
+    name: 'VIOT Mathilde',
+    role: '11 avis · 4 photos',
+    service: '',
+    date: "il y a 7 mois",
     stars: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=200&q=80',
+    initials: 'VM',
   },
-
+  {
+    id: 4,
+    text: "Super salon ! Découvert via les réseaux sociaux je suis très contente du travail réalisé par Julie j'ai fais un Powderbrow le résultat est magnifique merciii a toute l'équipe pour cette accueil.",
+    name: 'morgane Garcin',
+    role: 'Local Guide · 18 avis',
+    service: '',
+    date: "il y a 4 mois",
+    stars: 5,
+    initials: 'MG',
+  },
+  {
+    id: 5,
+    text: "Très belle découverte ! J'ai achetée un coupon sur Groupon pour cet institut, très bien accueilli, le massage était top. De la propreté jusqu'à la petite musique, j'ai pris rdv pour une manucure, qui a été réalisé avec soin et minutie. J'ai repris aussi tôt rdv pour une pédicure et ça sera mon institut chouchou ! De vrai moment de détente Merci.",
+    name: 'Chahinaize El Hadhiq',
+    role: '3 avis · 1 photo',
+    service: '',
+    date: "il y a 2 ans",
+    stars: 5,
+    initials: 'CE',
+  },
+  {
+    id: 6,
+    text: "Joli institut et agréable. Accueil chaleureux par Mélanie. J'y vais pour faire mes ongles, cela fait plusieurs fois que je les fait et ils sont bien réalisés et tiennent bien dans le temps. Je recommande.",
+    name: 'Stéphanie S.',
+    role: '8 avis · 5 photos',
+    service: '',
+    date: "il y a 3 ans",
+    stars: 5,
+    initials: 'SS',
+  },
+  {
+    id: 7,
+    text: "Prestation au top, je suis très satisfaite du travail de Sandy. Ma manucure était impeccable, bien soignée et elle a durée. Ça fait plaisir de voir des professionnelles impliquées dans leur travail. Sandy est très accueillante, gentille et rayonnante.",
+    name: 'Gulustan Sarikaya',
+    role: '13 avis',
+    service: '',
+    date: "il y a un an",
+    stars: 5,
+    initials: 'GS',
+  },
 ];
+
+const MAX_LENGTH = 140;
+const VISIBLE = 3;
 
 function Stars({ value }) {
   return (
@@ -47,12 +89,42 @@ function Stars({ value }) {
   );
 }
 
+function Avatar({ initials }) {
+  return (
+    <div className="testi-avatar testi-avatar-initials" aria-hidden="true">
+      {initials}
+    </div>
+  );
+}
+
+function ReviewText({ text }) {
+  const [expanded, setExpanded] = useState(false);
+  const long = text.length > MAX_LENGTH;
+  const displayed = expanded || !long ? text : text.slice(0, MAX_LENGTH).trim() + '…';
+  return (
+    <>
+      <p className="testi-text">{displayed}</p>
+      {long && (
+        <button
+          type="button"
+          className="testi-read-more"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+        >
+          {expanded ? 'Réduire' : 'Lire la suite'}
+        </button>
+      )}
+    </>
+  );
+}
+
 export default function TestimonialsSection() {
   useRevealOnScroll('.reveal');
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
   const items = useMemo(() => TESTIMONIALS, []);
+  const maxIndex = Math.max(0, items.length - VISIBLE);
 
   const goPrev = () => {
     setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
@@ -112,20 +184,19 @@ export default function TestimonialsSection() {
         <div className="testimonials-cards">
           <div
             className="testimonials-track"
-            style={isMobile ? { transform: `translateX(-${activeIndex * 100}%)` } : undefined}
+            style={{ transform: `translateX(-${Math.min(activeIndex, maxIndex) * (100 / VISIBLE)}%)` }}
           >
             {items.map((t) => (
               <div key={t.id} className="testi-card">
-                <p className="testi-text">{t.text}</p>
-                <div className="testi-author">
-                  <div className="testi-avatar">
-                    <img src={t.avatar} alt={t.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                  <div className="testi-info">
+                <div className="testi-body">
+                  <ReviewText text={t.text} />
+                </div>
+                <div className="testi-footer">
+                  <div className="testi-author">
+                    <Avatar initials={t.initials} />
                     <div className="testi-name">{t.name}</div>
-                    <div className="testi-role">{t.role}</div>
-                    <Stars value={t.stars} />
                   </div>
+                  <Stars value={t.stars} />
                 </div>
               </div>
             ))}

@@ -110,6 +110,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, __dirname, '');
   
   return {
+    base: './',
     plugins: [react(), stripeBackendPlugin(env)],
     server: {
       port: 5173

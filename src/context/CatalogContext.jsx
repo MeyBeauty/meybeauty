@@ -5,9 +5,11 @@ import { fetchPublicProducts } from '../firebase/publicQueries.js';
 const CatalogContext = createContext(null);
 
 export function CatalogProvider({ children }) {
-  const [products, setProducts] = useState(localProducts);
+  const [rawProducts, setRawProducts] = useState(localProducts);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const isActiveProduct = (p) => !p.status || p.status === 'active';
 
   useEffect(() => {
     let mounted = true;
@@ -17,15 +19,18 @@ export function CatalogProvider({ children }) {
         setLoading(true);
         const remote = await fetchPublicProducts();
         if (!mounted) return;
+        console.log('[Catalog] remote products:', remote?.length || 0, remote?.map((p) => ({ id: p.id, status: p.status })));
         if (Array.isArray(remote) && remote.length > 0) {
-          setProducts(remote);
+          setRawProducts(remote);
         } else {
-          setProducts(localProducts);
+          console.log('[Catalog] fallback to localProducts', localProducts.length);
+          setRawProducts(localProducts);
         }
       } catch (e) {
         if (!mounted) return;
+        console.error('[Catalog] fetch error:', e);
         setError(e?.message || 'Failed to load products');
-        setProducts(localProducts);
+        setRawProducts(localProducts);
       } finally {
         if (!mounted) return;
         setLoading(false);
@@ -36,6 +41,11 @@ export function CatalogProvider({ children }) {
       mounted = false;
     };
   }, []);
+
+  const products = useMemo(
+    () => (rawProducts || []).filter(isActiveProduct),
+    [rawProducts]
+  );
 
   const byId = useMemo(() => {
     const map = new Map();

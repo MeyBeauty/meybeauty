@@ -10,8 +10,11 @@ function parseSearchFromHash(hash) {
   return (params.get('search') || '').trim();
 }
 
+const isActiveProduct = (p) => !p.status || p.status === 'active';
+
 export default function ShopPage() {
-  const { products: allProducts } = useCatalog();
+  const { products: rawProducts } = useCatalog();
+  const allProducts = useMemo(() => (rawProducts || []).filter(isActiveProduct), [rawProducts]);
   const [activeCategory, setActiveCategory] = useState('');
   const [activeTag, setActiveTag] = useState('');
   const [page, setPage] = useState(1);
@@ -31,10 +34,23 @@ export default function ShopPage() {
   }, [allProducts]);
 
   const tags = useMemo(() => {
+    const allowed = new Set([
+      'visage',
+      'corps',
+      'minceur',
+      'anti-âge',
+      'hydratation',
+      'sérum',
+      'lift',
+      'masque',
+      'contour des yeux',
+      'fermeté',
+    ]);
     const set = new Set();
     (allProducts || []).forEach((p) => {
       (Array.isArray(p.tags) ? p.tags : []).forEach((t) => {
-        if (t) set.add(String(t).trim());
+        const tag = String(t || '').trim();
+        if (allowed.has(tag)) set.add(tag);
       });
     });
     return Array.from(set).sort();
@@ -81,7 +97,7 @@ export default function ShopPage() {
       list = list.filter((p) => (p.priceCents || 0) <= max * 100);
     }
     return list;
-  }, [activeCategory, activeTag, search, priceRange]);
+  }, [allProducts, activeCategory, activeTag, search, priceRange]);
 
   const totalPages = useMemo(() => Math.max(1, Math.ceil(products.length / pageSize)), [products.length]);
   const pageProducts = useMemo(() => {

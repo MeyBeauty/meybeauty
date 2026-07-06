@@ -108,18 +108,22 @@ export default function ProductDetailPage() {
     if (!product || !promotion) return null;
     return calculateSavings(product.priceCents, promotion);
   }, [product, promotion, calculateSavings]);
+  const isActive = (p) => !p.status || p.status === 'active';
+
   const related = useMemo(() => {
-    const byId = new Map((allProducts || []).map((p) => [p.id, p]));
+    const active = (allProducts || []).filter(isActive);
+    const byId = new Map(active.map((p) => [p.id, p]));
     const picked = popularProductIds.map((id) => byId.get(id)).filter(Boolean).filter((p) => p.id !== productId).slice(0, 3);
     if (picked.length) return picked;
-    return (allProducts || []).filter((p) => p.id !== productId).slice(0, 3);
+    return active.filter((p) => p.id !== productId).slice(0, 3);
   }, [allProducts, productId]);
 
   const mini = useMemo(() => {
-    const byId = new Map((allProducts || []).map((p) => [p.id, p]));
+    const active = (allProducts || []).filter(isActive);
+    const byId = new Map(active.map((p) => [p.id, p]));
     const picked = popularProductIds.map((id) => byId.get(id)).filter(Boolean).slice(0, 5);
     if (picked.length) return picked;
-    return (allProducts || []).slice(0, 5);
+    return active.slice(0, 5);
   }, [allProducts]);
 
   const images = product?.images?.length ? product.images : ['/produits/produit (1).webp'];
