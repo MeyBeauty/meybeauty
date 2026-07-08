@@ -52,7 +52,7 @@ const salon1 = {
 const salon2 = {
   id: 'gabriel-peri',
   name: 'Boulevard Gabriel Péri',
-  tagline: "L'art du détail. La précision au service de votre beauté.",
+  tagline: "Sublimer vos mains, magnifier votre regard.",
   address: 'Boulevard Gabriel Péri, 91170 Viry-Châtillon',
   phone: '+33 7 49 22 68 01',
   hours: 'Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h',
