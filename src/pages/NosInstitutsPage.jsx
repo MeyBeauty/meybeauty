@@ -30,7 +30,7 @@ const FONT_CORPS = "'Lato', sans-serif";
 const salon1 = {
   id: 'place-du-marche',
   name: 'Place du Marché',
-  tagline: 'Le soin du corps, porté à son sommet.',
+  tagline: 'Redonner vie à votre corps.',
   address: '6 Place des Martyrs de Châteaubriand, 91170 Viry-Châtillon',
   phone: '+33 7 49 22 68 01',
   hours: 'Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h',
