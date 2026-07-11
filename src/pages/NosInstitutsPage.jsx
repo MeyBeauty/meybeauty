@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MapPin, Clock, Phone, ArrowRight, X, Plus } from 'lucide-react';
 import SEO from '../components/SEO.jsx';
+import PlanityWidget from '../components/PlanityWidget.jsx';
 
 const planityUrl = 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i';
 
@@ -36,16 +37,16 @@ const salon1 = {
   hours: 'Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h',
   image: '/mey-beauty%20(1).jpeg',
   services: [
-    { name: 'Épilation', price: 'À partir de 15 €', family: 'precision', image: '/epilation-a-la-cire.jpg', pitch: 'Peau lisse. Dès la première séance.', description: 'Cires douces adaptées à toutes les zones. Résultat impeccable, confort maximal.' },
-    { name: 'Épilation définitive', price: 'À partir de 55 €', family: 'precision', image: '/Epilation-laser.webp', pitch: 'Fini les poils, pour de bon.', description: 'Laser et lumière pulsée pour une réduction durable. Peau nette au quotidien, sans contrainte.' },
-    { name: 'LPG Cellu M6', price: 'À partir de 75 €', family: 'corps', image: '/soin-minceur.PNG', pitch: 'Votre silhouette, sculptée par la technologie.', description: 'Endermologie brevetée pour cibler la cellulite, raffermir la peau et affiner durablement.' },
-    { name: 'Drainage lymphatique', price: 'À partir de 70 €', family: 'corps', image: '/DrainageLymphatiqueSilhouette.jpg', pitch: 'Légèreté retrouvée. Corps libéré.', description: 'Massage manuel profond pour éliminer les toxines, activer la circulation et soulager les jambes lourdes.' },
-    { name: 'Madérothérapie', price: 'À partir de 80 €', family: 'corps', image: '/soin%20minceur%20(1).jpg', pitch: 'Le bois sculpte, le corps se transforme.', description: 'Instruments en bois naturel pour déloger la cellulite, modeler les courbes et améliorer la circulation.' },
-    { name: 'Soin visage', price: 'À partir de 65 €', family: 'visage', image: '/soin%20visage%20(2).jpg', pitch: 'Votre teint, réveillé.', description: 'Rituel nettoyant, hydratant ou anti-âge personnalisé selon votre type de peau pour une peau lumineuse.' },
-    { name: 'Spray tan', price: 'À partir de 40 €', family: 'visage', image: '/beaut%C3%A9%20regard%20(2).jpg', pitch: 'Bronzée. Sans le soleil.', description: 'Hâle doré, uniforme et longue tenue. Sans UV, sans risque, avec un rendu naturel garanti.' },
-    { name: 'Beauté du regard', price: 'À partir de 25 €', family: 'visage', image: '/regard.jpg', pitch: "Des yeux qui parlent d'eux-mêmes.", description: 'Coloration, rehaussement et soin des cils et sourcils pour un regard ouvert et intense.' },
-    { name: 'Onglerie', price: 'À partir de 30 €', family: 'visage', image: '/Manucure%20Japonaise%20%20Le%20soin%20d%C3%A9tox%20r%C3%A9volutionnaire%20pour%20des%20ongles%20sains%20et%20brillants.jpg', pitch: 'Des mains à croquer.', description: 'Manucure, vernis classique ou semi-permanent pour des ongles soignés et des mains impeccables.' },
-    { name: 'Tatouage semi-permanent', price: 'À partir de 150 €', family: 'precision', image: '/Tatouage%20semi-permanent%20%20Le%20secret%20d%27une%20mise%20en%20beaut%C3%A9%20durable%20et%20naturelle.jpg', pitch: 'Réveillée belle. Tous les matins.', description: 'Sourcils, lèvres ou yeux subtilement rehaussés pour une beauté naturelle et durable sans effort.' },
+    { name: 'Épilation', price: 'Découvrir', family: 'precision', image: '/epilation-a-la-cire.jpg', pitch: 'Peau lisse. Dès la première séance.', description: 'Cires douces adaptées à toutes les zones. Résultat impeccable, confort maximal.', planityServiceSetIds: ['-Ol37IE9hHjduXLe5euh'] },
+    { name: 'Épilation définitive', price: 'Découvrir', family: 'precision', image: '/Epilation-laser.webp', pitch: 'Fini les poils, pour de bon.', description: 'Laser et lumière pulsée pour une réduction durable. Peau nette au quotidien, sans contrainte.', planityServiceSetIds: ['-Ol3CsevbpSXybi9euiF'] },
+    { name: 'LPG Cellu M6', price: 'Découvrir', family: 'corps', image: '/soin-minceur.PNG', pitch: 'Votre silhouette, sculptée par la technologie.', description: 'Endermologie brevetée pour cibler la cellulite, raffermir la peau et affiner durablement.', planityServiceSetIds: ['-Ol3L_k2ReRgOHI0FJw7'] },
+    { name: 'Drainage lymphatique', price: 'Découvrir', family: 'corps', image: '/DrainageLymphatiqueSilhouette.jpg', pitch: 'Légèreté retrouvée. Corps libéré.', description: 'Massage manuel profond pour éliminer les toxines, activer la circulation et soulager les jambes lourdes.', planityServiceSetIds: ['-Ol3PL-4DWabvYcQlZAx'] },
+    { name: 'Madérothérapie', price: 'Découvrir', family: 'corps', image: '/soin%20minceur%20(1).jpg', pitch: 'Le bois sculpte, le corps se transforme.', description: 'Instruments en bois naturel pour déloger la cellulite, modeler les courbes et améliorer la circulation.', planityServiceSetIds: ['-Ol3NxupvdMJITC5AZDH'] },
+    { name: 'Soin visage', price: 'Découvrir', family: 'visage', image: '/soin%20visage%20(2).jpg', pitch: 'Votre teint, réveillé.', description: 'Rituel nettoyant, hydratant ou anti-âge personnalisé selon votre type de peau pour une peau lumineuse.', planityServiceSetIds: ['-OnhVQxq7vObvSeJRzMU', '-Ol3GkVAkT6jUeNjS83U'] },
+    { name: 'Spray tan', price: 'Découvrir', family: 'visage', image: '/beaut%C3%A9%20regard%20(2).jpg', pitch: 'Bronzée. Sans le soleil.', description: 'Hâle doré, uniforme et longue tenue. Sans UV, sans risque, avec un rendu naturel garanti.', planityServiceSetIds: ['-Oqe80X7TxoVeWliJ9FY'] },
+    { name: 'Beauté du regard', price: 'Découvrir', family: 'visage', image: '/regard.jpg', pitch: "Des yeux qui parlent d'eux-mêmes.", description: 'Coloration, rehaussement et soin des cils et sourcils pour un regard ouvert et intense.', planityServiceSetIds: ['-Ol3UAjBrVUku0PURXqq'] },
+    { name: 'Onglerie', price: 'Découvrir', family: 'visage', image: '/Manucure%20Japonaise%20%20Le%20soin%20d%C3%A9tox%20r%C3%A9volutionnaire%20pour%20des%20ongles%20sains%20et%20brillants.jpg', pitch: 'Des mains à croquer.', description: 'Manucure, vernis classique ou semi-permanent pour des ongles soignés et des mains impeccables.', planityServiceSetIds: ['-Ol3Ea7M5wyLDv27sgmz'] },
+    { name: 'Tatouage semi-permanent', price: 'Découvrir', family: 'precision', image: '/Tatouage%20semi-permanent%20%20Le%20secret%20d%27une%20mise%20en%20beaut%C3%A9%20durable%20et%20naturelle.jpg', pitch: 'Réveillée belle. Tous les matins.', description: 'Sourcils, lèvres ou yeux subtilement rehaussés pour une beauté naturelle et durable sans effort.', planityServiceSetIds: ['-Ol35YKLTwrdNnEDQ6wQ'] },
   ],
 };
 
@@ -58,8 +59,8 @@ const salon2 = {
   hours: 'Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h',
   image: '/mey-beauty%20(5).jpeg',
   services: [
-    { name: 'Onglerie', price: 'À partir de 30 €', family: 'visage', image: '/meybeauty.jpg', pitch: 'Des mains sublimées, une finition parfaite.', description: "Manucure, vernis, semi-permanent et nail art pour des mains d'exception." },
-    { name: 'Extensions de cils', price: 'À partir de 90 €', family: 'visage', image: '/beaut%C3%A9%20regard%20(3).PNG', pitch: 'Un regard intense. Sans mascara.', description: 'Pose à cils ou volume russe selon votre morphologie pour un regard qui captive.' },
+    { name: 'Onglerie', price: 'Découvrir', family: 'visage', image: '/meybeauty.jpg', pitch: 'Des mains sublimées, une finition parfaite.', description: "Manucure, vernis, semi-permanent et nail art pour des mains d'exception.", planityServiceSetIds: ['-Ol3Ea7M5wyLDv27sgmz'] },
+    { name: 'Extensions de cils', price: 'Découvrir', family: 'visage', image: '/beaut%C3%A9%20regard%20(3).PNG', pitch: 'Un regard intense. Sans mascara.', description: 'Pose à cils ou volume russe selon votre morphologie pour un regard qui captive.', planityServiceSetIds: ['-Ol3UAjBrVUku0PURXqq'] },
   ],
 };
 
@@ -186,28 +187,13 @@ function ServiceDrawer({ service, index, onClose }) {
           </div>
         </div>
 
-        <div style={{ padding: '30px 28px', flex: 1, overflowY: 'auto' }}>
+        <div style={{ padding: '30px 28px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
           <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 19, color: C.gold, marginBottom: 18, lineHeight: 1.4 }}>
             "{service.pitch}"
           </p>
-          <p style={{ fontFamily: FONT_CORPS, fontSize: 14, lineHeight: 1.8, color: 'var(--brun)', marginBottom: 28 }}>
-            {service.description}
-          </p>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, marginBottom: 26 }}>
-            <div>
-              <div style={{ fontFamily: FONT_CORPS, fontSize: 10.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.label, marginBottom: 4 }}>Tarif</div>
-              <div style={{ fontFamily: FONT_SC, fontSize: 20, color: 'var(--brun-dark)' }}>{service.price}</div>
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontFamily: FONT_CORPS, fontSize: 10.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.label, marginBottom: 4 }}>Disponibilité</div>
-              <div style={{ fontFamily: FONT_CORPS, fontSize: 13, color: 'var(--brun-dark)' }}>Lun–Sam, 9h30–19h30</div>
-            </div>
+          <div style={{ flex: 1, minHeight: 420, marginTop: 8 }}>
+            <PlanityWidget serviceSetIds={service.planityServiceSetIds} />
           </div>
-
-          <a href={planityUrl} target="_blank" rel="noreferrer" className="btn-rdv" style={{ width: '100%', justifyContent: 'center' }}>
-            Réserver cette prestation <ArrowRight size={16} strokeWidth={2} />
-          </a>
         </div>
       </div>
     </div>
@@ -491,6 +477,63 @@ export default function NosInstitutsPage() {
       {activeService && (
         <ServiceDrawer service={activeService} index={activeIndex} onClose={handleClose} />
       )}
+
+      <style>{`
+        .ni-drawer-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 100;
+          background: rgba(26, 20, 8, 0.55);
+          backdrop-filter: blur(4px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+          animation: ni-fade-in 0.25s ease;
+        }
+        .ni-drawer {
+          width: min(520px, 100%);
+          max-height: 88vh;
+          background: var(--blanc, #FFFFFF);
+          border-radius: 12px;
+          box-shadow: 0 24px 80px rgba(26, 20, 8, 0.22);
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          animation: ni-drawer-center 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes ni-fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes ni-drawer-center {
+          from { opacity: 0; transform: scale(0.96); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes planity-spin {
+          to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 640px) {
+          .ni-drawer-overlay {
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding: 0;
+          }
+          .ni-drawer {
+            width: 100%;
+            max-height: 92vh;
+            height: 92vh;
+            border-radius: 16px 16px 0 0;
+            animation: ni-drawer-up 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          @keyframes ni-drawer-up {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+          }
+        }
+      `}</style>
     </>
   );
 }

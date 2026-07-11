@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planity — Mey Beauty</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: #fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    #planity {
+      width: 100%;
+      min-height: 100vh;
+      padding: 12px;
+    }
+    #loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: rgba(255,255,255,0.95);
+      z-index: 10;
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid rgba(138,110,90,0.2);
+      border-top-color: #8A6E5A;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .title { color: #1A1410; font-size: 16px; font-weight: 600; }
+    .subtitle { color: #8A6E5A; font-size: 13px; max-width: 260px; text-align: center; line-height: 1.4; }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <div class="spinner"></div>
+    <div class="title">Préparation de votre réservation</div>
+    <div class="subtitle">Sélectionnez votre prestation et votre créneau une fois le module Planity chargé.</div>
+  </div>
+  <div id="planity"></div>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const key = params.get('key');
+      const rawIds = params.get('serviceSetIds');
+      const serviceSetIds = rawIds ? rawIds.split(',').filter(Boolean) : [];
+
+      if (!key) {
+        document.getElementById('planity').innerHTML = '<p style="padding:24px;color:#b91c1c;text-align:center;">Clé Planity manquante.</p>';
+        document.getElementById('loader').style.display = 'none';
+        return;
+      }
+
+      const options = serviceSetIds.length > 0 ? { serviceSetsWhitelist: serviceSetIds } : {};
+
+      window.planity = {
+        key: key,
+        primaryColor: '#8A6E5A',
+        container: document.getElementById('planity'),
+        options: options,
+      };
+
+      let notified = false;
+      function hideLoader() {
+        const loader = document.getElementById('loader');
+        if (loader) loader.style.display = 'none';
+        if (!notified) {
+          notified = true;
+          try {
+            window.parent.postMessage({ type: 'planity:loaded' }, '*');
+          } catch (e) {}
+        }
+      }
+
+      const container = document.getElementById('planity');
+      const observer = new MutationObserver(() => {
+        if (container.childNodes.length > 0) {
+          // attendre que le contenu prenne de la hauteur
+          requestAnimationFrame(() => {
+            if (container.getBoundingClientRect().height > 100) {
+              hideLoader();
+            }
+          });
+        }
+      });
+      observer.observe(container, { childList: true, subtree: true });
+
+      setTimeout(hideLoader, 12000);
+
+      const polyfills = document.createElement('script');
+      polyfills.src = 'https://d2skjte8udjqxw.cloudfront.net/widget/production/2/polyfills.latest.js';
+      polyfills.async = true;
+      document.body.appendChild(polyfills);
+
+      const app = document.createElement('script');
+      app.src = 'https://d2skjte8udjqxw.cloudfront.net/widget/production/2/app.latest.js';
+      app.async = true;
+      document.body.appendChild(app);
+    })();
+  </script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 import SEO from '../components/SEO.jsx';
-import { ArrowLeft, Calendar, Search, Sparkles, ShieldCheck, MessageCircleHeart, Leaf, Flame, Wind, ClipboardList, Eye, Droplets, Paintbrush, Palette, Sliders } from 'lucide-react';
+import PlanityWidget from '../components/PlanityWidget.jsx';
+import { useState } from 'react';
+import { ArrowLeft, Calendar, X, Search, Sparkles, ShieldCheck, MessageCircleHeart, Leaf, Flame, Wind, ClipboardList, Eye, Droplets, Paintbrush, Palette, Sliders } from 'lucide-react';
 
 const SERVICES = {
   visage: {
@@ -8,6 +10,7 @@ const SERVICES = {
     title: 'Soin du visage Sur‑mesure',
     image: '/soin visage (2).PNG',
     video: 'https://www.pexels.com/fr-fr/download/video/9335813/',
+    planityServiceSetIds: ['-OnhVQxq7vObvSeJRzMU', '-Ol3GkVAkT6jUeNjS83U'],
     intro: 'Chaque peau est une histoire. Nous analysons votre visage avant chaque soin pour choisir les actifs, les gestes et le temps de pause qui vous correspondent.',
     paragraphs: [
       'Notre approche du soin visage combine diagnostic personnalisé, technologies douces et produits professionnels.',
@@ -43,6 +46,7 @@ const SERVICES = {
     title: 'Minceur',
     image: '/soin-minceur.PNG',
     video: 'https://www.pexels.com/fr-fr/download/video/32828416/',
+    planityServiceSetIds: ['-Ol3L_k2ReRgOHI0FJw7', '-Ol3PL-4DWabvYcQlZAx', '-Ol3NxupvdMJITC5AZDH'],
     intro: 'Affiner, tonifier, retrouver du confort dans son corps : nos soins corps associent technologies professionnelles et protocoles sur-mesure.',
     paragraphs: [
       'LPG Cellu M6, drainage lymphatique, enveloppements et soins ciblés : nous combinons les techniques les plus efficaces pour accompagner votre silhouette.',
@@ -78,6 +82,7 @@ const SERVICES = {
     title: 'Beauté du Regard',
     image: '/mey-beauty (6).jpeg',
     video: 'https://www.pexels.com/fr-fr/download/video/8502623/',
+    planityServiceSetIds: ['-Ol3UAjBrVUku0PURXqq'],
     intro: 'Intensifier le regard, sublimer le sourcil, allonger les cils : nos prestations de beauté du regard sont conçues pour donner du caractère à votre face.',
     paragraphs: [
       'Extensions de cils, rehaussement, teinture de cils et sourcils, microblading et soins du contour de l’œil : chaque geste est précis.',
@@ -113,6 +118,7 @@ const SERVICES = {
     title: 'Onglerie Premium',
     image: '/meybeauty.jpg',
     video: '',
+    planityServiceSetIds: ['-Ol3Ea7M5wyLDv27sgmz'],
     intro: 'Des mains soignées, des ongles sublimés : notre onglerie premium allie esthétique, tenue et respect de la nature de l’ongle.',
     paragraphs: [
       'Vernis semi-permanent, pose en gel, nail art, soins des mains et des pieds : chaque prestation est réalisée avec des produits professionnels.',
@@ -157,8 +163,6 @@ const TRUST_ITEMS = [
   { icon: ShieldCheck, label: 'Hygiène irréprochable' },
   { icon: MessageCircleHeart, label: 'Clientes satisfaites' },
 ];
-
-const PLANITY_URL = 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i';
 
 function StarRow({ count = 5 }) {
   return (
@@ -210,6 +214,7 @@ function VideoOrImage({ src, video, alt, className }) {
 
 export default function ServiceDetailPage({ slug }) {
   const service = SERVICES[slug] || SERVICES['visage'];
+  const [showBooking, setShowBooking] = useState(false);
 
   return (
     <>
@@ -248,7 +253,14 @@ export default function ServiceDetailPage({ slug }) {
               ))}
               <div className="sd-chip-row">
                 <span className="sd-chip">Durée · {service.duration}</span>
-                <span className="sd-chip sd-chip-accent">{service.price}</span>
+                <button
+                  type="button"
+                  onClick={() => setShowBooking(true)}
+                  className="btn-rdv sd-chip-btn"
+                  style={{ border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+                >
+                  <Calendar size={16} strokeWidth={1.5} /> Réserver
+                </button>
               </div>
             </div>
           </div>
@@ -268,17 +280,20 @@ export default function ServiceDetailPage({ slug }) {
           </div>
         </section>
 
-        <section className="sd-trust">
-          <div className="sd-trust-row">
-            {TRUST_ITEMS.map((t, i) => (
-              <div key={i} className="sd-trust-item">
-                <span className="sd-trust-icon"><t.icon size={28} strokeWidth={1.5} /></span>
-                <span className="sd-trust-label">{t.label}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        {false && (
+          <section className="sd-trust">
+            <div className="sd-trust-row">
+              {TRUST_ITEMS.map((t, i) => (
+                <div key={i} className="sd-trust-item">
+                  <span className="sd-trust-icon"><t.icon size={28} strokeWidth={1.5} /></span>
+                  <span className="sd-trust-label">{t.label}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
+        {false && (
         <section className="sd-reviews">
           <div className="sd-reviews-header">
             <p className="sd-eyebrow sd-center">Avis clientes</p>
@@ -302,6 +317,7 @@ export default function ServiceDetailPage({ slug }) {
             );
           })}
         </section>
+        )}
 
         <section className="sd-others">
           <p className="sd-eyebrow sd-center">À découvrir aussi</p>
@@ -338,9 +354,14 @@ export default function ServiceDetailPage({ slug }) {
           <p className="sd-final-copy">
             Choisissez votre créneau en ligne. Nous vous accueillons à Viry-Châtillon dans nos deux instituts, selon la prestation sélectionnée.
           </p>
-          <a href={PLANITY_URL} target="_blank" rel="noopener noreferrer" className="btn-rdv">
-            <Calendar size={18} strokeWidth={1.5} /> Réserver sur Planity
-          </a>
+          <button
+            type="button"
+            onClick={() => setShowBooking(true)}
+            className="btn-rdv"
+            style={{ border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+          >
+            <Calendar size={18} strokeWidth={1.5} /> Réserver
+          </button>
           <div className="sd-final-back">
             <a href="#home">
               <ArrowLeft size={16} strokeWidth={1.5} /> Retour à l’accueil
@@ -348,6 +369,22 @@ export default function ServiceDetailPage({ slug }) {
           </div>
         </section>
       </main>
+
+      {showBooking && (
+        <div className="sd-planity-overlay" onClick={() => setShowBooking(false)}>
+          <div className="sd-planity-drawer" onClick={(e) => e.stopPropagation()}>
+            <div className="sd-planity-header">
+              <h3>Réserver — {service.title}</h3>
+              <button type="button" onClick={() => setShowBooking(false)} aria-label="Fermer">
+                <X size={20} strokeWidth={1.5} />
+              </button>
+            </div>
+            <div className="sd-planity-body">
+              <PlanityWidget serviceSetIds={service.planityServiceSetIds} />
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>{`
         .service-detail-page .about-hero h1 {
@@ -463,6 +500,21 @@ export default function ServiceDetailPage({ slug }) {
           box-shadow: 0 4px 14px rgba(107, 83, 68, 0.18);
         }
         .sd-chip-accent { background: var(--brun-medium); }
+        .sd-chip-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 18px;
+          border-radius: 2px;
+          font-family: var(--font-sc);
+          font-size: 11px;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          background: var(--brun-medium);
+          color: var(--blanc);
+          box-shadow: 0 4px 14px rgba(107, 83, 68, 0.18);
+        }
+        .sd-chip-btn:hover { background: var(--brun-dark); }
 
         .sd-ritual { padding: 80px 32px; background: var(--nude-light); }
         .sd-ritual-list {
@@ -686,6 +738,91 @@ export default function ServiceDetailPage({ slug }) {
           font-size: 14px;
           color: #8A6E5A;
           text-decoration: none;
+        }
+
+        .sd-planity-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 100;
+          background: rgba(26, 20, 8, 0.55);
+          backdrop-filter: blur(4px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+        }
+        .sd-planity-drawer {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          width: min(480px, 92%);
+          max-height: 86vh;
+          transform: translate(-50%, -50%);
+          background: var(--blanc, #FFFFFF);
+          border-radius: 12px;
+          box-shadow: 0 20px 60px rgba(26, 20, 8, 0.2);
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          animation: sd-planity-center 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sd-planity-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          padding: 18px 22px;
+          border-bottom: 1px solid var(--gris-border, #E5E5E5);
+        }
+        .sd-planity-header h3 {
+          margin: 0;
+          font-family: var(--font-titre);
+          font-size: 18px;
+          font-weight: 600;
+          color: var(--brun-dark);
+        }
+        .sd-planity-header button {
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #8A6E5A;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px;
+          flex-shrink: 0;
+        }
+        .sd-planity-body {
+          flex: 1;
+          overflow-y: auto;
+          padding: 10px;
+          min-height: 420px;
+        }
+        @keyframes sd-planity-center {
+          from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+          to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        @keyframes planity-spin {
+          to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 800px) {
+          .sd-planity-drawer {
+            top: auto;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 92vh;
+            max-height: 92vh;
+            width: 100%;
+            transform: translateY(0);
+            border-radius: 16px 16px 0 0;
+            animation: sd-planity-up 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          @keyframes sd-planity-up {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+          }
         }
 
         @media (max-width: 800px) {
