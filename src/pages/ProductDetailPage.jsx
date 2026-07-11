@@ -108,7 +108,7 @@ export default function ProductDetailPage() {
     if (!product || !promotion) return null;
     return calculateSavings(product.priceCents, promotion);
   }, [product, promotion, calculateSavings]);
-  const isActive = (p) => !p.status || p.status === 'active';
+  const isActive = (p) => p && p.status === 'active';
 
   const related = useMemo(() => {
     const active = (allProducts || []).filter(isActive);

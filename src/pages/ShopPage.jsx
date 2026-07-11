@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useCatalog } from '../context/CatalogContext.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import SEO from '../components/SEO.jsx';
+import { SkeletonCard } from '../components/SkeletonLoader.jsx';
 
 function parseSearchFromHash(hash) {
   const idx = hash.indexOf('?');
@@ -10,10 +11,10 @@ function parseSearchFromHash(hash) {
   return (params.get('search') || '').trim();
 }
 
-const isActiveProduct = (p) => !p.status || p.status === 'active';
+const isActiveProduct = (p) => p && p.status === 'active';
 
 export default function ShopPage() {
-  const { products: rawProducts } = useCatalog();
+  const { products: rawProducts, loading } = useCatalog();
   const allProducts = useMemo(() => (rawProducts || []).filter(isActiveProduct), [rawProducts]);
   const [activeCategory, setActiveCategory] = useState('');
   const [activeTag, setActiveTag] = useState('');
@@ -243,51 +244,57 @@ export default function ShopPage() {
 
         <div className="shop-main">
           <div className="products-grid unified shop-products-grid">
-            {pageProducts.map((p) => (
-              <ProductCard
-                key={p.id}
-                product={p}
-                className="shop-product-card unified"
-                onClick={() => {
-                  window.location.hash = `#product?id=${encodeURIComponent(p.id)}`;
-                }}
-              />
-            ))}
+            {loading
+              ? Array.from({ length: pageSize }).map((_, idx) => (
+                  <SkeletonCard key={idx} height="380px" className="shop-product-card unified" />
+                ))
+              : pageProducts.map((p) => (
+                  <ProductCard
+                    key={p.id}
+                    product={p}
+                    className="shop-product-card unified"
+                    onClick={() => {
+                      window.location.hash = `#product?id=${encodeURIComponent(p.id)}`;
+                    }}
+                  />
+                ))}
           </div>
 
-          <div className="shop-pagination" aria-label="Pagination boutique">
-            <button
-              className={`shop-page-btn arrow${page <= 1 ? ' inactive' : ''}`}
-              type="button"
-              onClick={() => goToPage((p) => p - 1)}
-              disabled={page <= 1}
-            >
-              ←
-            </button>
+          {!loading && (
+            <div className="shop-pagination" aria-label="Pagination boutique">
+              <button
+                className={`shop-page-btn arrow${page <= 1 ? ' inactive' : ''}`}
+                type="button"
+                onClick={() => goToPage((p) => p - 1)}
+                disabled={page <= 1}
+              >
+                ←
+              </button>
 
-            {Array.from({ length: totalPages }).map((_, idx) => {
-              const n = idx + 1;
-              return (
-                <button
-                  key={n}
-                  className={`shop-page-btn${n === page ? ' active' : ''}`}
-                  type="button"
-                  onClick={() => goToPage(n)}
-                >
-                  {n}
-                </button>
-              );
-            })}
+              {Array.from({ length: totalPages }).map((_, idx) => {
+                const n = idx + 1;
+                return (
+                  <button
+                    key={n}
+                    className={`shop-page-btn${n === page ? ' active' : ''}`}
+                    type="button"
+                    onClick={() => goToPage(n)}
+                  >
+                    {n}
+                  </button>
+                );
+              })}
 
-            <button
-              className={`shop-page-btn arrow${page >= totalPages ? ' inactive' : ''}`}
-              type="button"
-              onClick={() => goToPage((p) => p + 1)}
-              disabled={page >= totalPages}
-            >
-              →
-            </button>
-          </div>
+              <button
+                className={`shop-page-btn arrow${page >= totalPages ? ' inactive' : ''}`}
+                type="button"
+                onClick={() => goToPage((p) => p + 1)}
+                disabled={page >= totalPages}
+              >
+                →
+              </button>
+            </div>
+          )}
 
           <div className="shop-tags-mobile">
             <div className="shop-tags-mobile-title">Tags</div>

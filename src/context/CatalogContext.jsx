@@ -4,12 +4,12 @@ import { fetchPublicProducts } from '../firebase/publicQueries.js';
 
 const CatalogContext = createContext(null);
 
+const isActiveProduct = (p) => p && p.status === 'active';
+
 export function CatalogProvider({ children }) {
-  const [rawProducts, setRawProducts] = useState(localProducts);
+  const [rawProducts, setRawProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  const isActiveProduct = (p) => !p.status || p.status === 'active';
 
   useEffect(() => {
     let mounted = true;
@@ -20,17 +20,12 @@ export function CatalogProvider({ children }) {
         const remote = await fetchPublicProducts();
         if (!mounted) return;
         console.log('[Catalog] remote products:', remote?.length || 0, remote?.map((p) => ({ id: p.id, status: p.status })));
-        if (Array.isArray(remote) && remote.length > 0) {
-          setRawProducts(remote);
-        } else {
-          console.log('[Catalog] fallback to localProducts', localProducts.length);
-          setRawProducts(localProducts);
-        }
+        setRawProducts(Array.isArray(remote) ? remote : []);
       } catch (e) {
         if (!mounted) return;
         console.error('[Catalog] fetch error:', e);
         setError(e?.message || 'Failed to load products');
-        setRawProducts(localProducts);
+        setRawProducts(localProducts.map((p) => ({ ...p, status: p.status || 'active' })));
       } finally {
         if (!mounted) return;
         setLoading(false);
