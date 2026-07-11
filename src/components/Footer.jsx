@@ -20,6 +20,7 @@ export default function Footer() {
             <li><a href="#instituts">Nos Instituts</a></li>
             <li><a href="#shop">Boutique</a></li>
             <li><a href="#blog">Blog</a></li>
+<li><a href="#evenements">Evènements</a></li>
             <li><a href="#about">À Propos</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>

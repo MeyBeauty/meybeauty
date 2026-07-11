@@ -75,6 +75,7 @@ export default function Navbar() {
           <li><a href="#home" onClick={() => setMobileOpen(false)}>Accueil</a></li>
           <li><a href="#instituts" onClick={() => setMobileOpen(false)}>Nos Instituts</a></li>
           <li><a href="#shop" onClick={() => setMobileOpen(false)}>Boutique</a></li>
+          <li><a href="#events" onClick={() => setMobileOpen(false)}>Evènements</a></li>
           <li><a href="#blog" onClick={() => setMobileOpen(false)}>Blog</a></li>
           <li><a href="#about" onClick={() => setMobileOpen(false)}>À Propos</a></li>
           <li><a href="#contact" onClick={() => setMobileOpen(false)}>Contact</a></li>
@@ -89,6 +90,7 @@ export default function Navbar() {
           <li><a href="#home">Accueil</a></li>
           <li><a href="#instituts">Nos Instituts</a></li>
           <li><a href="#shop">Boutique</a></li>
+          <li><a href="#events">Evènements</a></li>
           <li><a href="#blog">Blog</a></li>
           <li><a href="#about">À Propos</a></li>
           <li><a href="#contact">Contact</a></li>

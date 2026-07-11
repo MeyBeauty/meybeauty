@@ -1,6 +1,5 @@
 import {
   BadgeCheck,
-  Calendar,
   CalendarClock,
   Clock,
   Droplets,
@@ -16,7 +15,6 @@ import {
   Sparkles,
   Star,
   Timer,
-  Users,
 } from 'lucide-react';
 
 import { useEffect } from 'react';
@@ -237,44 +235,6 @@ export default function AboutPage() {
             <h3>Onglerie</h3>
             <p>Manucure, vernis classique ou semi-permanent, et nail care pour des mains sublimées.</p>
           </div>
-        </div>
-      </section>
-
-      <section className="about-events" aria-label="Événements & Privatisation">
-        <div className="about-events-inner">
-          <div className="about-events-header">
-            <span className="section-kicker">Moments privilégiés</span>
-            <h2 className="section-title">Événements & Privatisation</h2>
-            <p>
-              Offrez-vous un moment d’exception entre amies ou en privatisant l’institut pour vos occasions spéciales. EVJF, anniversaires, ou simple envie de partager un rituel beauté : nous créons une expérience sur mesure, élégante et détendue.
-            </p>
-          </div>
-
-          <div className="about-events-grid">
-            <div className="about-event-card">
-              <div className="about-event-icon" aria-hidden="true">
-                <Users size={22} />
-              </div>
-              <h3>Entre amies</h3>
-              <p>EVJF, anniversaires ou sorties bien-être : profitez d’une ambiance exclusive et de soins adaptés à chacune.</p>
-            </div>
-            <div className="about-event-card">
-              <div className="about-event-icon" aria-hidden="true">
-                <Calendar size={22} />
-              </div>
-              <h3>Privatisation</h3>
-              <p>Réservez l’institut pour votre groupe et bénéficiez d’un accès privé, d’un service personnalisé et d’un moment inoubliable.</p>
-            </div>
-            <div className="about-event-card">
-              <div className="about-event-icon" aria-hidden="true">
-                <Sparkles size={22} />
-              </div>
-              <h3>Sur mesure</h3>
-              <p>Nous élaborons des forfaits personnalisés selon vos envies, votre budget et le nombre de participants.</p>
-            </div>
-          </div>
-
-          <a className="about-events-cta" href="#contact">Demander un devis personnalisé</a>
         </div>
       </section>
 

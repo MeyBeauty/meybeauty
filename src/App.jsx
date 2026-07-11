@@ -20,6 +20,7 @@ const NosInstitutsPage = lazy(() => import('./pages/NosInstitutsPage.jsx'));
 const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage.jsx'));
 const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage.jsx'));
 const CartPage = lazy(() => import('./pages/CartPage.jsx'));
+const EventsPage = lazy(() => import('./pages/EventsPage.jsx'));
 const AdminPage = lazy(() => import('./pages/AdminPage.jsx'));
 
 // Skeleton Loader - effet YouTube style shimmer
@@ -36,7 +37,7 @@ export default function App() {
       const isAdminHash = next.startsWith('#admin');
       document.documentElement.style.zoom = isAdminHash ? '100%' : '100%';
 
-      if (next === '#home' || next === '#about' || next === '#legal' || next === '#privacy' || next === '#contact' || next === '#blog' || next.startsWith('#blog-detail') || next.startsWith('#shop') || next === '#instituts' || next.startsWith('#service') || next === '#cart' || next.startsWith('#product') || next.startsWith('#admin')) {
+      if (next === '#home' || next === '#about' || next === '#legal' || next === '#privacy' || next === '#contact' || next === '#blog' || next.startsWith('#blog-detail') || next.startsWith('#shop') || next === '#instituts' || next.startsWith('#service') || next === '#cart' || next === '#events' || next.startsWith('#product') || next.startsWith('#admin')) {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       }
     };
@@ -56,6 +57,7 @@ export default function App() {
   if (hash === '#instituts') page = 'instituts';
   if (hash.startsWith('#service')) page = 'service';
   if (hash === '#cart') page = 'cart';
+  if (hash === '#events') page = 'events';
   if (hash.startsWith('#product')) page = 'product';
   if (hash.startsWith('#admin')) page = 'admin';
 
@@ -89,6 +91,8 @@ export default function App() {
           <ServiceDetailPage slug={serviceSlug} />
         ) : page === 'cart' ? (
           <CartPage />
+        ) : page === 'events' ? (
+          <EventsPage />
         ) : page === 'product' ? (
           <ProductDetailPage />
         ) : page === 'admin' ? (
