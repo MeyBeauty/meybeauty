@@ -62,7 +62,7 @@ export default function AboutPage() {
 
   <div className="about-text">
     <div className="about-label">À propos de nous</div>
-    <h2>Votre institut à Viry‑Châtillon dédié à votre éclat naturel</h2>
+    <h2>Révélez votre beauté naturelle avec l'expertise Mey Beauty</h2>
     <p>
       Fondé avec la passion de l’excellence, Mey Beauty s’est construit autour d’une promesse simple : révéler l’éclat naturel de chaque femme grâce à une synergie parfaite entre technologies de pointe et rituels sensoriels.
       <br /><br />
@@ -70,7 +70,7 @@ export default function AboutPage() {
       <br /><br />
       C’est pourquoi nous sélectionnons rigoureusement des protocoles d’avant-garde et des partenaires de renom mondial — comme les technologies de pointe LPG — pour garantir des résultats visibles dès la première séance, sans jamais faire de compromis sur votre moment de détente.
       <br /><br />
-      Retrouvez-nous au 6 Place des Martyrs de Châteaubriand, 91170 Viry‑Châtillon, pour un instant de beauté et de sérénité.
+      Retrouvez-nous dans nos locaux sur Viry‑Châtillon, pour un instant de beauté et de sérénité.
     </p>
 
     <div className="about-badges" aria-label="Engagements">
