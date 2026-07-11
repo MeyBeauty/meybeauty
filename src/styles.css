@@ -10251,7 +10251,7 @@ a { text-decoration: none; color: inherit; }
 
 /* ---- Page Événements & Privatisation ---- */
 .events-page {
-  padding-top: 74px;
+  background: var(--blanc);
 }
 
 .events-hero {

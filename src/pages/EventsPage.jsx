@@ -138,9 +138,6 @@ export default function EventsPage() {
             {gallery.map((img, i) => (
               <div className={`ev-gallery-item ev-gallery-item-${i + 1}`} key={i}>
                 <img src={img.src} alt={img.alt} loading="lazy" />
-                <div className="ev-gallery-overlay">
-                  <span>{img.alt}</span>
-                </div>
               </div>
             ))}
           </div>
