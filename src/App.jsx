@@ -2,6 +2,7 @@ import AnnounceBar from './components/AnnounceBar.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import RecentPurchaseToast from './components/RecentPurchaseToast.jsx';
+import WishlistWidget from './components/WishlistWidget.jsx';
 import { SkeletonPage } from './components/SkeletonLoader.jsx';
 import { useEffect, useState, lazy, Suspense } from 'react';
 import { ToastProvider } from './context/ToastContext.jsx';
@@ -102,6 +103,7 @@ export default function App() {
         )}
       </Suspense>
       {isAdmin ? null : <Footer />}
+      {isAdmin ? null : <WishlistWidget />}
     </ToastProvider>
   );
 }

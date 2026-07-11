@@ -7,6 +7,7 @@
 import { formatPriceEUR } from '../data/products.js';
 import { useCart } from '../context/CartContext.jsx';
 import { useCatalog } from '../context/CatalogContext.jsx';
+import { useWishlist } from '../context/WishlistContext.jsx';
 import LazyImage from './LazyImage.jsx';
 import { Percent, Heart } from 'lucide-react';
 
@@ -36,6 +37,7 @@ export default function ProductCard({
   className = ''
 }) {
   const { addItem } = useCart();
+  const { toggle, isWishlisted } = useWishlist();
   const { getProductPromotion, calculateDiscountedPrice, calculateSavings } = useCatalog();
 
   const promo = getProductPromotion?.(product.id);
@@ -146,15 +148,16 @@ export default function ProductCard({
           </button>
           {showWishlist && (
             <button
-              className="product-card-wish"
+              className={`product-card-wish${isWishlisted(product.id) ? ' active' : ''}`}
               type="button"
-              aria-label="Favori"
+              aria-label={isWishlisted(product.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                toggle(product.id);
               }}
             >
-              ♡
+              <Heart size={16} fill={isWishlisted(product.id) ? 'currentColor' : 'none'} />
             </button>
           )}
         </div>
