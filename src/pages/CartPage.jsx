@@ -1,5 +1,20 @@
 import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
-import { CreditCard, ShieldCheck, CheckCircle, ArrowRight, Lock } from 'lucide-react';
+import {
+  CreditCard,
+  ShieldCheck,
+  CheckCircle,
+  ArrowRight,
+  ChevronRight,
+  Lock,
+  X,
+  Wallet,
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Building2,
+  Sparkles,
+} from 'lucide-react';
 import { getProductById, formatPriceEUR } from '../data/products.js';
 import { useCart } from '../context/CartContext.jsx';
 import { Elements } from '@stripe/react-stripe-js';
@@ -16,6 +31,7 @@ export default function CartPage() {
   const [orderComplete, setOrderComplete] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [paidAmount, setPaidAmount] = useState(0);
+  const [showCheckout, setShowCheckout] = useState(false);
   const [customerInfo, setCustomerInfo] = useState({
     firstName: '',
     lastName: '',
@@ -70,7 +86,7 @@ export default function CartPage() {
   const handlePaymentSuccess = useCallback(async (amount, paymentMethod, customerInfo = {}) => {
     const finalAmount = amount || subtotalCents;
     setPaidAmount(finalAmount);
-    
+
     // Create order in Firebase
     try {
       const orderData = {
@@ -95,13 +111,13 @@ export default function CartPage() {
         status: 'paid',
         createdAt: new Date().toISOString(),
       };
-      
+
       await createOrder(orderData);
       console.log('[Order] Order saved successfully');
     } catch (err) {
       console.error('[Order] Failed to save order:', err);
     }
-    
+
     setOrderComplete(true);
     clearCart();
     setIsProcessing(false);
@@ -230,8 +246,11 @@ export default function CartPage() {
         </div>
 
         <aside className="cart-summary" aria-label="Récapitulatif">
-          <div className="cart-summary-box">
-            <div className="cart-summary-title">Récapitulatif</div>
+          <div className="cart-summary-box cart-summary-box-modern">
+            <div className="cart-summary-title">
+              <Sparkles size={16} strokeWidth={2} />
+              Récapitulatif
+            </div>
             <div className="cart-summary-line">
               <span>Sous‑total</span>
               <span>{formatPriceEUR(subtotalCents)}</span>
@@ -267,78 +286,35 @@ export default function CartPage() {
               </div>
             ) : (
               <>
-              <div className="cart-customer-form">
-                <h4>Informations client</h4>
-                <div className="cart-form-row">
-                  <input
-                    type="text"
-                    placeholder="Prénom"
-                    value={customerInfo.firstName}
-                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, firstName: e.target.value }))}
-                    className="cart-form-input"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Nom"
-                    value={customerInfo.lastName}
-                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, lastName: e.target.value }))}
-                    className="cart-form-input"
-                  />
-                </div>
-                <div className="cart-form-row">
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={customerInfo.email}
-                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, email: e.target.value }))}
-                    className="cart-form-input"
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Téléphone"
-                    value={customerInfo.phone}
-                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, phone: e.target.value }))}
-                    className="cart-form-input"
-                  />
-                </div>
-                <div className="cart-form-row cart-form-row-address">
-                  <input
-                    type="text"
-                    placeholder="Adresse"
-                    value={customerInfo.address}
-                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, address: e.target.value }))}
-                    className="cart-form-input"
-                  />
-                </div>
-                <div className="cart-form-row cart-form-row-city">
-                  <input
-                    type="text"
-                    placeholder="Ville"
-                    value={customerInfo.city}
-                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, city: e.target.value }))}
-                    className="cart-form-input"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Code postal"
-                    value={customerInfo.postalCode}
-                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, postalCode: e.target.value }))}
-                    className="cart-form-input"
-                  />
-                </div>
-              </div>
+                <button
+                  type="button"
+                  className="cart-pay-main-btn"
+                  onClick={() => setShowCheckout(true)}
+                  disabled={subtotalCents === 0}
+                >
+                  <CreditCard size={18} strokeWidth={1.8} />
+                  Payer {formatPriceEUR(subtotalCents)}
+                  <ArrowRight size={16} />
+                </button>
+                <p className="cart-pay-main-note">
+                  Paiement sécurisé · Vous pourrez choisir carte bancaire ou PayPal
+                </p>
+              </>
+            )}
 
+            {showCheckout && (
               <Elements stripe={stripePromise}>
-                <PaymentSection
+                <CheckoutModal
                   amount={subtotalCents}
                   totalSavings={totalSavings}
+                  customerInfo={customerInfo}
+                  setCustomerInfo={setCustomerInfo}
                   onSuccess={handlePaymentSuccess}
                   isProcessing={isProcessing}
                   setIsProcessing={setIsProcessing}
-                  customerInfo={customerInfo}
+                  onClose={() => setShowCheckout(false)}
                 />
               </Elements>
-              </>
             )}
           </div>
         </aside>
@@ -348,13 +324,11 @@ export default function CartPage() {
   );
 }
 
-// Payment Section Component with Stripe + PayPal
-function PaymentSection({ amount, totalSavings, onSuccess, isProcessing, setIsProcessing, customerInfo }) {
-  const amountEuros = (amount / 100).toFixed(2);
-  const stripeKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
-  const paypalClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
-
-  const [showStripeForm, setShowStripeForm] = useState(false);
+// Checkout modal with two steps:
+// 1. Customer information
+// 2. Payment method selection (Card or PayPal)
+function CheckoutModal({ amount, totalSavings, customerInfo, setCustomerInfo, onSuccess, isProcessing, setIsProcessing, onClose }) {
+  const [step, setStep] = useState('customer'); // 'customer' | 'payment' | 'card' | 'paypal'
   const [paypalReady, setPaypalReady] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -363,99 +337,78 @@ function PaymentSection({ amount, totalSavings, onSuccess, isProcessing, setIsPr
   const renderTimeoutRef = useRef(null);
   const customerInfoRef = useRef(customerInfo);
 
-  // Keep customerInfoRef always up to date
+  const amountEuros = (amount / 100).toFixed(2);
+  const paypalClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
+
   useEffect(() => {
     customerInfoRef.current = customerInfo;
   }, [customerInfo]);
 
-  // Clear error message once the customer form becomes valid
   useEffect(() => {
-    if (isCustomerFormValid() && errorMsg.includes('informations client')) {
+    if (!isCustomerFormValid() && errorMsg && !errorMsg.includes('PayPal')) {
+      return;
+    }
+    if (isCustomerFormValid() && errorMsg && errorMsg.includes('informations client')) {
       setErrorMsg('');
     }
   }, [customerInfo, errorMsg]);
 
-  // Check if customer form is valid
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
+
   const isCustomerFormValid = () => {
     const info = customerInfoRef.current;
     return info && info.firstName?.trim() && info.lastName?.trim() && info.email?.trim() && info.phone?.trim() && info.address?.trim() && info.city?.trim() && info.postalCode?.trim();
   };
 
-  // Load PayPal SDK and render button
-  const loadPayPal = () => {
-    console.log('[PayPal] loadPayPal called, clientId:', paypalClientId ? 'present' : 'missing');
-    
-    if (!paypalClientId) {
-      setErrorMsg('Client ID PayPal manquant - Vérifiez VITE_PAYPAL_CLIENT_ID dans .env.local');
-      console.error('[PayPal] Missing client ID');
+  const handleCustomerSubmit = () => {
+    if (!isCustomerFormValid()) {
+      setErrorMsg('Veuillez remplir toutes vos informations client.');
       return;
     }
-    
+    setErrorMsg('');
+    setStep('payment');
+  };
+
+  const updateField = (field, value) => {
+    setCustomerInfo(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Load PayPal SDK and render button
+  const loadPayPal = () => {
+    if (!paypalClientId) return;
     if (window.paypal) {
-      console.log('[PayPal] SDK already loaded, scheduling render');
       scheduleRender();
       return;
     }
-    
-    console.log('[PayPal] Loading SDK...');
     const script = document.createElement('script');
     script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=EUR&intent=capture&locale=fr_FR`;
     script.async = true;
-    script.onload = () => {
-      console.log('[PayPal] SDK loaded successfully');
-      scheduleRender();
-    };
-    script.onerror = (e) => {
-      console.error('[PayPal] Failed to load SDK:', e);
-      setErrorMsg('Erreur chargement PayPal - vérifiez votre connexion');
-    };
+    script.onload = () => scheduleRender();
+    script.onerror = () => setErrorMsg('Erreur chargement PayPal - vérifiez votre connexion');
     document.body.appendChild(script);
   };
 
-  // Schedule render with delay to handle React Strict Mode
   const scheduleRender = () => {
-    // Clear any pending render
-    if (renderTimeoutRef.current) {
-      clearTimeout(renderTimeoutRef.current);
-    }
-    // Delay render to let React Strict Mode settle
-    renderTimeoutRef.current = setTimeout(() => {
-      renderPayPal();
-    }, 100);
+    if (renderTimeoutRef.current) clearTimeout(renderTimeoutRef.current);
+    renderTimeoutRef.current = setTimeout(() => renderPayPal(), 100);
   };
 
-  // Render PayPal Smart Buttons
   const renderPayPal = () => {
-    console.log('[PayPal] renderPayPal called, paypal available:', !!window.paypal, 'ref available:', !!paypalButtonRef.current, 'buttons exist:', !!paypalButtonsRef.current);
-    
-    if (!window.paypal) {
-      console.error('[PayPal] window.paypal not available');
-      setErrorMsg('SDK PayPal non disponible');
-      return;
-    }
-    
-    if (!paypalButtonRef.current) {
-      console.error('[PayPal] Button container ref not available');
-      return;
-    }
-    
-    // If buttons already exist, close them first (for re-renders)
+    if (!window.paypal || !paypalButtonRef.current) return;
+
     if (paypalButtonsRef.current) {
-      try {
-        paypalButtonsRef.current.close();
-        console.log('[PayPal] Closed existing buttons');
-      } catch (e) {
-        // Ignore close errors
-      }
+      try { paypalButtonsRef.current.close(); } catch (e) {}
       paypalButtonsRef.current = null;
     }
-    
-    // Clear container
     paypalButtonRef.current.innerHTML = '';
-    
+
     try {
-      console.log('[PayPal] Creating buttons with amount:', amountEuros);
-      
       const buttons = window.paypal.Buttons({
         style: {
           layout: 'vertical',
@@ -464,16 +417,7 @@ function PaymentSection({ amount, totalSavings, onSuccess, isProcessing, setIsPr
           label: 'paypal',
           height: 45
         },
-        onClick: (data, actions) => {
-          // Validate before opening PayPal popup
-          if (!isCustomerFormValid()) {
-            setErrorMsg('Veuillez remplir vos informations client (prénom, nom, email, téléphone, adresse, ville, code postal) avant de payer avec PayPal.');
-            return actions.reject();
-          }
-          return actions.resolve();
-        },
         createOrder: (data, actions) => {
-          console.log('[PayPal] createOrder called');
           return actions.order.create({
             purchase_units: [{
               amount: {
@@ -486,198 +430,313 @@ function PaymentSection({ amount, totalSavings, onSuccess, isProcessing, setIsPr
               description: 'Commande Mey Beauty',
               custom_id: 'MEY-' + Date.now()
             }],
-            application_context: {
-              shipping_preference: 'NO_SHIPPING'
-            }
-          }).then((orderId) => {
-            console.log('[PayPal] Order created:', orderId);
-            return orderId;
+            application_context: { shipping_preference: 'NO_SHIPPING' }
           });
         },
         onApprove: async (data, actions) => {
-          console.log('[PayPal] onApprove called, orderID:', data.orderID);
-          // Check if customer form is filled
-          if (!isCustomerFormValid()) {
-            setErrorMsg('Veuillez remplir vos informations client (prénom, nom, email, téléphone, adresse, ville, code postal) avant de payer.');
-            return;
-          }
           setIsProcessing(true);
           try {
             const details = await actions.order.capture();
-            console.log('[PayPal] Payment captured:', details);
             if (details.status === 'COMPLETED') {
-              // Use the ref to get current customerInfo
+              onClose();
               onSuccess(amount, 'paypal', customerInfoRef.current);
             } else {
               setErrorMsg('Statut PayPal: ' + details.status);
               setIsProcessing(false);
             }
           } catch (err) {
-            console.error('[PayPal] Capture error:', err);
             setErrorMsg('Erreur capture PayPal: ' + (err.message || 'Erreur inconnue'));
             setIsProcessing(false);
           }
         },
         onError: (err) => {
-          console.error('[PayPal] onError:', err);
           setErrorMsg('Erreur PayPal: ' + (err.message || 'Erreur inconnue'));
           setIsProcessing(false);
         },
-        onCancel: () => {
-          console.log('[PayPal] Payment cancelled by user');
-          setIsProcessing(false);
-        }
+        onCancel: () => setIsProcessing(false)
       });
-      
+
       paypalButtonsRef.current = buttons;
-      
       buttons.render(paypalButtonRef.current).then(() => {
-        console.log('[PayPal] Buttons rendered successfully');
         setPaypalReady(true);
       }).catch((err) => {
-        console.error('[PayPal] Render error:', err);
         setErrorMsg('Erreur affichage bouton PayPal: ' + err.message);
         paypalButtonsRef.current = null;
       });
-      
     } catch (err) {
-      console.error('[PayPal] Exception:', err);
       setErrorMsg('Erreur rendu PayPal: ' + err.message);
     }
   };
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (renderTimeoutRef.current) {
-        clearTimeout(renderTimeoutRef.current);
-      }
-      if (paypalButtonsRef.current) {
-        try {
-          paypalButtonsRef.current.close();
-          console.log('[PayPal] Cleaned up buttons on unmount');
-        } catch (e) {
-          // Ignore
-        }
-      }
-    };
-  }, []);
-  
-  // Auto-load PayPal on mount if client ID is available
   useEffect(() => {
     if (paypalClientId && amount > 0) {
-      console.log('[PayPal] Auto-loading SDK on mount');
       loadPayPal();
     }
+    return () => {
+      if (renderTimeoutRef.current) clearTimeout(renderTimeoutRef.current);
+      if (paypalButtonsRef.current) {
+        try { paypalButtonsRef.current.close(); } catch (e) {}
+      }
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paypalClientId]);
+  }, [paypalClientId, amount]);
+
+  const isFormValid = isCustomerFormValid();
+
+  const stepTitle = {
+    customer: 'Vos informations',
+    payment: 'Mode de paiement',
+    card: 'Paiement par carte',
+    paypal: 'Paiement PayPal'
+  }[step];
+
+  const stepIcon = step === 'paypal' ? <Wallet size={18} strokeWidth={1.8} /> : <CreditCard size={18} strokeWidth={1.8} />;
 
   return (
-    <div className="cart-pay">
-      <div className="cart-pay-title">
-        <ShieldCheck size={14} strokeWidth={2} />
-        Paiement sécurisé
-      </div>
-
-      {totalSavings > 0 && (
-        <div className="cart-savings-banner">
-          <span className="cart-savings-icon">🎉</span>
-          <span>Vous économisez {formatPriceEUR(totalSavings)}</span>
-        </div>
-      )}
-
-      {errorMsg && (
-        <div className="cart-pay-error" style={{ 
-          padding: '10px 12px', 
-          background: '#fef2f2', 
-          border: '1px solid #fecaca',
-          borderRadius: '6px',
-          color: '#dc2626',
-          fontSize: '12px',
-          marginBottom: '10px'
-        }}>
-          {errorMsg}
-        </div>
-      )}
-
-      {/* Form validation warning */}
-      {!isCustomerFormValid() && (
-        <div className="cart-pay-error" style={{
-          padding: '10px 12px',
-          background: '#fef3c7',
-          border: '1px solid #fcd34d',
-          borderRadius: '6px',
-          color: '#92400e',
-          fontSize: '12px',
-          marginBottom: '10px'
-        }}>
-          ⚠️ Veuillez remplir vos informations client (prénom, nom, email, téléphone, adresse, ville, code postal) pour accéder au paiement.
-        </div>
-      )}
-
-      {/* CARTE BANCAIRE */}
-      <div className="cart-payment-section">
-        {!showStripeForm ? (
-          <button
-            type="button"
-            className="cart-pay-btn stripe"
-            onClick={() => {
-              if (!isCustomerFormValid()) {
-                setErrorMsg('Veuillez remplir vos informations client avant de payer.');
-                return;
-              }
-              setShowStripeForm(true);
-            }}
-            disabled={isProcessing || amount === 0}
-          >
-            <span className="cart-pay-icon"><CreditCard size={18} strokeWidth={2} /></span>
-            <span className="cart-pay-label">Carte bancaire</span>
-          </button>
-        ) : (
-          <CardPaymentForm
-            amount={amount}
-            isProcessing={isProcessing}
-            setIsProcessing={setIsProcessing}
-            setErrorMsg={setErrorMsg}
-            onSuccess={(amt, method) => onSuccess(amt, method, customerInfoRef.current)}
-            onCancel={() => { setShowStripeForm(false); setErrorMsg(''); }}
-            customerInfo={customerInfo}
-          />
-        )}
-      </div>
-
-      {/* PAYPAL PAYMENT */}
-      <div className="cart-payment-section" style={{ marginTop: '10px' }}>
-        {!paypalClientId ? (
-          <div className="cart-pay-error" style={{ padding: '12px', fontSize: '12px' }}>
-            PayPal non configuré - Vérifiez VITE_PAYPAL_CLIENT_ID
+    <div className="checkout-modal-overlay open" onClick={onClose}>
+      <div className="checkout-modal checkout-modal-wide" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+        <div className="checkout-modal-header">
+          <div className="checkout-modal-header-left">
+            <span className="checkout-modal-icon">
+              {stepIcon}
+            </span>
+            <div>
+              <div className="checkout-modal-title">{stepTitle}</div>
+              <div className="checkout-modal-amount">{formatPriceEUR(amount)}</div>
+            </div>
           </div>
-        ) : (
-          <>
-            {!paypalReady && (
-              <div style={{ 
-                padding: '12px', 
-                textAlign: 'center', 
-                color: '#666',
-                fontSize: '12px',
-                background: '#f5f5f5',
-                borderRadius: '6px',
-                marginBottom: '8px'
-              }}>
-                Chargement de PayPal...
-              </div>
-            )}
-            <div 
-              ref={paypalButtonRef} 
-              style={{ minHeight: paypalReady ? 'auto' : '0px' }}
-            />
-          </>
-        )}
-      </div>
+          <button type="button" className="checkout-modal-close" onClick={onClose} aria-label="Fermer">
+            <X size={18} />
+          </button>
+        </div>
 
-      <div className="cart-pay-security">
-        <ShieldCheck size={12} />
-        <span>Paiement 100% sécurisé • SSL Chiffré</span>
+        <div className="checkout-modal-body">
+          {/* Step progress */}
+          <div className="checkout-progress">
+            <div className={`checkout-progress-step${step === 'customer' || step === 'payment' || step === 'card' || step === 'paypal' ? ' active' : ''}`}>
+              <span className="checkout-progress-num">1</span>
+              <span className="checkout-progress-label">Informations</span>
+            </div>
+            <div className={`checkout-progress-line${step === 'payment' || step === 'card' || step === 'paypal' ? ' active' : ''}`} />
+            <div className={`checkout-progress-step${step === 'payment' || step === 'card' || step === 'paypal' ? ' active' : ''}`}>
+              <span className="checkout-progress-num">2</span>
+              <span className="checkout-progress-label">Paiement</span>
+            </div>
+          </div>
+
+          {errorMsg && (
+            <div className="cart-pay-alert cart-pay-alert-error">
+              {errorMsg}
+            </div>
+          )}
+
+          {/* Step 1: Customer information */}
+          {(step === 'customer') && (
+            <div className="checkout-step">
+              <div className="cart-customer-form cart-customer-form-modern checkout-customer-form">
+                <div className="cart-form-row">
+                  <div className="cart-input-group">
+                    <User size={15} className="cart-input-icon" />
+                    <input
+                      type="text"
+                      placeholder="Prénom"
+                      value={customerInfo.firstName}
+                      onChange={(e) => updateField('firstName', e.target.value)}
+                      className="cart-form-input"
+                    />
+                  </div>
+                  <div className="cart-input-group">
+                    <User size={15} className="cart-input-icon" />
+                    <input
+                      type="text"
+                      placeholder="Nom"
+                      value={customerInfo.lastName}
+                      onChange={(e) => updateField('lastName', e.target.value)}
+                      className="cart-form-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="cart-form-row">
+                  <div className="cart-input-group">
+                    <Mail size={15} className="cart-input-icon" />
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      value={customerInfo.email}
+                      onChange={(e) => updateField('email', e.target.value)}
+                      className="cart-form-input"
+                    />
+                  </div>
+                  <div className="cart-input-group">
+                    <Phone size={15} className="cart-input-icon" />
+                    <input
+                      type="tel"
+                      placeholder="Téléphone"
+                      value={customerInfo.phone}
+                      onChange={(e) => updateField('phone', e.target.value)}
+                      className="cart-form-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="cart-form-row cart-form-row-address">
+                  <div className="cart-input-group cart-input-group-full">
+                    <MapPin size={15} className="cart-input-icon" />
+                    <input
+                      type="text"
+                      placeholder="Adresse"
+                      value={customerInfo.address}
+                      onChange={(e) => updateField('address', e.target.value)}
+                      className="cart-form-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="cart-form-row cart-form-row-city">
+                  <div className="cart-input-group">
+                    <Building2 size={15} className="cart-input-icon" />
+                    <input
+                      type="text"
+                      placeholder="Ville"
+                      value={customerInfo.city}
+                      onChange={(e) => updateField('city', e.target.value)}
+                      className="cart-form-input"
+                    />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Code postal"
+                    value={customerInfo.postalCode}
+                    onChange={(e) => updateField('postalCode', e.target.value)}
+                    className="cart-form-input cart-form-input-postal"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                className="cart-pay-main-btn"
+                onClick={handleCustomerSubmit}
+                disabled={isProcessing}
+              >
+                Continuer vers le paiement
+                <ArrowRight size={16} />
+              </button>
+            </div>
+          )}
+
+          {/* Step 2: Payment method selection */}
+          {step === 'payment' && (
+            <div className="checkout-step">
+              <div className="pay-method-grid">
+                <button
+                  type="button"
+                  className="pay-method-card"
+                  onClick={() => setStep('card')}
+                  disabled={isProcessing || amount === 0}
+                >
+                  <span className="pay-method-icon">
+                    <CreditCard size={20} strokeWidth={1.8} />
+                  </span>
+                  <span className="pay-method-text">
+                    <span className="pay-method-title">Carte bancaire</span>
+                    <span className="pay-method-sub">Visa, Mastercard, Amex</span>
+                  </span>
+                  <ChevronRight size={18} className="pay-method-arrow" />
+                </button>
+
+                <button
+                  type="button"
+                  className="pay-method-card"
+                  onClick={() => setStep('paypal')}
+                  disabled={isProcessing || amount === 0 || !paypalClientId}
+                >
+                  <span className="pay-method-icon pay-method-icon-paypal">
+                    <Wallet size={20} strokeWidth={1.8} />
+                  </span>
+                  <span className="pay-method-text">
+                    <span className="pay-method-title">PayPal</span>
+                    <span className="pay-method-sub">
+                      {paypalClientId ? 'Paiement rapide et sécurisé' : 'Non configuré'}
+                    </span>
+                  </span>
+                  <ChevronRight size={18} className="pay-method-arrow" />
+                </button>
+              </div>
+
+              <button
+                type="button"
+                className="checkout-back-btn"
+                onClick={() => setStep('customer')}
+                disabled={isProcessing}
+              >
+                ← Modifier mes informations
+              </button>
+            </div>
+          )}
+
+          {/* Card payment form */}
+          {step === 'card' && (
+            <div className="checkout-step">
+              <CardPaymentForm
+                amount={amount}
+                isProcessing={isProcessing}
+                setIsProcessing={setIsProcessing}
+                setErrorMsg={setErrorMsg}
+                onSuccess={(amt, method) => {
+                  onClose();
+                  onSuccess(amt, method, customerInfoRef.current);
+                }}
+                onCancel={() => setStep('payment')}
+                customerInfo={customerInfo}
+              />
+              <button
+                type="button"
+                className="checkout-back-btn"
+                onClick={() => setStep('payment')}
+                disabled={isProcessing}
+              >
+                ← Choisir un autre mode de paiement
+              </button>
+            </div>
+          )}
+
+          {/* PayPal payment */}
+          {step === 'paypal' && (
+            <div className="checkout-step">
+              <div className="checkout-paypal-wrap">
+                {!paypalClientId ? (
+                  <div className="cart-pay-alert cart-pay-alert-warning">
+                    PayPal non configuré — Vérifiez VITE_PAYPAL_CLIENT_ID
+                  </div>
+                ) : (
+                  <>
+                    {!paypalReady && (
+                      <div className="checkout-paypal-loading">
+                        Chargement de PayPal…
+                      </div>
+                    )}
+                    <div ref={paypalButtonRef} className="checkout-paypal-container" />
+                  </>
+                )}
+              </div>
+              <button
+                type="button"
+                className="checkout-back-btn"
+                onClick={() => setStep('payment')}
+                disabled={isProcessing}
+              >
+                ← Choisir un autre mode de paiement
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="checkout-modal-footer">
+          <Lock size={12} />
+          <span>Paiement 100% sécurisé · Connexion chiffrée</span>
+        </div>
       </div>
     </div>
   );
