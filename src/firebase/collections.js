@@ -153,6 +153,38 @@ export async function seedProductsMerge(products) {
   return { merged: true, count: list.length };
 }
 
+export async function syncExistingProducts(products) {
+  const list = Array.isArray(products) ? products : [];
+  const snap = await getDocs(collection(db, 'products'));
+  const existingIds = new Set(snap.docs.map((d) => d.id));
+
+  const results = { updated: 0, skipped: 0, errors: [] };
+
+  await Promise.all(
+    list
+      .filter((p) => p && String(p.id || '').trim() && existingIds.has(String(p.id).trim()))
+      .map(async (p) => {
+        try {
+          const { images, id, ...payload } = p;
+          await setDoc(
+            doc(db, 'products', String(id).trim()),
+            {
+              ...payload,
+              updatedAt: serverTimestamp(),
+            },
+            { merge: true }
+          );
+          results.updated++;
+        } catch (e) {
+          results.errors.push({ id: p.id, reason: e.message });
+        }
+      })
+  );
+
+  results.skipped = list.length - results.updated - results.errors.length;
+  return results;
+}
+
 export async function deletePost(id) {
   await deleteDoc(doc(db, 'posts', id));
 }

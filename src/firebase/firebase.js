@@ -2,8 +2,18 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
+function getEnv(key) {
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env[key] !== undefined) {
+    return import.meta.env[key];
+  }
+  if (typeof process !== 'undefined' && process.env && process.env[key] !== undefined) {
+    return process.env[key];
+  }
+  return undefined;
+}
+
 function requireEnv(key) {
-  const v = import.meta.env[key];
+  const v = getEnv(key);
   if (v === undefined || v === null || String(v).trim() === '') {
     throw new Error(`Variable d'environnement manquante: ${key}`);
   }
