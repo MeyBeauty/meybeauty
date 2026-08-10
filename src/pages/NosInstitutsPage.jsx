@@ -260,7 +260,7 @@ function Gallery() {
   const items = [
     { img: '/mey-beauty%20(1).jpeg', cap: 'Institut', col: 1, row: '1 / 3' },
     { img: '/mey-beauty%20(2).jpeg', cap: 'Ambiance', col: 2, row: 1 },
-    { img: '/mey-beauty%20(3).jpeg', cap: 'Cabine', col: 3, row: 1 },
+    { img: '/mey beauty.png', cap: 'Cabine', col: 3, row: 1 },
     { img: '/mey-beauty%20(4).jpeg', cap: 'Onglerie', col: 2, row: 2 },
     { img: '/mey-beauty%20(5).jpeg', cap: 'Accueil', col: 3, row: 2 },
   ];
