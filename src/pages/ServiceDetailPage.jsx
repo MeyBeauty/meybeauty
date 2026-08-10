@@ -112,6 +112,42 @@ const SERVICES = {
       { q: 'Les produits sont-ils adaptés aux yeux sensibles ?', a: 'Oui, nous utilisons des colles et teintures formulées pour limiter les réactions sur les yeux sensibles ou porteurs de lentilles.' },
     ],
   },
+  maillot: {
+    slug: 'maillot',
+    kicker: 'Maillot',
+    title: 'Soin du maillot : Vajacial',
+    image: '/Vajacial Le soin intime tendance pour une peau saine et sans imperfections.webp',
+    video: '/epilation du maillot.mp4',
+    planityServiceSetIds: ['-OvATDed1S_NPHbY0SgB'],
+    intro: 'Le Vajacial est un soin esthétique réalisé sur la zone du pubis après une épilation du maillot intégral. Il aide à apaiser la peau, prévenir les poils incarnés, réduire les imperfections et retrouver une peau plus douce et uniforme.',
+    paragraphs: [
+      'Nettoyage de la peau, gommage doux, extraction des poils incarnés et impuretés, masque apaisant et purifiant, puis application d’un soin adapté : chaque étape est choisie pour apaiser et embellir cette zone délicate.',
+      'Idéal après l’épilation, ce soin convient aux peaux sujettes aux poils incarnés, aux rougeurs, aux petites imperfections et aux taches pigmentaires.',
+      'Vous repartez avec une peau lisse, douce, confortable et visiblement plus saine au quotidien.',
+    ],
+    benefits: [
+      'Nettoyage de la peau et gommage doux',
+      'Extraction des poils incarnés et impuretés',
+      'Masque apaisant et purifiant',
+      'Application d’un soin adapté à la zone',
+    ],
+    duration: '30 à 45 min',
+    price: 'À partir de 45 €',
+    perks: [
+      { icon: Droplets, label: 'Apaisant' },
+      { icon: Sparkles, label: 'Peau lisse' },
+      { icon: ShieldCheck, label: 'Sans imperfections' },
+    ],
+    testimonials: [
+      { name: 'Sarah', note: 5, quote: 'J’ai enfin trouvé un soin qui soulage les rougeurs après mon épilation. Ma peau est beaucoup plus douce.' },
+      { name: 'Jessica', note: 5, quote: 'L’extraction des poils incarnés est faite avec une grande douceur. Je repars apaisée et confiante.' },
+      { name: 'Mélanie', note: 5, quote: 'Un rituel complet et respectueux. On sent que la zone intime est traitée avec professionnalisme.' },
+    ],
+    faqs: [
+      { q: 'L’épilation du maillot est-elle obligatoire avant le soin ?', a: 'Oui, l’épilation du maillot intégral est obligatoire pour bénéficier du Vajacial et obtenir des résultats optimaux.' },
+      { q: 'Le soin convient-il aux peaux sensibles ?', a: 'Oui, le protocole est adapté à votre peau et utilise des gestes doux pour apaiser la zone sans agresser.' },
+    ],
+  },
   mains: {
     slug: 'mains',
     kicker: 'Mains',
@@ -154,6 +190,7 @@ const OTHERS = [
   { slug: 'visage', kicker: 'Éclat', title: 'Soin du visage', image: '/soin visage (2).PNG', video: 'https://www.pexels.com/fr-fr/download/video/9335813/' },
   { slug: 'minceur', kicker: 'Silhouette', title: 'Minceur', image: '/soin-minceur.PNG', video: 'https://www.pexels.com/fr-fr/download/video/32828416/' },
   { slug: 'regard', kicker: 'Regard', title: 'Beauté du regard', image: '/mey-beauty (6).jpeg', video: 'https://www.pexels.com/fr-fr/download/video/8502623/' },
+  { slug: 'maillot', kicker: 'Maillot', title: 'Soin du maillot', image: '/Vajacial Le soin intime tendance pour une peau saine et sans imperfections.webp', video: '/epilation du maillot.mp4' },
   { slug: 'mains', kicker: 'Mains', title: 'Onglerie premium', image: '/meybeauty.jpg', video: '' },
 ];
 

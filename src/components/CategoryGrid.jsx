@@ -32,6 +32,15 @@ const CATS = [
     image: 'mey-beauty (6).jpeg',
   },
   {
+    id: 'cat-5',
+    className: 'cat-item cat-5',
+    kicker: 'Maillot',
+    title: 'Soin du\nmaillot',
+    cta: '— Découvrir ce service —',
+    href: '#service/maillot',
+    video: '/epilation du maillot.mp4',
+  },
+  {
     id: 'cat-4',
     className: 'cat-item cat-4',
     kicker: 'Mains',
