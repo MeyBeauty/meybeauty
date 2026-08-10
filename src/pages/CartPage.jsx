@@ -15,8 +15,9 @@ import {
   Building2,
   Sparkles,
 } from 'lucide-react';
-import { getProductById, formatPriceEUR } from '../data/products.js';
+import { getProductById as getLocalProductById, formatPriceEUR } from '../data/products.js';
 import { useCart } from '../context/CartContext.jsx';
+import { useCatalog } from '../context/CatalogContext.jsx';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardPaymentForm } from '../components/StripeCardForm.jsx';
@@ -28,6 +29,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export default function CartPage() {
   const { items, removeItem, setQuantity, clearCart } = useCart();
+  const { getProductById: getCatalogProductById, loading: catalogLoading } = useCatalog();
   const [orderComplete, setOrderComplete] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [paidAmount, setPaidAmount] = useState(0);
@@ -46,7 +48,7 @@ export default function CartPage() {
   const lines = useMemo(() => {
     return items
       .map((it) => {
-        const product = getProductById(it.productId);
+        const product = getCatalogProductById?.(it.productId) || getLocalProductById(it.productId);
         if (!product) return null;
         const quantity = Math.max(1, Number(it.quantity) || 1);
         // Use stored promotional price if available, otherwise use product price
@@ -63,15 +65,18 @@ export default function CartPage() {
           hasPromotion,
           promotionId: it.promotionId,
           savingsPerUnit: hasPromotion ? originalPriceCents - priceCents : 0,
+          outOfStock: Number(product.stock) === 0,
         };
       })
       .filter(Boolean);
-  }, [items]);
+  }, [items, getCatalogProductById]);
 
   const subtotalCents = useMemo(
     () => lines.reduce((sum, l) => sum + l.lineTotalCents, 0),
     [lines]
   );
+
+  const hasOutOfStock = useMemo(() => lines.some((l) => l.outOfStock), [lines]);
 
   const hasPromotions = useMemo(() => lines.some((l) => l.promotionId), [lines]);
   const totalSavings = useMemo(() => {
@@ -146,12 +151,21 @@ export default function CartPage() {
           {lines.length === 0 ? (
             <div className="cart-empty">
               <div className="legal-block">
-                <h2>Ton panier est vide</h2>
-                <p>
-                  Ajoute des produits depuis la boutique.
-                  <br />
-                  <a href="#shop">Aller à la boutique</a>
-                </p>
+                {catalogLoading && items.length > 0 ? (
+                  <>
+                    <h2>Chargement du panier…</h2>
+                    <p>Récupération de vos produits en cours.</p>
+                  </>
+                ) : (
+                  <>
+                    <h2>Ton panier est vide</h2>
+                    <p>
+                      Ajoute des produits depuis la boutique.
+                      <br />
+                      <a href="#shop">Aller à la boutique</a>
+                    </p>
+                  </>
+                )}
               </div>
             </div>
           ) : (
@@ -177,6 +191,11 @@ export default function CartPage() {
                       <div className="cart-product-meta">
                         <div className="cart-product-name">{l.product.name}</div>
                         <div className="cart-product-cat">{l.product.category}</div>
+                        {l.outOfStock && (
+                          <div style={{ color: '#b91c1c', fontSize: 11, fontWeight: 600, marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                            Rupture de stock
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -290,7 +309,7 @@ export default function CartPage() {
                   type="button"
                   className="cart-pay-main-btn"
                   onClick={() => setShowCheckout(true)}
-                  disabled={subtotalCents === 0}
+                  disabled={subtotalCents === 0 || hasOutOfStock}
                 >
                   <CreditCard size={18} strokeWidth={1.8} />
                   Payer {formatPriceEUR(subtotalCents)}
@@ -299,6 +318,11 @@ export default function CartPage() {
                 <p className="cart-pay-main-note">
                   Paiement sécurisé · Vous pourrez choisir carte bancaire ou PayPal
                 </p>
+                {hasOutOfStock && (
+                  <p style={{ color: '#b91c1c', fontSize: 12, fontWeight: 500, marginTop: 8, textAlign: 'center' }}>
+                    Retirez les produits en rupture de stock pour finaliser votre commande.
+                  </p>
+                )}
               </>
             )}
 
@@ -400,7 +424,11 @@ function CheckoutModal({ amount, totalSavings, customerInfo, setCustomerInfo, on
   };
 
   const renderPayPal = () => {
-    if (!window.paypal || !paypalButtonRef.current) return;
+    if (!window.paypal) {
+      setErrorMsg('SDK PayPal non chargé — vérifiez votre connexion.');
+      return;
+    }
+    if (!paypalButtonRef.current) return;
 
     if (paypalButtonsRef.current) {
       try { paypalButtonsRef.current.close(); } catch (e) {}
@@ -480,6 +508,19 @@ function CheckoutModal({ amount, totalSavings, customerInfo, setCustomerInfo, on
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paypalClientId, amount]);
+
+  // Re-render PayPal buttons when the user enters the PayPal step
+  // (the container div only exists when step === 'paypal')
+  useEffect(() => {
+    if (step === 'paypal' && paypalClientId && amount > 0) {
+      if (window.paypal) {
+        scheduleRender();
+      } else {
+        loadPayPal();
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, paypalClientId, amount]);
 
   const isFormValid = isCustomerFormValid();
 

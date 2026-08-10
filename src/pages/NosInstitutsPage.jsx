@@ -36,6 +36,7 @@ const salon1 = {
   phone: '+33 7 49 22 68 01',
   hours: 'Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h',
   image: '/mey-beauty%20(1).jpeg',
+  planityUrl: 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i',
   services: [
     { name: 'Épilation', price: 'Découvrir', family: 'precision', image: '/epilation-a-la-cire.jpg', pitch: 'Peau lisse. Dès la première séance.', description: 'Cires douces adaptées à toutes les zones. Résultat impeccable, confort maximal.', planityServiceSetIds: ['-Ol37IE9hHjduXLe5euh'] },
     { name: 'Épilation définitive', price: 'Découvrir', family: 'precision', image: '/Epilation-laser.webp', pitch: 'Fini les poils, pour de bon.', description: 'Laser et lumière pulsée pour une réduction durable. Peau nette au quotidien, sans contrainte.', planityServiceSetIds: ['-Ol3CsevbpSXybi9euiF'] },
@@ -58,6 +59,7 @@ const salon2 = {
   phone: '+33 7 49 22 68 01',
   hours: 'Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h',
   image: '/mey-beauty%20(5).jpeg',
+  planityUrl: 'https://www.planity.com/mey-beauty-ongles-beaute-du-regard-91170-viry-chatillon',
   services: [
     { name: 'Onglerie', price: 'Découvrir', family: 'visage', image: '/meybeauty.jpg', pitch: 'Des mains sublimées, une finition parfaite.', description: "Manucure, vernis, semi-permanent et nail art pour des mains d'exception.", planityServiceSetIds: ['-Ol3Ea7M5wyLDv27sgmz'] },
     { name: 'Extensions de cils', price: 'Découvrir', family: 'visage', image: '/beaut%C3%A9%20regard%20(3).PNG', pitch: 'Un regard intense. Sans mascara.', description: 'Pose à cils ou volume russe selon votre morphologie pour un regard qui captive.', planityServiceSetIds: ['-Ol3UAjBrVUku0PURXqq'] },
@@ -67,11 +69,13 @@ const salon2 = {
 const salons = [salon1, salon2];
 
 const testimonials = [
-  { text: 'Le soin LPG a changé ma routine bien-être. Un vrai savoir-faire, pas juste un massage.', who: 'Léa, cliente Place du Marché' },
-  { text: 'Extensions de cils impeccables, tenue parfaite pendant plus de 3 semaines.', who: 'Sarah, cliente Gabriel Péri' },
-  { text: 'L\u2019épilation définitive tient vraiment ses promesses. Résultats visibles dès la 3e séance.', who: 'Nadia, cliente Place du Marché' },
-  { text: "Accueil chaleureux, jamais l'impression d'être pressée. On prend le temps.", who: 'Fatou, cliente' },
-  { text: 'La madérothérapie est bluffante, ma silhouette est plus dessinée après quelques séances.', who: 'Camille, cliente' },
+  { text: "Je vais voir Chloé tous les mois depuis presque un an, et c'est toujours un plaisir ! Son travail est impeccable et l'ambiance au top, c'est pour ça que je n'ai pas hésité à la suivre quand elle a changé de salon.", who: 'Héloïse Dmy, Local Guide · 7 avis' },
+  { text: "Une expérience absolument parfaite ! J'ai fait mes ongles en pose américaine dans ce salon de manucure et le résultat est incroyable. La prothésiste ongulaire Chloé est très professionnelle, douce et attentive aux détails. La tenue est impeccable même après plusieurs semaines. Le design des ongles est magnifique, le nail art personnalisé est fait avec beaucoup de goût. Le lieu est propre et accueillant. Je recommande à 100 % cet institut de beauté spécialisé dans les ongles et les cils. Un vrai coup de cœur pour cette nail artist passionnée qui sait sublimer les mains avec élégance.", who: 'Earine, 4 avis · 1 photo' },
+  { text: "Franchement la meilleure prothésiste ongulaire de Viry-Châtillon (91) : Chloé alias beautybyc sans aucun doute !!! Elle me fait mes poses de Gel X, mon semi-permanent et mes nail arts (les plus fous) depuis un bon moment maintenant ! Elle prend toujours le temps d'écouter mes envies et elle arrive toujours à sublimer mes idées (même quand je pars loin). Un vrai moment de détente à chaque rendez-vous, dans une ambiance super agréable au salon. Si vous cherchez une pro en pose de gel et nail art dans le 91, foncez les yeux fermés !", who: 'VIOT Mathilde, 11 avis · 4 photos' },
+  { text: "Super salon ! Découvert via les réseaux sociaux je suis très contente du travail réalisé par Julie j'ai fais un Powderbrow le résultat est magnifique merciii a toute l'équipe pour cette accueil.", who: 'morgane Garcin, Local Guide · 18 avis' },
+  { text: "Très belle découverte ! J'ai achetée un coupon sur Groupon pour cet institut, très bien accueilli, le massage était top. De la propreté jusqu'à la petite musique, j'ai pris rdv pour une manucure, qui a été réalisé avec soin et minutie. J'ai repris aussi tôt rdv pour une pédicure et ça sera mon institut chouchou ! De vrai moment de détente Merci.", who: 'Chahinaize El Hadhiq, 3 avis · 1 photo' },
+  { text: "Joli institut et agréable. Accueil chaleureux par Mélanie. J'y vais pour faire mes ongles, cela fait plusieurs fois que je les fait et ils sont bien réalisés et tiennent bien dans le temps. Je recommande.", who: 'Stéphanie S., 8 avis · 5 photos' },
+  { text: "Prestation au top, je suis très satisfaite du travail de Sandy. Ma manucure était impeccable, bien soignée et elle a durée. Ça fait plaisir de voir des professionnelles impliquées dans leur travail. Sandy est très accueillante, gentille et rayonnante.", who: 'Gulustan Sarikaya, 13 avis' },
 ];
 
 const differentiators = [
@@ -228,7 +232,7 @@ function SalonRow({ salon, reverse, onServiceClick }) {
               </div>
             ))}
           </div>
-          <a href={planityUrl} target="_blank" rel="noreferrer" className="btn-rdv">
+          <a href={salon.planityUrl || planityUrl} target="_blank" rel="noreferrer" className="btn-rdv">
             Prendre rendez-vous <ArrowRight size={14} strokeWidth={2} />
           </a>
         </div>
@@ -278,10 +282,71 @@ function Gallery() {
 }
 
 /* ────────────────────────────────────────────────────
-   Témoignages (marquee)
+   Témoignages (marquee) — cartes taille fixe + "Voir plus"
 ──────────────────────────────────────────────────── */
+function TestimonialCard({ t, expanded, onToggle }) {
+  const long = t.text.length > 180;
+  return (
+    <div
+      style={{
+        background: 'rgba(245,242,238,0.06)',
+        border: '1px solid rgba(245,242,238,0.12)',
+        padding: 26,
+        width: 340,
+        minHeight: 300,
+        flexShrink: 0,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <div
+        style={{
+          flex: 1,
+          fontFamily: FONT_SERIF,
+          fontStyle: 'italic',
+          fontSize: 16,
+          lineHeight: 1.6,
+          marginBottom: 12,
+        }}
+      >
+        "{expanded ? t.text : t.text.slice(0, 180).trim() + (long ? '…' : '')}"
+      </div>
+      <div style={{ fontFamily: FONT_SC, fontSize: 12, opacity: 0.6, marginBottom: long ? 8 : 0 }}>
+        {t.who}
+      </div>
+      {long && (
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); onToggle(); }}
+          style={{
+            alignSelf: 'flex-start',
+            background: 'none',
+            border: 'none',
+            color: C.gold,
+            fontFamily: FONT_SC,
+            fontSize: 12,
+            cursor: 'pointer',
+            padding: 0,
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+          }}
+        >
+          {expanded ? 'Voir moins' : 'Voir plus'}
+        </button>
+      )}
+    </div>
+  );
+}
+
 function Testimonials() {
+  const [expandedIdx, setExpandedIdx] = useState(null); // index dans `testimonials`
   const row = [...testimonials, ...testimonials];
+
+  const handleToggle = (i) => {
+    const realIndex = i % testimonials.length;
+    setExpandedIdx((prev) => (prev === realIndex ? null : realIndex));
+  };
+
   return (
     <section style={{ background: 'var(--brun-dark)', color: C.bg, padding: '80px 0', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 32px' }}>
@@ -295,15 +360,21 @@ function Testimonials() {
           style={{
             display: 'flex', gap: 20, width: 'max-content',
             animation: `ni-marquee ${42 + r * 8}s linear infinite ${r === 1 ? 'reverse' : ''}`,
+            animationPlayState: expandedIdx !== null ? 'paused' : 'running',
             marginTop: r === 1 ? 20 : 0,
           }}
         >
-          {row.map((t, i) => (
-            <div key={i} style={{ background: 'rgba(245,242,238,0.06)', border: '1px solid rgba(245,242,238,0.12)', padding: 26, width: 340, flexShrink: 0 }}>
-              <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 16, lineHeight: 1.6, marginBottom: 16 }}>"{t.text}"</p>
-              <div style={{ fontFamily: FONT_SC, fontSize: 12, opacity: 0.6 }}>{t.who}</div>
-            </div>
-          ))}
+          {row.map((t, i) => {
+            const realIndex = i % testimonials.length;
+            return (
+              <TestimonialCard
+                key={i}
+                t={t}
+                expanded={expandedIdx === realIndex}
+                onToggle={() => handleToggle(i)}
+              />
+            );
+          })}
         </div>
       ))}
     </section>
@@ -387,10 +458,10 @@ function FinalCta() {
         <h2 className="section-title" style={{ fontSize: 'clamp(32px,5vw,52px)', marginBottom: 22 }}>Votre rendez-vous vous attend.</h2>
         <p style={{ fontFamily: FONT_CORPS, opacity: 0.8, fontSize: 15, marginBottom: 36 }}>Choisissez votre institut, votre créneau — on s'occupe du reste.</p>
         <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a href={planityUrl} target="_blank" rel="noreferrer" className="btn-rdv">
+          <a href={salon1.planityUrl} target="_blank" rel="noreferrer" className="btn-rdv">
             Réserver — Place du Marché
           </a>
-          <a href={planityUrl} target="_blank" rel="noreferrer" className="btn-rdv-outline">
+          <a href={salon2.planityUrl} target="_blank" rel="noreferrer" className="btn-rdv-outline">
             Réserver — Gabriel Péri
           </a>
         </div>

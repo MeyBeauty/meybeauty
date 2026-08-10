@@ -248,6 +248,34 @@ export default function ShopPage() {
               ? Array.from({ length: pageSize }).map((_, idx) => (
                   <SkeletonCard key={idx} height="380px" className="shop-product-card unified" />
                 ))
+              : pageProducts.length === 0
+              ? (
+                  <div className="shop-empty" style={{ gridColumn: '1 / -1', padding: '60px 20px', textAlign: 'center' }}>
+                    <h2 style={{ fontFamily: 'var(--font-titre, Georgia, serif)', fontSize: 22, color: 'var(--brun-dark)', marginBottom: 12 }}>
+                      Aucun produit disponible pour le moment
+                    </h2>
+                    <p style={{ fontFamily: 'var(--font-corps, system-ui)', fontSize: 14, color: 'var(--brun-moyen, #8A6E5A)', lineHeight: 1.6, maxWidth: 420, margin: '0 auto 20px' }}>
+                      {search
+                        ? <>Nous n'avons trouvé aucun produit correspondant à « <strong>{search}</strong> ». Ce produit n'est pas disponible pour le moment — il reviendra bientôt en stock.</>
+                        : "Aucun produit ne correspond à vos filtres. Essayez d'élargir votre recherche ou réinitialisez les filtres."}
+                    </p>
+                    {(search || activeCategory || activeTag || priceRange < priceBounds.max) && (
+                      <button
+                        type="button"
+                        className="btn-rdv-outline"
+                        onClick={() => {
+                          setSearch('');
+                          setActiveCategory('');
+                          setActiveTag('');
+                          setPriceRange(priceBounds.max);
+                          window.location.hash = '#shop';
+                        }}
+                      >
+                        Réinitialiser la recherche
+                      </button>
+                    )}
+                  </div>
+                )
               : pageProducts.map((p) => (
                   <ProductCard
                     key={p.id}
@@ -260,7 +288,7 @@ export default function ShopPage() {
                 ))}
           </div>
 
-          {!loading && (
+          {!loading && products.length > 0 && (
             <div className="shop-pagination" aria-label="Pagination boutique">
               <button
                 className={`shop-page-btn arrow${page <= 1 ? ' inactive' : ''}`}

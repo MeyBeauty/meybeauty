@@ -23,7 +23,7 @@ export default function LookbookSection() {
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    if (product) {
+    if (product && Number(product.stock) !== 0) {
       addItem(product, 1);
     }
   };

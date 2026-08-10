@@ -21,6 +21,7 @@ export default function WishlistWidget() {
   }, [ids, products]);
 
   const handleAddToCart = (product) => {
+    if (Number(product.stock) === 0) return;
     const promo = getProductPromotion?.(product.id);
     const discountedPrice = promo
       ? calculateDiscountedPrice?.(product.priceCents, promo)
@@ -80,6 +81,7 @@ export default function WishlistWidget() {
                       ? calculateDiscountedPrice?.(product.priceCents, promo)
                       : null;
                     const price = discountedPrice || product.priceCents;
+                    const outOfStock = Number(product.stock) === 0;
                     return (
                       <li className="wishlist-item" key={product.id}>
                         <div className="wishlist-item-img">
@@ -88,7 +90,9 @@ export default function WishlistWidget() {
                         <div className="wishlist-item-info">
                           <div className="wishlist-item-name">{product.name}</div>
                           <div className="wishlist-item-price">
-                            {promo ? (
+                            {outOfStock ? (
+                              <span style={{ color: '#b91c1c', fontSize: 12, fontWeight: 600 }}>Rupture de stock</span>
+                            ) : promo ? (
                               <>
                                 <span className="wishlist-price-old">{formatPriceEUR(product.priceCents)}</span>
                                 <span className="wishlist-price-current">{formatPriceEUR(price)}</span>
@@ -104,6 +108,8 @@ export default function WishlistWidget() {
                             type="button"
                             aria-label={`Ajouter ${product.name} au panier`}
                             onClick={() => handleAddToCart(product)}
+                            disabled={outOfStock}
+                            style={outOfStock ? { opacity: 0.4, cursor: 'not-allowed' } : undefined}
                           >
                             <ShoppingBag size={16} />
                           </button>

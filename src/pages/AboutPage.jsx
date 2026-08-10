@@ -190,7 +190,7 @@ export default function AboutPage() {
                   <a href="tel:+33749226801">+33 7 49 22 68 01</a>
                 </div>
               </div>
-              <a className="ni-salon-rdv" href="https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i" target="_blank" rel="noreferrer">
+              <a className="ni-salon-rdv" href="https://www.planity.com/mey-beauty-ongles-beaute-du-regard-91170-viry-chatillon" target="_blank" rel="noreferrer">
                 Prendre rendez-vous
               </a>
             </div>

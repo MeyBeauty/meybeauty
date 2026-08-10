@@ -43,10 +43,12 @@ export default function ProductCard({
   const promo = getProductPromotion?.(product.id);
   const discountedPrice = promo ? calculateDiscountedPrice?.(product.priceCents, promo) : null;
   const savings = promo ? calculateSavings?.(product.priceCents, promo) : null;
+  const outOfStock = Number(product.stock) === 0;
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (outOfStock) return;
     const itemToAdd = promo 
       ? { ...product, priceCents: discountedPrice, originalPriceCents: product.priceCents, promotionId: promo.id }
       : product;
@@ -143,8 +145,10 @@ export default function ProductCard({
             className="product-card-add"
             type="button"
             onClick={handleAddToCart}
+            disabled={outOfStock}
+            style={outOfStock ? { opacity: 0.5, cursor: 'not-allowed' } : undefined}
           >
-            Ajouter au Panier
+            {outOfStock ? 'Rupture de stock' : 'Ajouter au Panier'}
           </button>
           {showWishlist && (
             <button

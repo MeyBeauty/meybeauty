@@ -22,6 +22,7 @@ export function CartProvider({ children }) {
 
   const addItem = useCallback((product, quantity = 1) => {
     if (!product || !product.id) return;
+    if (Number(product.stock) === 0) return;
     const qty = Number(quantity) || 1;
     setItems((prev) => {
       const existing = prev.find((it) => it.productId === product.id);

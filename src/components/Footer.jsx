@@ -63,7 +63,7 @@ export default function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <div className="footer-copy">© 2024 Mey Beauty Paris. Tous droits réservés.</div>
+        <div className="footer-copy">© {new Date().getFullYear()} Mey Beauty Paris. Tous droits réservés.</div>
         <div className="footer-legal">
           <a href="#legal">Mentions Légales</a>
           <a href="#privacy">Politique de Confidentialité</a>

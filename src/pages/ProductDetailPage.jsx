@@ -109,6 +109,7 @@ export default function ProductDetailPage() {
     return calculateSavings(product.priceCents, promotion);
   }, [product, promotion, calculateSavings]);
   const isActive = (p) => p && p.status === 'active';
+  const outOfStock = product ? Number(product.stock) === 0 : false;
 
   const related = useMemo(() => {
     const active = (allProducts || []).filter(isActive);
@@ -140,7 +141,8 @@ export default function ProductDetailPage() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  useEffect(() => { setMainImg(images[0]); setQty(1); }, [productId]);
+  // Reset main image when product images become available (e.g. after Firebase load)
+  useEffect(() => { setMainImg(images[0]); setQty(1); }, [productId, images[0]]);
 
   const productStructuredData = product ? generateProductSchema(product) : null;
 
@@ -263,6 +265,12 @@ export default function ProductDetailPage() {
               <div className="pd-product-price">{formatPriceEUR(product.priceCents)}</div>
             )}
 
+            {outOfStock && (
+              <div style={{ display: 'inline-block', marginTop: 10, padding: '6px 14px', background: '#fee2e2', color: '#b91c1c', borderRadius: 999, fontSize: 12, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                Rupture de stock
+              </div>
+            )}
+
             {/* ────────────────────────────────────────────────────
                 MÉTA-INFOS — remplacées par des puces bien stylées
                 (seule modification par rapport à l'original)
@@ -326,14 +334,17 @@ export default function ProductDetailPage() {
                 <button
                   type="button"
                   className="pd-btn-add-cart"
+                  disabled={outOfStock}
+                  style={outOfStock ? { opacity: 0.5, cursor: 'not-allowed' } : undefined}
                   onClick={() => {
+                    if (outOfStock) return;
                     const itemToAdd = promotion
                       ? { ...product, priceCents: discountedPrice, originalPriceCents: product.priceCents, promotionId: promotion.id }
                       : product;
                     addItem(itemToAdd, qty);
                   }}
                 >
-                  Ajouter au panier
+                  {outOfStock ? 'Rupture de stock' : 'Ajouter au panier'}
                 </button>
 
                 <button
