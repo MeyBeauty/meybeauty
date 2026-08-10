@@ -17,9 +17,91 @@ import {
   Timer,
 } from 'lucide-react';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import TestimonialsSection from '../components/TestimonialsSection.jsx';
 import SEO from '../components/SEO.jsx';
+
+const TEAM_PHOTOS = [
+  { src: '/equipe/mey%20beauty%20team%20(1).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'top' },
+  { src: '/equipe/mey%20beauty%20team%20(2).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'top' },
+  { src: '/equipe/mey%20beauty%20team%20(3).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'bottom' },
+  { src: '/equipe/mey%20beauty%20team%20(4).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'center' },
+  { src: '/equipe/mey%20beauty%20team%20(5).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'center' },
+  { src: '/equipe/mey%20beauty%20team%20(6).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'center' },
+];
+
+function useSlidesPerView() {
+  const [perView, setPerView] = useState(3);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 760px)');
+    const update = () => setPerView(mq.matches ? 2 : 3);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+  return perView;
+}
+
+function TeamSlider() {
+  const perView = useSlidesPerView();
+  const [active, setActive] = useState(0);
+  const pageCount = Math.ceil(TEAM_PHOTOS.length / perView);
+
+  useEffect(() => {
+    if (pageCount <= 1) return undefined;
+    const id = setInterval(() => {
+      setActive((prev) => (prev + 1) % pageCount);
+    }, 4000);
+    return () => clearInterval(id);
+  }, [pageCount]);
+
+  useEffect(() => {
+    if (active >= pageCount) setActive(0);
+  }, [active, pageCount]);
+
+  const pages = [];
+  for (let i = 0; i < pageCount; i++) {
+    pages.push(TEAM_PHOTOS.slice(i * perView, (i + 1) * perView));
+  }
+
+  const slideWidth = 100 / pageCount;
+  const trackWidth = pageCount * 100;
+
+  return (
+    <div className="team-slider" aria-roledescription="carrousel" aria-label="Photos de l'équipe">
+      <div
+        className="team-slider-track"
+        style={{
+          width: `${trackWidth}%`,
+          transform: `translateX(-${active * slideWidth}%)`,
+        }}
+      >
+        {pages.map((page, i) => (
+          <div key={i} className="team-slide" style={{ flex: `0 0 ${slideWidth}%` }}>
+            {page.map((photo, j) => (
+              <div key={j} className="about-team-card">
+                <div className="about-team-photo">
+                  <img src={photo.src} alt={photo.alt} loading="lazy" style={{ objectPosition: photo.position }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div className="team-slider-dots" aria-hidden="true">
+        {Array.from({ length: pageCount }).map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            className={`team-dot ${i === active ? 'active' : ''}`}
+            onClick={() => setActive(i)}
+            aria-label={`Diapositive ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function AboutPage() {
   useEffect(() => {
@@ -298,35 +380,7 @@ export default function AboutPage() {
           <h2 className="section-title">Des mains expertes, une attention sincère</h2>
         </div>
 
-        <div className="about-team-grid">
-          <div className="about-team-card">
-            <div className="about-team-photo">
-              <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Mélanie" />
-              <div className="about-team-caption">
-                <div className="about-team-name">Mélanie</div>
-                <div className="about-team-role">Soins & accompagnement</div>
-              </div>
-            </div>
-          </div>
-          <div className="about-team-card">
-            <div className="about-team-photo">
-              <img src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=900&q=80" alt="Brianna" />
-              <div className="about-team-caption">
-                <div className="about-team-name">Brianna</div>
-                <div className="about-team-role">Beauté du regard</div>
-              </div>
-            </div>
-          </div>
-          <div className="about-team-card">
-            <div className="about-team-photo">
-              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80" alt="Yoana" />
-              <div className="about-team-caption">
-                <div className="about-team-name">Yoana</div>
-                <div className="about-team-role">Onglerie & finitions</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <TeamSlider />
       </section>
 
       <section className="about-footer" aria-label="Retour">

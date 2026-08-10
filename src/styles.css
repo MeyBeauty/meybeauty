@@ -2762,6 +2762,51 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: 0.06em;
 }
 
+.team-slider {
+  position: relative;
+  overflow: hidden;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.team-slider-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.team-slide {
+  display: flex;
+  gap: 28px;
+  box-sizing: border-box;
+}
+
+.team-slide .about-team-card {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.team-slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.team-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(138, 110, 90, 0.3);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+
+.team-dot.active {
+  background: var(--brun);
+}
+
 .about-events {
   padding: 100px 40px;
   background: var(--blanc);
