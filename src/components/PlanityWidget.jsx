@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 const BASE_PLANITY_URL = 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i';
 
@@ -243,3 +243,63 @@ const fallbackLinkStyle = {
   fontWeight: 500,
   textDecoration: 'none',
 };
+
+const PLANITY_ONGLERIE_KEY = '-Ol2BFGQkZio5m1QpVIK';
+
+export function PlanityRaw() {
+  const id = useId();
+  const safeId = `planity-raw-${id.replace(/:/g, '')}`;
+
+  useEffect(() => {
+    const container = document.getElementById(safeId);
+    if (!container) return;
+
+    const style = document.createElement('style');
+    style.textContent = `
+      #planitywl { background-color: #F6F7F8; }
+      @media (min-width: 768px) { #planitywl h3 { color: #000000 !important; } }
+      #planitywl .planity_bookappointment-button-choose { background-color: #000000; }
+      .planity_ui_appointment_background>div:nth-child(2) { padding: 10px; }
+      .planity-gift-voucher-button-choose { background-color: #000000 !important; }
+      #planitywl>div:nth-child(2)>div:nth-child(2)>div>div>div>div>h2 { color: #000000 !important; }
+      #planitywl>div:nth-child(2)>div:nth-child(2)>div>div>div>h2 { color: #000000 !important; }
+      #planitywl>div:nth-child(2)>div:nth-child(2)>div>div>div:nth-child(2)>span { color: #000000 !important; }
+      #planitywl .planity_bookappointment-button-choose { background-color: #000000; }
+    `;
+    document.head.appendChild(style);
+
+    const initScript = document.createElement('script');
+    initScript.textContent = `
+      (function () {
+        var container = document.getElementById('${safeId}');
+        window.planity = {
+          key: '${PLANITY_ONGLERIE_KEY}',
+          primaryColor: '#fff',
+          appointmentContainer: container,
+          options: {}
+        };
+      })();
+    `;
+    initScript.async = false;
+    document.body.appendChild(initScript);
+
+    const polyfills = document.createElement('script');
+    polyfills.src = 'https://d2skjte8udjqxw.cloudfront.net/widget/production/2/polyfills.latest.js';
+    polyfills.async = false;
+    document.body.appendChild(polyfills);
+
+    const app = document.createElement('script');
+    app.src = 'https://d2skjte8udjqxw.cloudfront.net/widget/production/2/app.latest.js';
+    app.async = false;
+    document.body.appendChild(app);
+
+    return () => {
+      style.remove();
+      initScript.remove();
+      polyfills.remove();
+      app.remove();
+    };
+  }, [safeId]);
+
+  return <div id={safeId} style={{ width: '100%', minHeight: 420 }} />;
+}

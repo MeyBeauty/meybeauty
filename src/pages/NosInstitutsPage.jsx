@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MapPin, Clock, Phone, ArrowRight, X, Plus } from 'lucide-react';
 import SEO from '../components/SEO.jsx';
-import PlanityWidget from '../components/PlanityWidget.jsx';
+import PlanityWidget, { PlanityRaw } from '../components/PlanityWidget.jsx';
 
 const planityUrl = 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i';
 
@@ -47,7 +47,7 @@ const salon1 = {
     { name: 'Spray tan', price: 'Découvrir', family: 'visage', image: '/beaut%C3%A9%20regard%20(2).jpg', pitch: 'Bronzée. Sans le soleil.', description: 'Hâle doré, uniforme et longue tenue. Sans UV, sans risque, avec un rendu naturel garanti.', planityServiceSetIds: ['-Oqe80X7TxoVeWliJ9FY'] },
     { name: 'Beauté du regard', price: 'Découvrir', family: 'visage', image: '/regard.jpg', pitch: "Des yeux qui parlent d'eux-mêmes.", description: 'Coloration, rehaussement et soin des cils et sourcils pour un regard ouvert et intense.', planityServiceSetIds: ['-Ol3UAjBrVUku0PURXqq'] },
     { name: 'Onglerie', price: 'Découvrir', family: 'visage', image: '/Manucure%20Japonaise%20%20Le%20soin%20d%C3%A9tox%20r%C3%A9volutionnaire%20pour%20des%20ongles%20sains%20et%20brillants.jpg', pitch: 'Des mains à croquer.', description: 'Manucure, vernis classique ou semi-permanent pour des ongles soignés et des mains impeccables.', planityServiceSetIds: ['-Ol3Ea7M5wyLDv27sgmz'] },
-    { name: 'Tatouage semi-permanent', price: 'Découvrir', family: 'precision', image: '/Tatouage%20semi-permanent%20%20Le%20secret%20d%27une%20mise%20en%20beaut%C3%A9%20durable%20et%20naturelle.jpg', pitch: 'Réveillée belle. Tous les matins.', description: 'Sourcils, lèvres ou yeux subtilement rehaussés pour une beauté naturelle et durable sans effort.', planityServiceSetIds: ['-Ol35YKLTwrdNnEDQ6wQ'] },
+    // { name: 'Tatouage semi-permanent', price: 'Découvrir', family: 'precision', image: '/Tatouage%20semi-permanent%20%20Le%20secret%20d%27une%20mise%20en%20beaut%C3%A9%20durable%20et%20naturelle.jpg', pitch: 'Réveillée belle. Tous les matins.', description: 'Sourcils, lèvres ou yeux subtilement rehaussés pour une beauté naturelle et durable sans effort.', planityServiceSetIds: ['-Ol35YKLTwrdNnEDQ6wQ'] },
   ],
 };
 
@@ -196,7 +196,7 @@ function ServiceDrawer({ service, index, onClose }) {
             "{service.pitch}"
           </p>
           <div style={{ flex: 1, minHeight: 420, marginTop: 8 }}>
-            <PlanityWidget serviceSetIds={service.planityServiceSetIds} />
+            {service.name === 'Onglerie' ? <PlanityRaw /> : <PlanityWidget serviceSetIds={service.planityServiceSetIds} />}
           </div>
         </div>
       </div>
