@@ -33,11 +33,20 @@ const TEAM_PHOTOS = [
 function useSlidesPerView() {
   const [perView, setPerView] = useState(3);
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 760px)');
-    const update = () => setPerView(mq.matches ? 2 : 3);
+    const mqSmall = window.matchMedia('(max-width: 600px)');
+    const mqMedium = window.matchMedia('(max-width: 900px)');
+    const update = () => {
+      if (mqSmall.matches) setPerView(1);
+      else if (mqMedium.matches) setPerView(2);
+      else setPerView(3);
+    };
     update();
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
+    mqSmall.addEventListener('change', update);
+    mqMedium.addEventListener('change', update);
+    return () => {
+      mqSmall.removeEventListener('change', update);
+      mqMedium.removeEventListener('change', update);
+    };
   }, []);
   return perView;
 }
