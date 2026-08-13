@@ -4370,6 +4370,9 @@ a { text-decoration: none; color: inherit; }
   align-items: start;
 }
 
+/* Force le zoom sur la page détail produit */
+.product-detail-page { zoom: 1.1 !important; }
+
 .product-detail-page .pd-product-gallery { min-width: 0; }
 .product-detail-page .pd-product-info { min-width: 0; }
 .product-detail-page .pd-product-sidebar { min-width: 0; }
