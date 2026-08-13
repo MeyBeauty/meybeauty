@@ -9,7 +9,7 @@ const CATS = [
     cta: '— Découvrir ce service —',
     href: '#service/visage',
     video: 'https://www.pexels.com/fr-fr/download/video/9335813/',
-    image: 'soin visage (2).PNG',
+    image: '',
   },
   {
     id: 'cat-2',
@@ -19,7 +19,7 @@ const CATS = [
     cta: '— Découvrir ce service —',
     href: '#service/minceur',
     video: 'https://www.pexels.com/fr-fr/download/video/32828416/',
-    image: 'soin-minceur.PNG',
+    image: '',
   },
   {
     id: 'cat-6',
@@ -29,7 +29,7 @@ const CATS = [
     cta: '— Découvrir ce service —',
     href: '#service/epilation',
     video: '/epilation.mp4',
-    image: 'epilation-a-la-cire.jpg',
+    image: '',
   },
   {
     id: 'cat-3',
@@ -39,7 +39,7 @@ const CATS = [
     cta: '— Découvrir ce service —',
     href: '#service/regard',
     video: 'https://www.pexels.com/fr-fr/download/video/8502623/',
-    image: 'mey-beauty (6).jpeg',
+    image: '',
   },
   {
     id: 'cat-5',
