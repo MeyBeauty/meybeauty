@@ -102,7 +102,7 @@ function GlobalKeyframes() {
       @keyframes ni-drawer-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
       @keyframes ni-drawer-center { from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
       @keyframes ni-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-      .ni-drawer-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(26,20,8,0.55); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; }
+      .ni-drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100; background: rgba(26,20,8,0.55); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; }
       .ni-drawer { position: fixed; top: 50%; left: 50%; width: min(400px, 85%); max-height: 78vh; transform: translate(-50%, -50%); background: ${C.paper}; display: flex; flex-direction: column; animation: ni-drawer-center .32s cubic-bezier(.4,0,.2,1); box-shadow: 0 20px 60px rgba(26,20,8,0.2); border-radius: 10px; overflow: hidden; }
       @media (prefers-reduced-motion: reduce) {
         .ni-marquee-row { animation: none !important; }
@@ -156,7 +156,7 @@ function Fiche({ service, index, onClick }) {
           preload="metadata"
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(26,20,8,0.55) 100%)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(26,20,8,0.55) 100%)' }} />
         <span style={{ position: 'absolute', top: 12, left: 14, fontFamily: FONT_SC, fontSize: 11, letterSpacing: '0.06em', color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.35)' }}>{ref}</span>
       </div>
       <div style={{ padding: '18px 16px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -202,7 +202,7 @@ function ServiceDrawer({ service, index, onClose }) {
           ) : (
             <img src={service.image || undefined} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           )}
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
           <button
             onClick={onClose}
             style={{ position: 'absolute', zIndex: 2, top: 14, right: 14, background: 'rgba(255,255,255,0.22)', border: 'none', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -576,7 +576,7 @@ export default function NosInstitutsPage() {
       <style>{`
         .ni-drawer-overlay {
           position: fixed;
-          inset: 0;
+          top: 0; left: 0; right: 0; bottom: 0;
           z-index: 100;
           background: rgba(26, 20, 8, 0.55);
           backdrop-filter: blur(4px);
