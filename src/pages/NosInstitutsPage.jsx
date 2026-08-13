@@ -145,29 +145,17 @@ function Fiche({ service, index, onClick }) {
       onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
     >
       <div style={{ height: 140, position: 'relative', overflow: 'hidden' }}>
-        {service.video ? (
-          <video
-            src={service.video}
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={service.image}
-            preload="metadata"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-        ) : (
-          <video
-            src={service.video}
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={service.image}
-            preload="metadata"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-        )}
+        <video
+          key={service.video}
+          src={service.video ? encodeURI(service.video) : undefined}
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={service.image || undefined}
+          preload="metadata"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(26,20,8,0.55) 100%)' }} />
         <span style={{ position: 'absolute', top: 12, left: 14, fontFamily: FONT_SC, fontSize: 11, letterSpacing: '0.06em', color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.35)' }}>{ref}</span>
       </div>
@@ -201,22 +189,23 @@ function ServiceDrawer({ service, index, onClose }) {
         <div style={{ height: 220, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', color: '#fff' }}>
           {service.video ? (
             <video
-              src={service.video}
+              key={service.video}
+              src={encodeURI(service.video)}
               autoPlay
               muted
               loop
               playsInline
-              poster={service.image}
+              poster={service.image || undefined}
               preload="metadata"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, zIndex: 0 }}
             />
           ) : (
-            <img src={service.image} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
+            <img src={service.image || undefined} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, zIndex: 0 }} />
           )}
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
+          <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
           <button
             onClick={onClose}
-            style={{ position: 'relative', zIndex: 2, alignSelf: 'flex-end', background: 'rgba(255,255,255,0.18)', border: 'none', color: 'inherit', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            style={{ position: 'relative', zIndex: 2, alignSelf: 'flex-end', background: 'rgba(255,255,255,0.22)', border: 'none', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <X size={16} strokeWidth={1.75} />
           </button>

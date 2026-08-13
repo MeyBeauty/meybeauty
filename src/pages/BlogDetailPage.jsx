@@ -139,20 +139,7 @@ export default function BlogDetailPage() {
 
           {!loading && post && (
           <div className="comments-section">
-            <div className="comments-title">Commentaires ( 1 )</div>
-            <div className="comment">
-              <div className="comment-avatar" aria-hidden="true">
-                <User />
-              </div>
-              <div className="comment-body">
-                <div className="comment-name">Cliente</div>
-                <div className="comment-date">28 Octobre, 2024 à 07:41</div>
-                <p className="comment-text">
-                  Super expérience : peau plus lumineuse dès la première séance, et un massage très relaxant.
-                  Merci à l’équipe Mey Beauty.
-                </p>
-              </div>
-            </div>
+
           </div>
           )}
         </article>
