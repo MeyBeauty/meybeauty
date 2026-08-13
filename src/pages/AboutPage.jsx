@@ -22,9 +22,9 @@ import TestimonialsSection from '../components/TestimonialsSection.jsx';
 import SEO from '../components/SEO.jsx';
 
 const TEAM_PHOTOS = [
-  { src: '/equipe/mey%20beauty%20team%20(1).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'top' },
+    { src: '/equipe/mey%20beauty%20team%20(3).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'top' },
   { src: '/equipe/mey%20beauty%20team%20(2).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'top' },
-  { src: '/equipe/mey%20beauty%20team%20(3).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'bottom' },
+{ src: '/equipe/mey%20beauty%20team%20(1).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'bottom' },
   { src: '/equipe/mey%20beauty%20team%20(4).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'center' },
   { src: '/equipe/mey%20beauty%20team%20(5).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'center' },
   { src: '/equipe/mey%20beauty%20team%20(6).png', alt: 'Membre de l\'équipe Mey Beauty', position: 'center' },
