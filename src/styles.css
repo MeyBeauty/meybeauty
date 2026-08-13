@@ -11605,8 +11605,3 @@ a { text-decoration: none; color: inherit; }
     body { transform: scale(1.0); transform-origin: top left; width: 100%; }
   }
 }
-
-/* Réduction du zoom global sur les écrans moyens (petits PC / portables) */
-@media (min-width: 1000px) and (max-width: 1400px) {
-  html { zoom: 0.75; }
-}
