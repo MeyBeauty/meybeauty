@@ -200,10 +200,19 @@ function ServiceDrawer({ service, index, onClose }) {
       >
         <div style={{ height: 220, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', color: '#fff' }}>
           {service.video ? (
-         <img src={service.image} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
-        ) : (
-          <img src={service.image} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
-        )}
+            <video
+              src={service.video}
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={service.image}
+              preload="metadata"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }}
+            />
+          ) : (
+            <img src={service.image} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
+          )}
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
           <button
             onClick={onClose}

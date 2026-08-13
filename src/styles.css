@@ -1183,7 +1183,7 @@ a { text-decoration: none; color: inherit; }
   overflow: hidden;
   white-space: nowrap;
   user-select: none;
-  margin-bottom: 84px;
+  margin-bottom: 40px;
 }
 .hashtag-track {
   display: inline-flex;
@@ -1226,6 +1226,11 @@ a { text-decoration: none; color: inherit; }
   padding: 0 10px;
   max-width: 1400px;
   margin: 0 auto;
+}
+
+/* Ligne 1 de l'accueil (visage + minceur) un peu moins haute */
+.cat-grid:not(.others-grid) {
+  grid-template-rows: 390px;
 }
 .cat-item {
   position: relative;
@@ -1889,7 +1894,7 @@ a { text-decoration: none; color: inherit; }
    ⑨ BLOG + INSTAGRAM + MARQUES
 ============================================================ */
 .blog-section {
-  padding: 80px 60px;
+  padding: 80px 60px 24px;
   background: var(--blanc);
 }
 .blog-grid {
@@ -1897,7 +1902,7 @@ a { text-decoration: none; color: inherit; }
   grid-template-columns: repeat(3, 1fr);
   gap: 36px;
   margin-top: 52px;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
 }
 .blog-card { cursor: pointer; }
 .blog-img {
