@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 const BASE_PLANITY_URL = 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i';
+const DEFAULT_PLANITY_KEY = '-OT1v5CLaAu9eXFhWVbA';
 
 function normalizeServiceSetIds(serviceSetIds) {
   if (Array.isArray(serviceSetIds)) return serviceSetIds.filter(Boolean);
@@ -12,7 +13,7 @@ export default function PlanityWidget({ serviceSetIds, className = '' }) {
   const iframeRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const planityKey = import.meta.env.VITE_PLANITY_KEY;
+  const planityKey = import.meta.env.VITE_PLANITY_KEY || DEFAULT_PLANITY_KEY;
 
   const embedUrl = useMemo(() => {
     const ids = normalizeServiceSetIds(serviceSetIds);
@@ -246,9 +247,12 @@ const fallbackLinkStyle = {
 
 const PLANITY_ONGLERIE_KEY = '-Ol2BFGQkZio5m1QpVIK';
 
-export function PlanityRaw() {
+export function PlanityRaw({ serviceSetIds, planityKey }) {
   const id = useId();
   const safeId = `planity-raw-${id.replace(/:/g, '')}`;
+  const key = planityKey || PLANITY_ONGLERIE_KEY;
+  const ids = normalizeServiceSetIds(serviceSetIds);
+  const options = ids.length > 0 ? { serviceSetsWhitelist: ids } : {};
 
   useEffect(() => {
     const container = document.getElementById(safeId);
@@ -265,7 +269,6 @@ export function PlanityRaw() {
       #planitywl>div:nth-child(2)>div:nth-child(2)>div>div>div>h2 { color: #000000 !important; }
       #planitywl>div:nth-child(2)>div:nth-child(2)>div>div>div:nth-child(2)>span { color: #000000 !important; }
       #planitywl .planity_bookappointment-button-choose { background-color: #000000; }
-      /* Empêcher Planity de créer des overlays qui couvrent le modal */
       .planity_ui_appointment_background { z-index: 0 !important; }
     `;
     document.head.appendChild(style);
@@ -275,10 +278,10 @@ export function PlanityRaw() {
       (function () {
         var container = document.getElementById('${safeId}');
         window.planity = {
-          key: '${PLANITY_ONGLERIE_KEY}',
+          key: '${key}',
           primaryColor: '#fff',
           appointmentContainer: container,
-          options: {}
+          options: ${JSON.stringify(options)}
         };
       })();
     `;
@@ -301,7 +304,7 @@ export function PlanityRaw() {
       polyfills.remove();
       app.remove();
     };
-  }, [safeId]);
+  }, [safeId, key]);
 
   return <div id={safeId} style={{ width: '100%', minHeight: 600 }} />;
 }

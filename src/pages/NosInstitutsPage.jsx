@@ -3,6 +3,8 @@ import { MapPin, Clock, Phone, ArrowRight, X, Plus } from 'lucide-react';
 import SEO from '../components/SEO.jsx';
 import PlanityWidget, { PlanityRaw } from '../components/PlanityWidget.jsx';
 
+const DEFAULT_PLANITY_KEY = '-OT1v5CLaAu9eXFhWVbA';
+
 const planityUrl = 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i';
 
 /* ────────────────────────────────────────────────────
@@ -222,7 +224,10 @@ function ServiceDrawer({ service, index, onClose }) {
             "{service.pitch}"
           </p>
           <div style={{ flex: 1, minHeight: 300, marginTop: 6, position: 'relative', isolation: 'isolate' }}>
-            {service.name === 'Onglerie' ? <PlanityRaw /> : <PlanityWidget serviceSetIds={service.planityServiceSetIds} />}
+            {service.name === 'Onglerie'
+              ? <PlanityRaw />
+              : <PlanityRaw serviceSetIds={service.planityServiceSetIds} planityKey={DEFAULT_PLANITY_KEY} />
+            }
           </div>
         </div>
       </div>
