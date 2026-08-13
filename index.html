@@ -54,14 +54,21 @@
     <meta name="theme-color" content="#523A28" />
     <meta name="msapplication-TileColor" content="#523A28" />
 
-    <!-- Force 75% zoom sur les PC -->
+    <!-- Force 80% zoom sur les PC (desktop uniquement) -->
     <script>
       (function(){
         function applyZoom(){
-          var w = window.innerWidth;
-          document.documentElement.style.zoom = (w >= 1024) ? '0.75' : '';
+          var w = window.outerWidth || window.innerWidth;
+          var isDesktop = w >= 1024 && !('ontouchstart' in window);
+          var z = isDesktop ? '0.8' : '';
+          document.documentElement.style.zoom = z;
+          document.body && (document.body.style.zoom = z);
         }
         applyZoom();
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', applyZoom);
+        }
+        window.addEventListener('load', applyZoom);
         window.addEventListener('resize', applyZoom);
       })();
     </script>

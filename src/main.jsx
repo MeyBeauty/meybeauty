@@ -11,6 +11,20 @@ import { PromotionsProvider } from './context/PromotionsContext.jsx';
 
 const helmetContext = {};
 
+// Force le zoom à 80% sur desktop (PC)
+(function forceDesktopZoom() {
+  function apply() {
+    var w = window.outerWidth || window.innerWidth;
+    var isDesktop = w >= 1024 && !('ontouchstart' in window);
+    var z = isDesktop ? '0.8' : '';
+    document.documentElement.style.zoom = z;
+  }
+  apply();
+  document.addEventListener('DOMContentLoaded', apply);
+  window.addEventListener('load', apply);
+  window.addEventListener('resize', apply);
+})();
+
 // Register Service Worker for offline cache
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

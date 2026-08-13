@@ -11597,9 +11597,13 @@ a { text-decoration: none; color: inherit; }
   }
 }
 
-/* Zoom global à 75% sur tous les PC (mini + grands écrans) */
+/* Zoom global à 80% sur tous les PC (desktop) */
 @media (min-width: 1024px) {
-  html { zoom: 0.75; }
+  html { zoom: 0.8; }
+  /* Fallback Firefox ancien : transform sur body */
+  @supports not (zoom: 1) {
+    body { transform: scale(0.8); transform-origin: top left; width: 125%; }
+  }
 }
 
 /* Réduction du zoom global sur les écrans moyens (petits PC / portables) */
