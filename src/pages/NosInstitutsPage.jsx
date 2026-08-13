@@ -187,7 +187,7 @@ function ServiceDrawer({ service, index, onClose }) {
         onClick={e => e.stopPropagation()}
         className="ni-drawer"
       >
-        <div style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff', backgroundColor: '#1a1408' }}>
+        <div style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff', backgroundColor: '#1a1408', zIndex: 10, flexShrink: 0 }}>
           {service.video ? (
             <video
               key={service.video}
@@ -207,22 +207,22 @@ function ServiceDrawer({ service, index, onClose }) {
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
           <button
             onClick={onClose}
-            style={{ position: 'absolute', zIndex: 2, top: 14, right: 14, background: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.5)', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            style={{ position: 'absolute', zIndex: 20, top: 14, right: 14, background: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.5)', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <X size={16} strokeWidth={1.75} />
           </button>
-          <div style={{ position: 'absolute', zIndex: 2, left: 0, right: 0, bottom: 0, padding: 20 }}>
+          <div style={{ position: 'absolute', zIndex: 20, left: 0, right: 0, bottom: 0, padding: 20 }}>
             <div style={{ fontFamily: FONT_SC, fontSize: 12, letterSpacing: '0.1em', opacity: 0.9 }}>{ref}</div>
             <div style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 25, marginTop: 6 }}>{service.name}</div>
           </div>
         </div>
 
-        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
           <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 18, color: C.gold, marginBottom: 14, lineHeight: 1.4 }}>
             "{service.pitch}"
           </p>
-          <div style={{ flex: 1, minHeight: 300, marginTop: 6 }}>
-            {service.planityServiceSetIds && service.planityServiceSetIds.length > 0 ? <PlanityWidget serviceSetIds={service.planityServiceSetIds} /> : <PlanityRaw />}
+          <div style={{ flex: 1, minHeight: 300, marginTop: 6, position: 'relative', overflow: 'hidden', isolation: 'isolate' }}>
+            {service.name === 'Onglerie' ? <PlanityRaw /> : <PlanityWidget serviceSetIds={service.planityServiceSetIds} />}
           </div>
         </div>
       </div>

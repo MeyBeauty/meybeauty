@@ -256,7 +256,7 @@ export function PlanityRaw() {
 
     const style = document.createElement('style');
     style.textContent = `
-      #planitywl { background-color: #F6F7F8; }
+      #planitywl { background-color: #F6F7F8; position: relative; z-index: 0; }
       @media (min-width: 768px) { #planitywl h3 { color: #000000 !important; } }
       #planitywl .planity_bookappointment-button-choose { background-color: #000000; }
       .planity_ui_appointment_background>div:nth-child(2) { padding: 10px; }
@@ -265,6 +265,8 @@ export function PlanityRaw() {
       #planitywl>div:nth-child(2)>div:nth-child(2)>div>div>div>h2 { color: #000000 !important; }
       #planitywl>div:nth-child(2)>div:nth-child(2)>div>div>div:nth-child(2)>span { color: #000000 !important; }
       #planitywl .planity_bookappointment-button-choose { background-color: #000000; }
+      /* Empêcher Planity de créer des overlays qui couvrent le modal */
+      .planity_ui_appointment_background { z-index: 0 !important; }
     `;
     document.head.appendChild(style);
 
