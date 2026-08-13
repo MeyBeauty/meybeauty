@@ -144,10 +144,9 @@ function Fiche({ service, index, onClick }) {
       onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 18px 40px rgba(26,20,8,0.14)'; }}
       onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
     >
-      <div style={{ height: 140, position: 'relative', overflow: 'hidden' }}>
+      <div style={{ height: 140, position: 'relative', overflow: 'hidden', backgroundColor: '#1a1408' }}>
         <video
           key={service.video}
-          src={service.video ? encodeURI(service.video) : undefined}
           autoPlay
           muted
           loop
@@ -155,7 +154,9 @@ function Fiche({ service, index, onClick }) {
           poster={service.image || undefined}
           preload="metadata"
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
+        >
+          <source src={service.video ? encodeURI(service.video) : undefined} type="video/mp4" />
+        </video>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(26,20,8,0.55) 100%)' }} />
         <span style={{ position: 'absolute', top: 12, left: 14, fontFamily: FONT_SC, fontSize: 11, letterSpacing: '0.06em', color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.35)' }}>{ref}</span>
       </div>
@@ -186,26 +187,27 @@ function ServiceDrawer({ service, index, onClose }) {
         onClick={e => e.stopPropagation()}
         className="ni-drawer"
       >
-        <div style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff' }}>
+        <div style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff', backgroundColor: '#1a1408' }}>
           {service.video ? (
             <video
               key={service.video}
-              src={encodeURI(service.video)}
               autoPlay
               muted
               loop
               playsInline
               poster={service.image || undefined}
-              preload="metadata"
+              preload="auto"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
+            >
+              <source src={encodeURI(service.video)} type="video/mp4" />
+            </video>
           ) : (
             <img src={service.image || undefined} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           )}
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
           <button
             onClick={onClose}
-            style={{ position: 'absolute', zIndex: 2, top: 14, right: 14, background: 'rgba(255,255,255,0.22)', border: 'none', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            style={{ position: 'absolute', zIndex: 2, top: 14, right: 14, background: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.5)', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <X size={16} strokeWidth={1.75} />
           </button>
