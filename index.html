@@ -53,6 +53,18 @@
     <!-- Theme Color -->
     <meta name="theme-color" content="#523A28" />
     <meta name="msapplication-TileColor" content="#523A28" />
+
+    <!-- Force 75% zoom sur les PC -->
+    <script>
+      (function(){
+        function applyZoom(){
+          var w = window.innerWidth;
+          document.documentElement.style.zoom = (w >= 1024) ? '0.75' : '';
+        }
+        applyZoom();
+        window.addEventListener('resize', applyZoom);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
