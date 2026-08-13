@@ -141,19 +141,6 @@ export default function ProductDetailPage() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  // Force le zoom sur la page détail produit
-  useEffect(() => {
-    function applyZoom() {
-      const el = document.querySelector('.product-detail-page');
-      if (el) {
-        el.style.zoom = '1.1';
-      }
-    }
-    applyZoom();
-    const t = setTimeout(applyZoom, 100);
-    const t2 = setTimeout(applyZoom, 500);
-    return () => { clearTimeout(t); clearTimeout(t2); };
-  }, [productId]);
 
   // Reset main image when product images become available (e.g. after Firebase load)
   useEffect(() => { setMainImg(images[0]); setQty(1); }, [productId, images[0]]);
@@ -223,13 +210,7 @@ export default function ProductDetailPage() {
         type="product"
         structuredData={productStructuredData}
       />
-      <main className="product-detail-page" style={{ zoom: '1.1' }}>
-        <style>{`
-          .product-detail-page { zoom: 1.1 !important; transform: scale(1.1); transform-origin: top center; }
-          @media (min-width: 1024px) {
-            .product-detail-page { zoom: 1.1 !important; }
-          }
-        `}</style>
+      <main className="product-detail-page">
         <section className="page-hero-banner" aria-label="Bannière">
           <h1>Produit</h1>
           <div className="breadcrumb">
