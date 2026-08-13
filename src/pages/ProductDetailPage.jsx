@@ -209,7 +209,7 @@ export default function ProductDetailPage() {
         type="product"
         structuredData={productStructuredData}
       />
-      <main className="product-detail-page" style={{ zoom: '90%' }}>
+      <main className="product-detail-page" style={{ zoom: '1.1' }}>
         <section className="page-hero-banner" aria-label="Bannière">
           <h1>Produit</h1>
           <div className="breadcrumb">
