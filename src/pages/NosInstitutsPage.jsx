@@ -262,7 +262,7 @@ function Gallery() {
     { img: '/mey-beauty%20(2).jpeg', cap: 'Ambiance', col: 2, row: 1 },
     { img: '/mey beauty.png', cap: 'Cabine', col: 3, row: 1 },
     { img: '/mey-beauty%20(4).jpeg', cap: 'Onglerie', col: 2, row: 2 },
-    { img: '/mey-beauty%20(5).jpeg', cap: 'Accueil', col: 3, row: 2 },
+    { img: '/mey beauty 1.png', cap: 'Accueil', col: 3, row: 2 },
   ];
   return (
     <section className="ni-gallery">
