@@ -222,7 +222,7 @@ function ServiceDrawer({ service, index, onClose }) {
             "{service.pitch}"
           </p>
           <div style={{ flex: 1, minHeight: 300, marginTop: 6 }}>
-            {service.name === 'Onglerie' ? <PlanityRaw /> : <PlanityWidget serviceSetIds={service.planityServiceSetIds} />}
+            {service.planityServiceSetIds && service.planityServiceSetIds.length > 0 ? <PlanityWidget serviceSetIds={service.planityServiceSetIds} /> : <PlanityRaw />}
           </div>
         </div>
       </div>
