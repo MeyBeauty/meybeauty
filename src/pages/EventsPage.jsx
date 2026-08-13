@@ -76,7 +76,7 @@ export default function EventsPage() {
         <section className="ev-intro" aria-label="Présentation">
           <div className="ev-intro-visual">
             <div className="ev-intro-arch">
-              <img src="/mey-beauty%20(3).jpeg" alt="Moments privilégiés chez Mey Beauty" />
+              <img src="/evg mey beauty.png" alt="Moments privilégiés chez Mey Beauty" />
             </div>
             <div className="ev-intro-badge">
               <span className="ev-intro-badge-number">2</span>
