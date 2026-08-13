@@ -303,5 +303,5 @@ export function PlanityRaw() {
     };
   }, [safeId]);
 
-  return <div id={safeId} style={{ width: '100%', minHeight: 420 }} />;
+  return <div id={safeId} style={{ width: '100%', minHeight: 600 }} />;
 }
