@@ -11,12 +11,12 @@ import { PromotionsProvider } from './context/PromotionsContext.jsx';
 
 const helmetContext = {};
 
-// Force le zoom à 80% sur desktop (PC)
+// Force le zoom à 100% sur desktop (PC)
 (function forceDesktopZoom() {
   function apply() {
     var w = window.outerWidth || window.innerWidth;
     var isDesktop = w >= 1024 && !('ontouchstart' in window);
-    var z = isDesktop ? '0.8' : '';
+    var z = isDesktop ? '1.0' : '';
     document.documentElement.style.zoom = z;
   }
   apply();

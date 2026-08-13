@@ -11597,12 +11597,12 @@ a { text-decoration: none; color: inherit; }
   }
 }
 
-/* Zoom global à 80% sur tous les PC (desktop) */
+/* Zoom global à 100% sur tous les PC (desktop) */
 @media (min-width: 1024px) {
-  html { zoom: 0.8; }
+  html { zoom: 1.0; }
   /* Fallback Firefox ancien : transform sur body */
   @supports not (zoom: 1) {
-    body { transform: scale(0.8); transform-origin: top left; width: 125%; }
+    body { transform: scale(1.0); transform-origin: top left; width: 100%; }
   }
 }
 
