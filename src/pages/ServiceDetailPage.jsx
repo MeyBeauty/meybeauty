@@ -2,7 +2,7 @@ import SEO from '../components/SEO.jsx';
 import PlanityWidget, { PlanityRaw } from '../components/PlanityWidget.jsx';
 import CategoryGrid from '../components/CategoryGrid.jsx';
 import { useState } from 'react';
-import { ArrowLeft, Calendar, X, Search, Scissors, Sparkles, ShieldCheck, MessageCircleHeart, Leaf, Flame, Wind, ClipboardList, Eye, Droplets, Paintbrush, Palette, Sliders } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calendar, X, Search, Scissors, Sparkles, ShieldCheck, MessageCircleHeart, Leaf, Flame, Wind, ClipboardList, Eye, Droplets, Paintbrush, Palette, Sliders } from 'lucide-react';
 
 const SERVICES = {
   visage: {
@@ -362,8 +362,8 @@ export default function ServiceDetailPage({ slug }) {
         </section>
 
         <section className="sd-ritual">
-          <p className="sd-eyebrow sd-center">Le déroulé</p>
-          <h2 className="sd-h2 sd-center">Le rituel, temps par temps</h2>
+          <p className="sd-eyebrow sd-center">Le protocole</p>
+          <h2 className="sd-h2 sd-center">Votre soin, étape par étape</h2>
           <div className="sd-ritual-list">
             <div className="sd-ritual-line" aria-hidden="true" />
             {service.benefits.map((b, i) => (
@@ -416,8 +416,13 @@ export default function ServiceDetailPage({ slug }) {
 
         <section className="sd-others">
           <p className="sd-eyebrow sd-center">À découvrir aussi</p>
-          <h2 className="sd-h2 sd-center">Nos autres univers</h2>
+          <h2 className="sd-h2 sd-center">Autres prestations</h2>
           <CategoryGrid items={discover} className="cat-grid others-grid" />
+          <div className="sd-others-cta">
+            <a href="#instituts" className="btn-rdv">
+              Voir toutes nos prestations <ArrowRight size={18} strokeWidth={1.5} />
+            </a>
+          </div>
         </section>
 
         <section className="sd-faq">
@@ -908,6 +913,8 @@ export default function ServiceDetailPage({ slug }) {
             to { transform: translateY(0); }
           }
         }
+
+        .sd-others-cta { text-align: center; margin-top: 44px; }
 
         @media (max-width: 800px) {
           .sd-intro-grid { grid-template-columns: 1fr; gap: 36px; }
