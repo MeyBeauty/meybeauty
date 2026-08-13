@@ -157,7 +157,16 @@ function Fiche({ service, index, onClick }) {
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         ) : (
-          <img src={service.image} alt={service.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <video
+            src={service.video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={service.image}
+            preload="metadata"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
         )}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(26,20,8,0.55) 100%)' }} />
         <span style={{ position: 'absolute', top: 12, left: 14, fontFamily: FONT_SC, fontSize: 11, letterSpacing: '0.06em', color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.35)' }}>{ref}</span>

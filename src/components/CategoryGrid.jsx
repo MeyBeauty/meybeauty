@@ -25,7 +25,7 @@ const CATS = [
     id: 'cat-6',
     className: 'cat-item cat-6',
     kicker: 'Épilation',
-    title: 'Épilation\nà la cire',
+    title: 'Épilation\nCire & définitive',
     cta: '— Découvrir ce service —',
     href: '#service/epilation',
     video: '/epilation.mp4',
