@@ -11597,6 +11597,11 @@ a { text-decoration: none; color: inherit; }
   }
 }
 
+/* Zoom global à 75% sur tous les PC (mini + grands écrans) */
+@media (min-width: 1024px) {
+  html { zoom: 0.75; }
+}
+
 /* Réduction du zoom global sur les écrans moyens (petits PC / portables) */
 @media (min-width: 1000px) and (max-width: 1400px) {
   html { zoom: 0.75; }
