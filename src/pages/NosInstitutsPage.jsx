@@ -186,7 +186,7 @@ function ServiceDrawer({ service, index, onClose }) {
         onClick={e => e.stopPropagation()}
         className="ni-drawer"
       >
-        <div style={{ height: 220, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', color: '#fff' }}>
+        <div style={{ height: 220, position: 'relative', overflow: 'hidden', color: '#fff' }}>
           {service.video ? (
             <video
               key={service.video}
@@ -197,19 +197,19 @@ function ServiceDrawer({ service, index, onClose }) {
               playsInline
               poster={service.image || undefined}
               preload="metadata"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, zIndex: 0 }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
           ) : (
-            <img src={service.image || undefined} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, zIndex: 0 }} />
+            <img src={service.image || undefined} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           )}
-          <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
           <button
             onClick={onClose}
-            style={{ position: 'relative', zIndex: 2, alignSelf: 'flex-end', background: 'rgba(255,255,255,0.22)', border: 'none', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            style={{ position: 'absolute', zIndex: 2, top: 14, right: 14, background: 'rgba(255,255,255,0.22)', border: 'none', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <X size={16} strokeWidth={1.75} />
           </button>
-          <div style={{ position: 'relative', zIndex: 2, padding: 24 }}>
+          <div style={{ position: 'absolute', zIndex: 2, left: 0, right: 0, bottom: 0, padding: 24 }}>
             <div style={{ fontFamily: FONT_SC, fontSize: 12, letterSpacing: '0.1em', opacity: 0.9 }}>{ref}</div>
             <div style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 28, marginTop: 8 }}>{service.name}</div>
           </div>
