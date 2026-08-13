@@ -1305,12 +1305,13 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: 0.26em;
 }
 
-/* Faux backgrounds pour les 4 catégories */
+/* Faux backgrounds pour les 6 catégories */
 .cat-1 { background: #C4A08A; }
 .cat-2 { background: #A8856B; }
 .cat-3 { background: #BDA88E; }
 .cat-4 { background: #8C6B55; }
 .cat-5 { background: #9E7A6D; }
+.cat-6 { background: #A67B5B; }
 
 .cat-1 .cat-bg {
   background: radial-gradient(ellipse at 30% 60%, #D4B09A 0%, #B89070 60%, #9A7456 100%);
@@ -1327,13 +1328,24 @@ a { text-decoration: none; color: inherit; }
 .cat-5 .cat-bg {
   background: radial-gradient(ellipse at 50% 50%, #BB9B8C 0%, #9C7A6D 50%, #7A5A50 100%);
 }
+.cat-6 .cat-bg {
+  background: radial-gradient(ellipse at 50% 50%, #C0A08C 0%, #A67B5B 50%, #7A5A45 100%);
+}
 
-/* Layout 6/4 puis 4/3/3 */
-.cat-grid .cat-item:nth-child(1) { grid-column: 1 / span 6; }
-.cat-grid .cat-item:nth-child(2) { grid-column: 7 / span 4; }
-.cat-grid .cat-item:nth-child(3) { grid-column: 1 / span 4; }
-.cat-grid .cat-item:nth-child(4) { grid-column: 5 / span 3; }
-.cat-grid .cat-item:nth-child(5) { grid-column: 8 / span 3; }
+/* Layout 6/4 puis 10 puis 4/3/3 */
+.cat-grid .cat-item:nth-child(1) { grid-column: 1 / span 6; grid-row: 1; }
+.cat-grid .cat-item:nth-child(2) { grid-column: 7 / span 4; grid-row: 1; }
+.cat-grid .cat-item:nth-child(3) { grid-column: 1 / span 10; grid-row: 2; }
+.cat-grid .cat-item:nth-child(4) { grid-column: 1 / span 4; grid-row: 3; }
+.cat-grid .cat-item:nth-child(5) { grid-column: 5 / span 3; grid-row: 3; }
+.cat-grid .cat-item:nth-child(6) { grid-column: 8 / span 3; grid-row: 3; }
+
+/* Layout "À découvrir aussi" : 3/3/4 puis 4/6 */
+.others-grid .cat-item:nth-child(1) { grid-column: 1 / span 3; grid-row: 1; }
+.others-grid .cat-item:nth-child(2) { grid-column: 4 / span 3; grid-row: 1; }
+.others-grid .cat-item:nth-child(3) { grid-column: 7 / span 4; grid-row: 1; }
+.others-grid .cat-item:nth-child(4) { grid-column: 1 / span 4; grid-row: 2; }
+.others-grid .cat-item:nth-child(5) { grid-column: 5 / span 6; grid-row: 2; }
 
 .cat-illus {
   position: absolute;
@@ -7388,8 +7400,10 @@ a { text-decoration: none; color: inherit; }
   .cat-grid .cat-item:nth-child(2),
   .cat-grid .cat-item:nth-child(3),
   .cat-grid .cat-item:nth-child(4),
-  .cat-grid .cat-item:nth-child(5) {
+  .cat-grid .cat-item:nth-child(5),
+  .cat-grid .cat-item:nth-child(6) {
     grid-column: auto;
+    grid-row: auto;
   }
 
   .about-intro { grid-template-columns: 1fr; gap: 40px; }
@@ -11434,6 +11448,7 @@ a { text-decoration: none; color: inherit; }
   line-height: 1.35;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

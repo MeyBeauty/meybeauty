@@ -38,19 +38,19 @@ const salon1 = {
   image: '/mey-beauty%20(1).jpeg',
   planityUrl: 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i',
   services: [
-    { name: 'Épilation', price: 'Découvrir', family: 'precision', image: '/epilation-a-la-cire.jpg', pitch: 'Peau lisse. Dès la première séance.', description: 'Cires douces adaptées à toutes les zones. Résultat impeccable, confort maximal.', planityServiceSetIds: ['-Ol37IE9hHjduXLe5euh'] },
-    { name: 'Épilation définitive', price: 'Découvrir', family: 'precision', image: '/Epilation-laser.webp', pitch: 'Fini les poils, pour de bon.', description: 'Laser et lumière pulsée pour une réduction durable. Peau nette au quotidien, sans contrainte.', planityServiceSetIds: ['-Ol3CsevbpSXybi9euiF'] },
-    { name: 'LPG Cellu M6', price: 'Découvrir', family: 'corps', image: '/soin-minceur.PNG', pitch: 'Votre silhouette, sculptée par la technologie.', description: 'Endermologie brevetée pour cibler la cellulite, raffermir la peau et affiner durablement.', planityServiceSetIds: ['-Ol3L_k2ReRgOHI0FJw7'] },
-    { name: 'Drainage lymphatique', price: 'Découvrir', family: 'corps', image: '/DrainageLymphatiqueSilhouette.jpg', pitch: 'Légèreté retrouvée. Corps libéré.', description: 'Massage manuel profond pour éliminer les toxines, activer la circulation et soulager les jambes lourdes.', planityServiceSetIds: ['-Ol3PL-4DWabvYcQlZAx'] },
-    { name: 'Madérothérapie', price: 'Découvrir', family: 'corps', image: '/soin%20minceur%20(1).jpg', pitch: 'Le bois sculpte, le corps se transforme.', description: 'Instruments en bois naturel pour déloger la cellulite, modeler les courbes et améliorer la circulation.', planityServiceSetIds: ['-Ol3NxupvdMJITC5AZDH'] },
-    { name: 'Soin visage', price: 'Découvrir', family: 'visage', image: '/soin%20visage%20(2).jpg', pitch: 'Votre teint, réveillé.', description: 'Rituel nettoyant, hydratant ou anti-âge personnalisé selon votre type de peau pour une peau lumineuse.', planityServiceSetIds: ['-OnhVQxq7vObvSeJRzMU', '-Ol3GkVAkT6jUeNjS83U'] },
-    { name: 'Spray tan', price: 'Découvrir', family: 'visage', image: '/beaut%C3%A9%20regard%20(2).jpg', pitch: 'Bronzée. Sans le soleil.', description: 'Hâle doré, uniforme et longue tenue. Sans UV, sans risque, avec un rendu naturel garanti.', planityServiceSetIds: ['-Oqe80X7TxoVeWliJ9FY'] },
-    { name: 'Beauté du regard', price: 'Découvrir', family: 'visage', image: '/regard.jpg', pitch: "Des yeux qui parlent d'eux-mêmes.", description: 'Coloration, rehaussement et soin des cils et sourcils pour un regard ouvert et intense.', planityServiceSetIds: ['-Ol3UAjBrVUku0PURXqq'] },
-    { name: 'Onglerie', price: 'Découvrir', family: 'visage', image: '/Manucure%20Japonaise%20%20Le%20soin%20d%C3%A9tox%20r%C3%A9volutionnaire%20pour%20des%20ongles%20sains%20et%20brillants.jpg', pitch: 'Des mains à croquer.', description: 'Manucure, vernis classique ou semi-permanent pour des ongles soignés et des mains impeccables.', planityServiceSetIds: ['-Ol3Ea7M5wyLDv27sgmz'] },
+    { name: 'Épilation', price: 'Découvrir', family: 'precision', image: '/epilation-a-la-cire.jpg',  video: '/videos prestations/épilation.mp4', pitch: 'Peau lisse. Dès la première séance.', description: 'Cires douces adaptées à toutes les zones. Résultat impeccable, confort maximal.', planityServiceSetIds: ['-Ol37IE9hHjduXLe5euh'] },
+    { name: 'Épilation définitive', price: 'Découvrir', family: 'precision', image: '/Epilation-laser.webp',  video: '/videos prestations/épiliation définitive.mp4',  pitch: 'Fini les poils, pour de bon.', description: 'Laser et lumière pulsée pour une réduction durable. Peau nette au quotidien, sans contrainte.', planityServiceSetIds: ['-Ol3CsevbpSXybi9euiF'] },
+    { name: 'LPG Cellu M6', price: 'Découvrir', family: 'corps', image: '/soin-minceur.PNG',  video: '/videos prestations/lpg.mp4', pitch: 'Votre silhouette, sculptée par la technologie.', description: 'Endermologie brevetée pour cibler la cellulite, raffermir la peau et affiner durablement.', planityServiceSetIds: ['-Ol3L_k2ReRgOHI0FJw7'] },
+    { name: 'Drainage lymphatique', price: 'Découvrir', family: 'corps', image: '/DrainageLymphatiqueSilhouette.jpg',  video: '/videos prestations/Drainage lymphatique.mp4', pitch: 'Légèreté retrouvée. Corps libéré.', description: 'Massage manuel profond pour éliminer les toxines, activer la circulation et soulager les jambes lourdes.', planityServiceSetIds: ['-Ol3PL-4DWabvYcQlZAx'] },
+    { name: 'Madérothérapie', price: 'Découvrir', family: 'corps', image: '/soin%20minceur%20(1).jpg', video: '/videos prestations/Madérothérapie.mp4', pitch: 'Le bois sculpte, le corps se transforme.', description: 'Instruments en bois naturel pour déloger la cellulite, modeler les courbes et améliorer la circulation.', planityServiceSetIds: ['-Ol3NxupvdMJITC5AZDH'] },
+    { name: 'Soin visage', price: 'Découvrir', family: 'visage', image: '/soin%20visage%20(2).jpg',  video: '/videos prestations/soin du visage.mp4', pitch: 'Votre teint, réveillé.', description: 'Rituel nettoyant, hydratant ou anti-âge personnalisé selon votre type de peau pour une peau lumineuse.', planityServiceSetIds: ['-OnhVQxq7vObvSeJRzMU', '-Ol3GkVAkT6jUeNjS83U'] },
+    { name: 'Spray tan', price: 'Découvrir', family: 'visage', image: '/beaut%C3%A9%20regard%20(2).jpg',  video: '/videos prestations/spray tan.mp4',  pitch: 'Bronzée. Sans le soleil.', description: 'Hâle doré, uniforme et longue tenue. Sans UV, sans risque, avec un rendu naturel garanti.', planityServiceSetIds: ['-Oqe80X7TxoVeWliJ9FY'] },
+    { name: 'Beauté du regard', price: 'Découvrir', family: 'visage', image: '/regard.jpg',  video: '/videos prestations/Beauté du Regard.mp4', pitch: "Des yeux qui parlent d'eux-mêmes.", description: 'Coloration, rehaussement et soin des cils et sourcils pour un regard ouvert et intense.', planityServiceSetIds: ['-Ol3UAjBrVUku0PURXqq'] },
+    { name: 'Onglerie', price: 'Découvrir', family: 'visage', image: '/Manucure%20Japonaise%20%20Le%20soin%20d%C3%A9tox%20r%C3%A9volutionnaire%20pour%20des%20ongles%20sains%20et%20brillants.jpg',  video: '/videos prestations/onglerie.mp4', pitch: 'Des mains à croquer.', description: 'Manucure, vernis classique ou semi-permanent pour des ongles soignés et des mains impeccables.', planityServiceSetIds: ['-Ol3Ea7M5wyLDv27sgmz'] },
     // { name: 'Tatouage semi-permanent', price: 'Découvrir', family: 'precision', image: '/Tatouage%20semi-permanent%20%20Le%20secret%20d%27une%20mise%20en%20beaut%C3%A9%20durable%20et%20naturelle.jpg', pitch: 'Réveillée belle. Tous les matins.', description: 'Sourcils, lèvres ou yeux subtilement rehaussés pour une beauté naturelle et durable sans effort.', planityServiceSetIds: ['-Ol35YKLTwrdNnEDQ6wQ'] },
   ],
 };
-
+   
 const salon2 = {
   id: 'gabriel-peri',
   name: 'Boulevard Gabriel Péri',
@@ -58,11 +58,11 @@ const salon2 = {
   address: 'Boulevard Gabriel Péri, 91170 Viry-Châtillon',
   phone: '+33 7 49 22 68 01',
   hours: 'Lun–Jeu 10h–18h, Ven 10h–21h, Sam 9h–17h',
-  image: '/mey-beauty%20(5).jpeg',
+  image: '/Institut Mey Beauty Boulevard Gabriel Péri.png',
   planityUrl: 'https://www.planity.com/mey-beauty-ongles-beaute-du-regard-91170-viry-chatillon',
   services: [
-    { name: 'Onglerie', price: 'Découvrir', family: 'visage', image: '/meybeauty.jpg', pitch: 'Des mains sublimées, une finition parfaite.', description: "Manucure, vernis, semi-permanent et nail art pour des mains d'exception.", planityServiceSetIds: ['-Ol3Ea7M5wyLDv27sgmz'] },
-    { name: 'Extensions de cils', price: 'Découvrir', family: 'visage', image: '/beaut%C3%A9%20regard%20(3).PNG', pitch: 'Un regard intense. Sans mascara.', description: 'Pose à cils ou volume russe selon votre morphologie pour un regard qui captive.', planityServiceSetIds: ['-Ol3UAjBrVUku0PURXqq'] },
+    { name: 'Onglerie', price: 'Découvrir', family: 'visage', image: '/meybeauty.jpg',  video: '/videos prestations/onglerie 1.mp4', pitch: 'Des mains sublimées, une finition parfaite.', description: "Manucure, vernis, semi-permanent et nail art pour des mains d'exception.", planityServiceSetIds: ['-Ol3Ea7M5wyLDv27sgmz'] },
+    { name: 'Extensions de cils', price: 'Découvrir', family: 'visage', image: '/beaut%C3%A9%20regard%20(3).PNG',  video: '/videos prestations/Extensions de cils.mp4', pitch: 'Un regard intense. Sans mascara.', description: 'Pose à cils ou volume russe selon votre morphologie pour un regard qui captive.', planityServiceSetIds: ['-Ol3UAjBrVUku0PURXqq'] },
   ],
 };
 
@@ -145,7 +145,20 @@ function Fiche({ service, index, onClick }) {
       onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
     >
       <div style={{ height: 140, position: 'relative', overflow: 'hidden' }}>
-        <img src={service.image} alt={service.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        {service.video ? (
+          <video
+            src={service.video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={service.image}
+            preload="metadata"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        ) : (
+          <img src={service.image} alt={service.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        )}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(26,20,8,0.55) 100%)' }} />
         <span style={{ position: 'absolute', top: 12, left: 14, fontFamily: FONT_SC, fontSize: 11, letterSpacing: '0.06em', color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.35)' }}>{ref}</span>
       </div>
@@ -177,7 +190,11 @@ function ServiceDrawer({ service, index, onClose }) {
         className="ni-drawer"
       >
         <div style={{ height: 220, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', color: '#fff' }}>
+          {service.video ? (
+         <img src={service.image} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
+        ) : (
           <img src={service.image} alt={service.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
+        )}
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
           <button
             onClick={onClose}

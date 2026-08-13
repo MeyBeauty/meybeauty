@@ -86,7 +86,7 @@ function TeamSlider() {
         }}
       >
         {pages.map((page, i) => (
-          <div key={i} className="team-slide" style={{ flex: `0 0 ${slideWidth}%` }}>
+          <div key={i} className="team-slide" style={{ flex: `0 0 ${slideWidth}%`, minWidth: `${slideWidth}%` }}>
             {page.map((photo, j) => (
               <div key={j} className="about-team-card">
                 <div className="about-team-photo">

@@ -22,6 +22,16 @@ const CATS = [
     image: 'soin-minceur.PNG',
   },
   {
+    id: 'cat-6',
+    className: 'cat-item cat-6',
+    kicker: 'Épilation',
+    title: 'Épilation\nà la cire',
+    cta: '— Découvrir ce service —',
+    href: '#service/epilation',
+    video: '/epilation.mp4',
+    image: 'epilation-a-la-cire.jpg',
+  },
+  {
     id: 'cat-3',
     className: 'cat-item cat-3',
     kicker: 'Regard',
@@ -125,10 +135,10 @@ function CatBgVideo({ src, label }) {
   );
 }
 
-export default function CategoryGrid() {
+export default function CategoryGrid({ items = CATS, className = 'cat-grid' }) {
   return (
-    <section className="cat-grid">
-      {CATS.map((cat) => (
+    <section className={className}>
+      {items.map((cat) => (
         <div key={cat.id} className={cat.className}>
           <div className="cat-bg">
             {cat.video ? (
@@ -145,7 +155,7 @@ export default function CategoryGrid() {
             <h3 className="cat-title">
               <TitleWithBreaks text={cat.title} />
             </h3>
-            <a href={cat.href} className="btn-cta-outline">{cat.cta}</a>
+            <a href={cat.href} className="btn-cta-outline">{cat.cta || '— Découvrir ce service —'}</a>
           </div>
         </div>
       ))}

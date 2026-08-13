@@ -1,7 +1,8 @@
 import SEO from '../components/SEO.jsx';
 import PlanityWidget, { PlanityRaw } from '../components/PlanityWidget.jsx';
+import CategoryGrid from '../components/CategoryGrid.jsx';
 import { useState } from 'react';
-import { ArrowLeft, Calendar, X, Search, Sparkles, ShieldCheck, MessageCircleHeart, Leaf, Flame, Wind, ClipboardList, Eye, Droplets, Paintbrush, Palette, Sliders } from 'lucide-react';
+import { ArrowLeft, Calendar, X, Search, Scissors, Sparkles, ShieldCheck, MessageCircleHeart, Leaf, Flame, Wind, ClipboardList, Eye, Droplets, Paintbrush, Palette, Sliders } from 'lucide-react';
 
 const SERVICES = {
   visage: {
@@ -9,7 +10,7 @@ const SERVICES = {
     kicker: 'Éclat',
     title: 'Soin du visage Sur‑mesure',
     image: '/soin visage (2).PNG',
-    video: 'https://www.pexels.com/fr-fr/download/video/9335813/',
+    video: '/detail videos/soin du visage.mp4',
     planityServiceSetIds: ['-OnhVQxq7vObvSeJRzMU', '-Ol3GkVAkT6jUeNjS83U'],
     intro: 'Chaque peau est une histoire. Nous analysons votre visage avant chaque soin pour choisir les actifs, les gestes et le temps de pause qui vous correspondent.',
     paragraphs: [
@@ -45,7 +46,7 @@ const SERVICES = {
     kicker: 'Silhouette',
     title: 'Minceur',
     image: '/soin-minceur.PNG',
-    video: 'https://www.pexels.com/fr-fr/download/video/32828416/',
+    video: '/detail videos/lpg.mp4',
     planityServiceSetIds: ['-Ol3L_k2ReRgOHI0FJw7', '-Ol3PL-4DWabvYcQlZAx', '-Ol3NxupvdMJITC5AZDH'],
     intro: 'Affiner, tonifier, retrouver du confort dans son corps : nos soins corps associent technologies professionnelles et protocoles sur-mesure.',
     paragraphs: [
@@ -81,7 +82,7 @@ const SERVICES = {
     kicker: 'Regard',
     title: 'Beauté du Regard',
     image: '/mey-beauty (6).jpeg',
-    video: 'https://www.pexels.com/fr-fr/download/video/8502623/',
+    video: '/detail videos/Beauté du Regard.mp4',
     planityServiceSetIds: ['-Ol3UAjBrVUku0PURXqq'],
     intro: 'Intensifier le regard, sublimer le sourcil, allonger les cils : nos prestations de beauté du regard sont conçues pour donner du caractère à votre face.',
     paragraphs: [
@@ -152,8 +153,8 @@ const SERVICES = {
     slug: 'mains',
     kicker: 'Mains',
     title: 'Onglerie Premium',
-    image: '/meybeauty.jpg',
-    video: '',
+    image: '',
+    video: '/detail videos/onglerie.mp4',
     planityServiceSetIds: ['-Ol3Ea7M5wyLDv27sgmz'],
     intro: 'Des mains soignées, des ongles sublimés : notre onglerie premium allie esthétique, tenue et respect de la nature de l’ongle.',
     paragraphs: [
@@ -184,12 +185,49 @@ const SERVICES = {
       { q: 'La pose abîme-t-elle l’ongle naturel ?', a: 'Non, nos techniques de pose et de dépose préservent la structure de l’ongle lorsqu’elles sont réalisées et retirées en institut.' },
     ],
   },
+  epilation: {
+    slug: 'epilation',
+    kicker: 'Épilation',
+    title: 'Épilation\nà la cire',
+    image: '/epilation-a-la-cire.jpg',
+    video: '/epilation.mp4',
+    planityServiceSetIds: ['-Ol37IE9hHjduXLe5euh'],
+    intro: 'Peau lisse dès la première séance. Une épilation précise, douce et adaptée à toutes les zones pour un résultat impeccable.',
+    paragraphs: [
+      'Nos esthéticiennes utilisent des cires chauffées à la bonne température, choisies selon votre type de peau et la zone à épiler.',
+      'Jambes, aisselles, maillot, visage ou sourcils : chaque geste est maîtrisé pour limiter l’inconfort et préserver l’intégrité de la peau.',
+      'Vous repartez avec une peau douce, sans poils et sans irritation, prête à affronter la journée en toute sérénité.',
+    ],
+    benefits: [
+      'Cires douces adaptées à chaque zone',
+      'Protocole hygiénique et sécurisé',
+      'Geste précis pour un confort optimal',
+      'Résultat visible dès la première séance',
+    ],
+    duration: '15 à 45 min',
+    price: 'À partir de 12 €',
+    perks: [
+      { icon: Scissors, label: 'Toutes zones' },
+      { icon: Sparkles, label: 'Peau lisse' },
+      { icon: Leaf, label: 'Cires douces' },
+    ],
+    testimonials: [
+      { name: 'Émilie', note: 5, quote: 'Une épilation rapide et vraiment moins douloureuse qu’ailleurs. Ma peau reste douce plusieurs semaines.' },
+      { name: 'Fatima', note: 5, quote: 'Je suis très exigeante sur l’hygiène et j’ai été rassurée dès le premier rendez-vous.' },
+      { name: 'Clara', note: 5, quote: 'Le soin des sourcils est précis, la forme est parfaite et tient dans le temps.' },
+    ],
+    faqs: [
+      { q: 'L’épilation à la cire convient-elle aux peaux sensibles ?', a: 'Oui, nos cires sont choisies selon votre peau et les zones traitées. Nous adaptons la température et le geste pour limiter les rougeurs.' },
+      { q: 'Combien de temps dure le résultat ?', a: 'En moyenne 3 à 4 semaines selon la repousse naturelle. L’épilation régulière affinit peu à peu les poils.' },
+    ],
+  },
 };
 
 const OTHERS = [
   { slug: 'visage', kicker: 'Éclat', title: 'Soin du visage', image: '/soin visage (2).PNG', video: 'https://www.pexels.com/fr-fr/download/video/9335813/' },
   { slug: 'minceur', kicker: 'Silhouette', title: 'Minceur', image: '/soin-minceur.PNG', video: 'https://www.pexels.com/fr-fr/download/video/32828416/' },
   { slug: 'regard', kicker: 'Regard', title: 'Beauté du regard', image: '/mey-beauty (6).jpeg', video: 'https://www.pexels.com/fr-fr/download/video/8502623/' },
+  { slug: 'epilation', kicker: 'Épilation', title: 'Épilation à la cire', image: '/epilation-a-la-cire.jpg', video: '/epilation.mp4' },
   { slug: 'maillot', kicker: 'Maillot', title: 'Soin du maillot', image: '/Vajacial Le soin intime tendance pour une peau saine et sans imperfections.webp', video: '/epilation du maillot.mp4' },
   { slug: 'mains', kicker: 'Mains', title: 'Onglerie premium', image: '/meybeauty.jpg', video: '' },
 ];
@@ -249,9 +287,29 @@ function VideoOrImage({ src, video, alt, className }) {
   return <img src={src} alt={alt} className={className} />;
 }
 
+const CAT_CLASS = {
+  visage: 'cat-1',
+  minceur: 'cat-2',
+  regard: 'cat-3',
+  maillot: 'cat-5',
+  mains: 'cat-4',
+  epilation: 'cat-6',
+};
+
 export default function ServiceDetailPage({ slug }) {
   const service = SERVICES[slug] || SERVICES['visage'];
   const [showBooking, setShowBooking] = useState(false);
+
+  const discover = OTHERS.filter((o) => o.slug !== service.slug).map((o) => ({
+    id: o.slug,
+    className: `cat-item ${CAT_CLASS[o.slug] || 'cat-1'}`,
+    kicker: o.kicker,
+    title: o.title,
+    href: `#service/${o.slug}`,
+    video: o.video,
+    image: o.image,
+    imageOnly: !o.video,
+  }));
 
   return (
     <>
@@ -359,18 +417,7 @@ export default function ServiceDetailPage({ slug }) {
         <section className="sd-others">
           <p className="sd-eyebrow sd-center">À découvrir aussi</p>
           <h2 className="sd-h2 sd-center">Nos autres univers</h2>
-          <div className="sd-others-grid">
-            {OTHERS.filter((o) => o.slug !== service.slug).map((o) => (
-              <a key={o.slug} href={`#service/${o.slug}`} className="sd-other-card">
-                <VideoOrImage src={o.image} video={o.video} alt={o.title} className="sd-other-img" />
-                <div className="sd-other-scrim" />
-                <div className="sd-other-body">
-                  <p className="sd-other-kicker">{o.kicker}</p>
-                  <p className="sd-other-title">{o.title}</p>
-                </div>
-              </a>
-            ))}
-          </div>
+          <CategoryGrid items={discover} className="cat-grid others-grid" />
         </section>
 
         <section className="sd-faq">
