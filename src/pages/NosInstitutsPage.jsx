@@ -110,7 +110,7 @@ function GlobalKeyframes() {
       @media (max-width: 860px) {
         .ni-salon-row { grid-template-columns: 1fr !important; }
         .ni-salon-row.reverse .ni-salon-media { order: 0 !important; }
-        .ni-drawer { top: 0; left: auto; right: 0; height: 100%; max-height: 100vh; transform: translateX(0); border-radius: 0; animation: ni-drawer-in .32s cubic-bezier(.4,0,.2,1); box-shadow: -20px 0 60px rgba(26,20,8,0.2); }
+        .ni-drawer { top: 2vh; left: auto; right: 0; height: 88vh; max-height: 88vh; transform: translateX(0); border-radius: 0; animation: ni-drawer-in .32s cubic-bezier(.4,0,.2,1); box-shadow: -20px 0 60px rgba(26,20,8,0.2); }
       }
       @media (max-width: 960px) {
         .ni-fiches-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -186,7 +186,7 @@ function ServiceDrawer({ service, index, onClose }) {
         onClick={e => e.stopPropagation()}
         className="ni-drawer"
       >
-        <div style={{ height: 220, position: 'relative', overflow: 'hidden', color: '#fff' }}>
+        <div style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff' }}>
           {service.video ? (
             <video
               key={service.video}
@@ -209,17 +209,17 @@ function ServiceDrawer({ service, index, onClose }) {
           >
             <X size={16} strokeWidth={1.75} />
           </button>
-          <div style={{ position: 'absolute', zIndex: 2, left: 0, right: 0, bottom: 0, padding: 24 }}>
+          <div style={{ position: 'absolute', zIndex: 2, left: 0, right: 0, bottom: 0, padding: 20 }}>
             <div style={{ fontFamily: FONT_SC, fontSize: 12, letterSpacing: '0.1em', opacity: 0.9 }}>{ref}</div>
-            <div style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 28, marginTop: 8 }}>{service.name}</div>
+            <div style={{ fontFamily: FONT_SERIF, fontWeight: 700, fontSize: 25, marginTop: 6 }}>{service.name}</div>
           </div>
         </div>
 
-        <div style={{ padding: '30px 28px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-          <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 19, color: C.gold, marginBottom: 18, lineHeight: 1.4 }}>
+        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+          <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 18, color: C.gold, marginBottom: 14, lineHeight: 1.4 }}>
             "{service.pitch}"
           </p>
-          <div style={{ flex: 1, minHeight: 420, marginTop: 8 }}>
+          <div style={{ flex: 1, minHeight: 300, marginTop: 6 }}>
             {service.name === 'Onglerie' ? <PlanityRaw /> : <PlanityWidget serviceSetIds={service.planityServiceSetIds} />}
           </div>
         </div>
@@ -588,7 +588,7 @@ export default function NosInstitutsPage() {
         }
         .ni-drawer {
           width: min(520px, 100%);
-          max-height: 88vh;
+          max-height: 82vh;
           background: var(--blanc, #FFFFFF);
           border-radius: 12px;
           box-shadow: 0 24px 80px rgba(26, 20, 8, 0.22);
@@ -618,8 +618,12 @@ export default function NosInstitutsPage() {
           }
           .ni-drawer {
             width: 100%;
-            max-height: 92vh;
-            height: 92vh;
+            max-height: 85vh;
+            height: 85vh;
+            top: auto;
+            bottom: 0;
+            right: 0;
+            left: auto;
             border-radius: 16px 16px 0 0;
             animation: ni-drawer-up 0.32s cubic-bezier(0.4, 0, 0.2, 1);
           }
