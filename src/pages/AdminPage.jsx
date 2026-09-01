@@ -1895,7 +1895,7 @@ function AdminDashboard({ products, posts, orders, userEmail, onGoProducts, onGo
         </div>
       </div>
 
-      <AdminMaintenanceSection />
+      {import.meta.env.DEV && <AdminMaintenanceSection />}
     </div>
   );
 }

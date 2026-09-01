@@ -153,7 +153,7 @@ function Fiche({ service, index, onClick }) {
           muted
           loop
           playsInline
-          poster={service.image || undefined}
+          poster=""
           preload="metadata"
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         >
@@ -196,7 +196,7 @@ function ServiceDrawer({ service, index, onClose }) {
               muted
               loop
               playsInline
-              poster={service.image || undefined}
+              poster=""
               preload="auto"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             >
