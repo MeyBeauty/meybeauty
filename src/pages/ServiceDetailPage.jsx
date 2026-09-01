@@ -893,7 +893,6 @@ export default function ServiceDetailPage({ slug }) {
         .sd-planity-body {
           flex: 1;
           overflow-y: auto;
-          overflow-x: hidden;
           padding: 10px;
           min-height: 0;
           display: flex;

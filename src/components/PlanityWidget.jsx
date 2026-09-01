@@ -137,7 +137,6 @@ const iframeStyle = {
   height: '100%',
   border: 'none',
   display: 'block',
-  overflow: 'hidden',
 };
 
 const loaderOverlayStyle = {

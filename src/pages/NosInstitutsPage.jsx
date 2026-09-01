@@ -216,7 +216,7 @@ function ServiceDrawer({ service, index, onClose }) {
           </div>
         </div>
 
-        <div className="ni-drawer-content" style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', overflowX: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative', minHeight: 0 }}>
+        <div className="ni-drawer-content" style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', minHeight: 0 }}>
           <p className="ni-drawer-pitch" style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 18, color: C.gold, marginBottom: 14, lineHeight: 1.4 }}>
             "{service.pitch}"
           </p>
