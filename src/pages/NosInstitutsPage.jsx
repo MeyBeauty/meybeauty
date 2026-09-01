@@ -204,9 +204,9 @@ function ServiceDrawer({ service, index, onClose }) {
           )}
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
           <button
-            onClick={onClose}
+            onClick={(e) => { e.stopPropagation(); onClose(); }}
             className="ni-drawer-close"
-            style={{ position: 'absolute', zIndex: 20, top: 14, right: 14, background: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.5)', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            style={{ position: 'absolute', zIndex: 999, top: 14, right: 14, background: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.5)', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <X size={16} strokeWidth={1.75} />
           </button>
@@ -592,6 +592,7 @@ export default function NosInstitutsPage() {
         }
         .ni-drawer {
           width: min(520px, 100%);
+          height: 82vh;
           max-height: 82vh;
           background: var(--blanc, #FFFFFF);
           border-radius: 12px;

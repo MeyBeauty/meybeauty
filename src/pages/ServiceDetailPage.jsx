@@ -462,13 +462,13 @@ export default function ServiceDetailPage({ slug }) {
       {showBooking && (
         <div className="sd-planity-overlay" onClick={() => setShowBooking(false)}>
           <div className="sd-planity-drawer" onClick={(e) => e.stopPropagation()}>
-            <div className="sd-planity-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '18px 22px', borderBottom: '1px solid var(--gris-border, #E5E5E5)', flexShrink: 0 }}>
+            <div className="sd-planity-header">
               <h3>Réserver — {service.title}</h3>
               <button type="button" onClick={() => setShowBooking(false)} aria-label="Fermer">
                 <X size={20} strokeWidth={1.5} />
               </button>
             </div>
-            <div className="sd-planity-body" style={{ flex: 1, overflowY: 'auto', padding: 10, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+            <div className="sd-planity-body">
               {service.slug === 'mains' ? <PlanityWidget planityKey="-Ol2BFGQkZio5m1QpVIK" /> : <PlanityWidget serviceSetIds={service.planityServiceSetIds} />}
             </div>
           </div>
@@ -851,6 +851,7 @@ export default function ServiceDetailPage({ slug }) {
           top: 50%;
           left: 50%;
           width: min(480px, 92%);
+          height: 86vh;
           max-height: 86vh;
           transform: translate(-50%, -50%);
           background: var(--blanc, #FFFFFF);
