@@ -462,13 +462,13 @@ export default function ServiceDetailPage({ slug }) {
       {showBooking && (
         <div className="sd-planity-overlay" onClick={() => setShowBooking(false)}>
           <div className="sd-planity-drawer" onClick={(e) => e.stopPropagation()}>
-            <div className="sd-planity-header">
+            <div className="sd-planity-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '18px 22px', borderBottom: '1px solid var(--gris-border, #E5E5E5)', flexShrink: 0 }}>
               <h3>Réserver — {service.title}</h3>
               <button type="button" onClick={() => setShowBooking(false)} aria-label="Fermer">
                 <X size={20} strokeWidth={1.5} />
               </button>
             </div>
-            <div className="sd-planity-body">
+            <div className="sd-planity-body" style={{ flex: 1, overflowY: 'auto', padding: 10, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
               {service.slug === 'mains' ? <PlanityWidget planityKey="-Ol2BFGQkZio5m1QpVIK" /> : <PlanityWidget serviceSetIds={service.planityServiceSetIds} />}
             </div>
           </div>
@@ -906,17 +906,36 @@ export default function ServiceDetailPage({ slug }) {
         }
 
         @media (max-width: 800px) {
+          .sd-planity-overlay {
+            padding: 0;
+            align-items: stretch;
+            justify-content: stretch;
+          }
           .sd-planity-drawer {
-            top: auto;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 100vh;
-            max-height: 100vh;
+            position: fixed;
+            inset: 0;
             width: 100%;
+            height: auto;
+            max-height: none;
+            border-radius: 0;
             transform: translateY(0);
-            border-radius: 16px 16px 0 0;
             animation: sd-planity-up 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          .sd-planity-header {
+            padding: 14px 18px !important;
+            height: 60px !important;
+          }
+          .sd-planity-header h3 {
+            font-size: 16px !important;
+          }
+          .sd-planity-header button {
+            width: 42px !important;
+            height: 42px !important;
+          }
+          .sd-planity-body {
+            height: calc(100% - 60px) !important;
+            padding: 8px !important;
+            overflow: hidden !important;
           }
           @keyframes sd-planity-up {
             from { transform: translateY(100%); }

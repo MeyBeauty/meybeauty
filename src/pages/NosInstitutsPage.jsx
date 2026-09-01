@@ -184,10 +184,8 @@ function ServiceDrawer({ service, index, onClose }) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       className="ni-drawer-overlay"
     >
-      <div
-        className="ni-drawer"
-      >
-        <div style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff', backgroundColor: '#1a1408', zIndex: 10, flexShrink: 0, borderRadius: '12px 12px 0 0' }}>
+      <div className="ni-drawer" >
+        <div className="ni-drawer-media" style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff', backgroundColor: '#1a1408', zIndex: 10, flexShrink: 0, borderRadius: '12px 12px 0 0' }}>
           {service.video ? (
             <video
               key={service.video}
@@ -207,6 +205,7 @@ function ServiceDrawer({ service, index, onClose }) {
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(180deg, rgba(26,20,8,0.45) 0%, rgba(26,20,8,0.15) 50%, rgba(26,20,8,0.55) 100%)' }} />
           <button
             onClick={onClose}
+            className="ni-drawer-close"
             style={{ position: 'absolute', zIndex: 20, top: 14, right: 14, background: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.5)', color: '#fff', borderRadius: '50%', width: 34, height: 34, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <X size={16} strokeWidth={1.75} />
@@ -217,8 +216,8 @@ function ServiceDrawer({ service, index, onClose }) {
           </div>
         </div>
 
-        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', minHeight: 0 }}>
-          <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 18, color: C.gold, marginBottom: 14, lineHeight: 1.4 }}>
+        <div className="ni-drawer-content" style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', minHeight: 0 }}>
+          <p className="ni-drawer-pitch" style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 18, color: C.gold, marginBottom: 14, lineHeight: 1.4 }}>
             "{service.pitch}"
           </p>
           <div style={{ flex: 1, minHeight: 0, marginTop: 6, position: 'relative', display: 'flex', flexDirection: 'column' }}>
@@ -619,15 +618,37 @@ export default function NosInstitutsPage() {
         @media (max-width: 860px) {
           .ni-drawer-overlay {
             padding: 0;
-            align-items: flex-end;
-            justify-content: center;
+            align-items: stretch;
+            justify-content: stretch;
           }
           .ni-drawer {
             width: 100%;
-            height: 100vh;
-            max-height: 100vh;
-            border-radius: 16px 16px 0 0;
+            position: fixed;
+            inset: 0;
+            height: auto;
+            max-height: none;
+            border-radius: 0;
             animation: ni-drawer-up 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          .ni-drawer-media {
+            height: 100px !important;
+            border-radius: 0 !important;
+          }
+          .ni-drawer-close {
+            top: 10px !important;
+            right: 10px !important;
+            width: 42px !important;
+            height: 42px !important;
+            background: rgba(0, 0, 0, 0.55) !important;
+            border: 1px solid rgba(255, 255, 255, 0.7) !important;
+          }
+          .ni-drawer-content {
+            height: calc(100% - 100px) !important;
+            padding: 16px !important;
+            overflow: hidden !important;
+          }
+          .ni-drawer-pitch {
+            display: none !important;
           }
         }
       `}</style>
