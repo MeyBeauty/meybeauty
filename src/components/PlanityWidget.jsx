@@ -9,11 +9,11 @@ function normalizeServiceSetIds(serviceSetIds) {
   return [];
 }
 
-export default function PlanityWidget({ serviceSetIds, className = '' }) {
+export default function PlanityWidget({ serviceSetIds, className = '', planityKey: propKey }) {
   const iframeRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const planityKey = import.meta.env.VITE_PLANITY_KEY || DEFAULT_PLANITY_KEY;
+  const planityKey = propKey || import.meta.env.VITE_PLANITY_KEY || DEFAULT_PLANITY_KEY;
 
   const embedUrl = useMemo(() => {
     const ids = normalizeServiceSetIds(serviceSetIds);
@@ -260,7 +260,7 @@ export function PlanityRaw({ serviceSetIds, planityKey }) {
 
     const style = document.createElement('style');
     style.textContent = `
-      #planitywl { background-color: #F6F7F8; position: relative; z-index: 0; }
+      #planitywl { background-color: #F6F7F8; position: relative; }
       @media (min-width: 768px) { #planitywl h3 { color: #000000 !important; } }
       #planitywl .planity_bookappointment-button-choose { background-color: #000000; }
       .planity_ui_appointment_background>div:nth-child(2) { padding: 10px; }
@@ -269,7 +269,7 @@ export function PlanityRaw({ serviceSetIds, planityKey }) {
       #planitywl>div:nth-child(2)>div:nth-child(2)>div>div>div>h2 { color: #000000 !important; }
       #planitywl>div:nth-child(2)>div:nth-child(2)>div>div>div:nth-child(2)>span { color: #000000 !important; }
       #planitywl .planity_bookappointment-button-choose { background-color: #000000; }
-      .planity_ui_appointment_background { z-index: 0 !important; }
+      .planity_ui_appointment_background { z-index: 2147483647 !important; }
     `;
     document.head.appendChild(style);
 
@@ -303,6 +303,9 @@ export function PlanityRaw({ serviceSetIds, planityKey }) {
       initScript.remove();
       polyfills.remove();
       app.remove();
+      try { delete window.planity; } catch (e) { window.planity = undefined; }
+      const container = document.getElementById(safeId);
+      if (container) container.innerHTML = '';
     };
   }, [safeId, key]);
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MapPin, Clock, Phone, ArrowRight, X, Plus } from 'lucide-react';
 import SEO from '../components/SEO.jsx';
-import PlanityWidget, { PlanityRaw } from '../components/PlanityWidget.jsx';
+import PlanityWidget from '../components/PlanityWidget.jsx';
 
 const DEFAULT_PLANITY_KEY = '-OT1v5CLaAu9eXFhWVbA';
 
@@ -102,17 +102,17 @@ function GlobalKeyframes() {
   return (
     <style>{`
       @keyframes ni-drawer-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
-      @keyframes ni-drawer-center { from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+      @keyframes ni-drawer-center { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
       @keyframes ni-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
       .ni-drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100; background: rgba(26,20,8,0.55); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; }
-      .ni-drawer { position: fixed; top: 50%; left: 50%; width: min(400px, 85%); max-height: 78vh; transform: translate(-50%, -50%); background: ${C.paper}; display: flex; flex-direction: column; animation: ni-drawer-center .32s cubic-bezier(.4,0,.2,1); box-shadow: 0 20px 60px rgba(26,20,8,0.2); border-radius: 10px; overflow: hidden; }
+      .ni-drawer { position: relative; width: min(400px, 85%); max-height: 78vh; background: ${C.paper}; display: flex; flex-direction: column; animation: ni-drawer-center .32s cubic-bezier(.4,0,.2,1); box-shadow: 0 20px 60px rgba(26,20,8,0.2); border-radius: 10px; overflow: hidden; }
       @media (prefers-reduced-motion: reduce) {
         .ni-marquee-row { animation: none !important; }
       }
       @media (max-width: 860px) {
         .ni-salon-row { grid-template-columns: 1fr !important; }
         .ni-salon-row.reverse .ni-salon-media { order: 0 !important; }
-        .ni-drawer { top: 2vh; left: auto; right: 0; height: 88vh; max-height: 88vh; transform: translateX(0); border-radius: 0; animation: ni-drawer-in .32s cubic-bezier(.4,0,.2,1); box-shadow: -20px 0 60px rgba(26,20,8,0.2); }
+        .ni-drawer { position: fixed; top: 2vh; left: auto; right: 0; height: 88vh; max-height: 88vh; border-radius: 0; animation: ni-drawer-in .32s cubic-bezier(.4,0,.2,1); box-shadow: -20px 0 60px rgba(26,20,8,0.2); }
       }
       @media (max-width: 960px) {
         .ni-fiches-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -182,14 +182,13 @@ function ServiceDrawer({ service, index, onClose }) {
   const ref = 'N° ' + String(index + 1).padStart(2, '0');
   return (
     <div
-      onClick={onClose}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       className="ni-drawer-overlay"
     >
       <div
-        onClick={e => e.stopPropagation()}
         className="ni-drawer"
       >
-        <div style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff', backgroundColor: '#1a1408', zIndex: 10, flexShrink: 0 }}>
+        <div style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff', backgroundColor: '#1a1408', zIndex: 10, flexShrink: 0, borderRadius: '12px 12px 0 0' }}>
           {service.video ? (
             <video
               key={service.video}
@@ -219,14 +218,14 @@ function ServiceDrawer({ service, index, onClose }) {
           </div>
         </div>
 
-        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
+        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative' }}>
           <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 18, color: C.gold, marginBottom: 14, lineHeight: 1.4 }}>
             "{service.pitch}"
           </p>
-          <div style={{ flex: 1, minHeight: 300, marginTop: 6, position: 'relative', isolation: 'isolate' }}>
+          <div style={{ flex: 1, minHeight: 300, marginTop: 6, position: 'relative' }}>
             {service.name === 'Onglerie'
-              ? <PlanityRaw />
-              : <PlanityRaw serviceSetIds={service.planityServiceSetIds} planityKey={DEFAULT_PLANITY_KEY} />
+              ? <PlanityWidget planityKey="-Ol2BFGQkZio5m1QpVIK" />
+              : <PlanityWidget serviceSetIds={service.planityServiceSetIds} planityKey={DEFAULT_PLANITY_KEY} />
             }
           </div>
         </div>
@@ -627,6 +626,7 @@ export default function NosInstitutsPage() {
             width: 100%;
             max-height: 85vh;
             height: 85vh;
+            position: fixed;
             top: auto;
             bottom: 0;
             right: 0;
