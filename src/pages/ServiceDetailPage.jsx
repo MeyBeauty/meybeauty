@@ -1,5 +1,5 @@
 import SEO from '../components/SEO.jsx';
-import PlanityWidget, { PlanityRaw } from '../components/PlanityWidget.jsx';
+import PlanityWidget from '../components/PlanityWidget.jsx';
 import CategoryGrid from '../components/CategoryGrid.jsx';
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight, Calendar, X, Search, Scissors, Sparkles, ShieldCheck, MessageCircleHeart, Leaf, Flame, Wind, ClipboardList, Eye, Droplets, Paintbrush, Palette, Sliders } from 'lucide-react';
@@ -469,7 +469,7 @@ export default function ServiceDetailPage({ slug }) {
               </button>
             </div>
             <div className="sd-planity-body">
-              {service.slug === 'mains' ? <PlanityRaw /> : <PlanityWidget serviceSetIds={service.planityServiceSetIds} />}
+              {service.slug === 'mains' ? <PlanityWidget planityKey="-Ol2BFGQkZio5m1QpVIK" /> : <PlanityWidget serviceSetIds={service.planityServiceSetIds} />}
             </div>
           </div>
         </div>
