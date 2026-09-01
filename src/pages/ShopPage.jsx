@@ -282,6 +282,7 @@ export default function ShopPage() {
                     product={p}
                     className="shop-product-card unified"
                     onClick={() => {
+                      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
                       window.location.hash = `#product?id=${encodeURIComponent(p.id)}`;
                     }}
                   />

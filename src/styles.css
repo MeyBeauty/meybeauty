@@ -7499,6 +7499,20 @@ a { text-decoration: none; color: inherit; }
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
+  .products-section-card-wrap {
+    flex: 0 0 78%;
+    max-width: 300px;
+    scroll-snap-align: center;
+  }
+  .products-section-card-wrap .product-card {
+    text-align: center;
+  }
+  .products-section-card-wrap .product-card-actions {
+    justify-content: center;
+  }
+  .products-section-card-wrap .stars {
+    justify-content: center;
+  }
 
   .products-dots {
     display: flex;

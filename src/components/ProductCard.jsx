@@ -60,6 +60,7 @@ export default function ProductCard({
     if (onClick) {
       onClick(product);
     } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       window.location.hash = `#product?id=${encodeURIComponent(product.id)}`;
     }
   };

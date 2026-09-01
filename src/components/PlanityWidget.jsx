@@ -126,7 +126,7 @@ const wrapperStyle = {
   position: 'relative',
   width: '100%',
   height: '100%',
-  minHeight: 420,
+  flex: 1,
   background: '#fff',
   borderRadius: 8,
   overflow: 'hidden',
@@ -135,7 +135,6 @@ const wrapperStyle = {
 const iframeStyle = {
   width: '100%',
   height: '100%',
-  minHeight: 420,
   border: 'none',
   display: 'block',
 };

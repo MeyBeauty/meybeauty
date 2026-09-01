@@ -94,14 +94,20 @@ export default function ProductsSection() {
           ))
         ) : (
           items.map((p, idx) => (
-            <ProductCard
+            <div
               key={p.id}
-              product={p}
-              className="products-section-card"
-              onClick={() => {
-                window.location.hash = `#product?id=${encodeURIComponent(p.id)}`;
-              }}
-            />
+              ref={(el) => (cardRefs.current[idx] = el)}
+              className="products-section-card-wrap"
+            >
+              <ProductCard
+                product={p}
+                className="products-section-card"
+                onClick={() => {
+                  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+                  window.location.hash = `#product?id=${encodeURIComponent(p.id)}`;
+                }}
+              />
+            </div>
           ))
         )}
       </div>

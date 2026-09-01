@@ -222,7 +222,7 @@ function ServiceDrawer({ service, index, onClose }) {
           <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 18, color: C.gold, marginBottom: 14, lineHeight: 1.4 }}>
             "{service.pitch}"
           </p>
-          <div style={{ flex: 1, minHeight: 300, marginTop: 6, position: 'relative' }}>
+          <div style={{ flex: 1, marginTop: 6, position: 'relative', display: 'flex', flexDirection: 'column' }}>
             {service.name === 'Onglerie'
               ? <PlanityWidget planityKey="-Ol2BFGQkZio5m1QpVIK" />
               : <PlanityWidget serviceSetIds={service.planityServiceSetIds} planityKey={DEFAULT_PLANITY_KEY} />

@@ -840,6 +840,12 @@ export default function ServiceDetailPage({ slug }) {
           justify-content: center;
           padding: 24px;
         }
+        @media (max-width: 800px) {
+          .sd-planity-overlay {
+            padding: 0;
+            align-items: flex-end;
+          }
+        }
         .sd-planity-drawer {
           position: fixed;
           top: 50%;
@@ -885,7 +891,9 @@ export default function ServiceDetailPage({ slug }) {
           flex: 1;
           overflow-y: auto;
           padding: 10px;
-          min-height: 420px;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
         }
         @keyframes sd-planity-center {
           from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
@@ -901,8 +909,8 @@ export default function ServiceDetailPage({ slug }) {
             left: 0;
             right: 0;
             bottom: 0;
-            height: 92vh;
-            max-height: 92vh;
+            height: 100vh;
+            max-height: 100vh;
             width: 100%;
             transform: translateY(0);
             border-radius: 16px 16px 0 0;
