@@ -19,7 +19,13 @@
       height: 100%;
       padding: 12px;
       overflow-y: auto;
+      overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
+    }
+    #planity > div,
+    #planity > div > div,
+    #planity div[class*="planity"] {
+      max-width: 100% !important;
     }
     #loader {
       position: fixed;
