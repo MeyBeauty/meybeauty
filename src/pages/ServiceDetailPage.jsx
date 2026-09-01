@@ -868,6 +868,7 @@ export default function ServiceDetailPage({ slug }) {
           gap: 16px;
           padding: 18px 22px;
           border-bottom: 1px solid var(--gris-border, #E5E5E5);
+          flex-shrink: 0;
         }
         .sd-planity-header h3 {
           margin: 0;
@@ -886,6 +887,7 @@ export default function ServiceDetailPage({ slug }) {
           justify-content: center;
           padding: 4px;
           flex-shrink: 0;
+          z-index: 10;
         }
         .sd-planity-body {
           flex: 1;

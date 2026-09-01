@@ -112,7 +112,6 @@ function GlobalKeyframes() {
       @media (max-width: 860px) {
         .ni-salon-row { grid-template-columns: 1fr !important; }
         .ni-salon-row.reverse .ni-salon-media { order: 0 !important; }
-        .ni-drawer { position: fixed; top: 2vh; left: auto; right: 0; height: 88vh; max-height: 88vh; border-radius: 0; animation: ni-drawer-in .32s cubic-bezier(.4,0,.2,1); box-shadow: -20px 0 60px rgba(26,20,8,0.2); }
       }
       @media (max-width: 960px) {
         .ni-fiches-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -218,11 +217,11 @@ function ServiceDrawer({ service, index, onClose }) {
           </div>
         </div>
 
-        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', minHeight: 0 }}>
           <p style={{ fontFamily: FONT_SERIF, fontStyle: 'italic', fontSize: 18, color: C.gold, marginBottom: 14, lineHeight: 1.4 }}>
             "{service.pitch}"
           </p>
-          <div style={{ flex: 1, marginTop: 6, position: 'relative', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ flex: 1, minHeight: 0, marginTop: 6, position: 'relative', display: 'flex', flexDirection: 'column' }}>
             {service.name === 'Onglerie'
               ? <PlanityWidget planityKey="-Ol2BFGQkZio5m1QpVIK" />
               : <PlanityWidget serviceSetIds={service.planityServiceSetIds} planityKey={DEFAULT_PLANITY_KEY} />
@@ -612,31 +611,23 @@ export default function NosInstitutsPage() {
           from { opacity: 0; transform: scale(0.96); }
           to { opacity: 1; transform: scale(1); }
         }
-        @keyframes planity-spin {
-          to { transform: rotate(360deg); }
+        @keyframes ni-drawer-up {
+          from { transform: translateY(100%); }
+          to { transform: translateY(0); }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 860px) {
           .ni-drawer-overlay {
-            align-items: flex-end;
-            justify-content: flex-end;
             padding: 0;
+            align-items: flex-end;
+            justify-content: center;
           }
           .ni-drawer {
             width: 100%;
-            max-height: 85vh;
-            height: 85vh;
-            position: fixed;
-            top: auto;
-            bottom: 0;
-            right: 0;
-            left: auto;
+            height: 100vh;
+            max-height: 100vh;
             border-radius: 16px 16px 0 0;
             animation: ni-drawer-up 0.32s cubic-bezier(0.4, 0, 0.2, 1);
-          }
-          @keyframes ni-drawer-up {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
           }
         }
       `}</style>
