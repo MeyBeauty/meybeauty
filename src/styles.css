@@ -3204,6 +3204,52 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 36px;
 }
 
+.planity-suggest {
+  background: var(--nude-light);
+  border: 1px solid var(--nude);
+  border-radius: 4px;
+  padding: 18px 22px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+.planity-suggest p {
+  font-family: var(--font-sc);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--brun);
+  margin: 0 0 12px;
+}
+.planity-suggest-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sc);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blanc);
+  background: var(--brun);
+  padding: 10px 24px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition);
+}
+.planity-suggest-link:hover {
+  background: var(--brun-dark);
+  transform: translateY(-1px);
+}
+
+.form-success {
+  text-align: center;
+  padding: 40px 20px;
+}
+.form-success p {
+  font-family: var(--font-titre);
+  font-size: 22px;
+  color: var(--brun);
+  margin-bottom: 24px;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -1,7 +1,25 @@
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { useState } from 'react';
+import { Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
 import SEO from '../components/SEO.jsx';
 
+const PLANITY_URL = 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i';
+
+const SUBJECTS = [
+  { value: 'reservation', label: 'Réservation' },
+  { value: 'renseignement', label: 'Demande de renseignement' },
+  { value: 'autre', label: 'Autre' },
+];
+
 export default function ContactPage() {
+  const [subject, setSubject] = useState('reservation');
+  const [otherSubject, setOtherSubject] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
     <>
       <SEO
@@ -70,84 +88,122 @@ export default function ContactPage() {
         </div>
 
         <div className="form-panel">
-          <h3>Réserver un rendez‑vous</h3>
+          <h3>Écrivez‑nous</h3>
           <p className="form-desc">
-            Dites‑nous ce que vous souhaitez (soin visage, soins minceur et bien‑être, soin spa,
-            massages corps, beauté du regard, onglerie) - nous vous recontactons rapidement.
+            Remplissez ce formulaire pour toute demande. Pour une réservation,
+            nous vous invitons à réserver directement via Planity.
           </p>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          {subject === 'reservation' && (
+            <div className="planity-suggest">
+              <p>
+                Pour réserver un créneau, c'est par ici&nbsp;:
+              </p>
+              <a
+                href={PLANITY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="planity-suggest-link"
+              >
+                Réserver sur Planity
+                <ExternalLink size={14} strokeWidth={1.6} />
+              </a>
+            </div>
+          )}
+
+          {submitted ? (
+            <div className="form-success">
+              <p>Merci pour votre message&nbsp;! Nous vous recontacterons rapidement.</p>
+              <button type="button" className="btn-submit" onClick={() => setSubmitted(false)}>
+                Envoyer un autre message
+              </button>
+            </div>
+          ) : (
+          <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="contact-date">Date souhaitée</label>
-                <input id="contact-date" type="date" />
+                <label htmlFor="contact-firstname">Prénom</label>
+                <input id="contact-firstname" type="text" required placeholder="Votre prénom" />
               </div>
               <div className="form-group">
-                <label htmlFor="contact-service">Type de soin</label>
+                <label htmlFor="contact-lastname">Nom</label>
+                <input id="contact-lastname" type="text" required placeholder="Votre nom" />
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="contact-email">Email</label>
+                <input id="contact-email" type="email" required placeholder="vous@email.com" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="contact-phone">Téléphone</label>
+                <input id="contact-phone" type="tel" placeholder="06 12 34 56 78" />
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="contact-address">Adresse</label>
+                <input id="contact-address" type="text" placeholder="N° et rue" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="contact-city">Ville</label>
+                <input id="contact-city" type="text" placeholder="Ville" />
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="contact-zip">Code postal</label>
+                <input id="contact-zip" type="text" placeholder="91170" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="contact-subject">Sujet</label>
                 <div className="select-wrap">
-                  <select id="contact-service" defaultValue="">
-                    <option value="" disabled>Sélectionner</option>
-                    <option>Soin visage</option>
-                    <option>Soins minceur et bien‑être</option>
-                    <option>Soin spa</option>
-                    <option>Massages corps</option>
-                    <option>Beauté du regard</option>
-                    <option>Onglerie</option>
+                  <select
+                    id="contact-subject"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                  >
+                    {SUBJECTS.map((s) => (
+                      <option key={s.value} value={s.value}>{s.label}</option>
+                    ))}
                   </select>
                 </div>
               </div>
             </div>
+
+            {subject === 'autre' && (
+              <div className="form-row">
+                <div className="form-group full">
+                  <label htmlFor="contact-other">Précisez le motif</label>
+                  <input
+                    id="contact-other"
+                    type="text"
+                    value={otherSubject}
+                    onChange={(e) => setOtherSubject(e.target.value)}
+                    placeholder="Décrivez votre demande"
+                  />
+                </div>
+              </div>
+            )}
 
             <div className="form-row">
               <div className="form-group full">
-                <label htmlFor="contact-people">Nombre de personnes</label>
-                <div className="select-wrap">
-                  <select id="contact-people" defaultValue="1">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                  </select>
-                </div>
+                <label htmlFor="contact-message">Message</label>
+                <textarea
+                  id="contact-message"
+                  rows={4}
+                  placeholder="Votre message…"
+                  style={{ resize: 'vertical', fontFamily: 'var(--font-corps)', fontSize: 13 }}
+                />
               </div>
             </div>
 
-            <div className="services-title">Choisir des services</div>
-            <div className="services-grid" aria-label="Choix des services">
-              <label className="checkbox-item">
-                <input type="checkbox" />
-                <span className="checkbox-box" aria-hidden="true"></span>
-                Soin visage
-              </label>
-              <label className="checkbox-item">
-                <input type="checkbox" />
-                <span className="checkbox-box" aria-hidden="true"></span>
-                Soins minceur et bien‑être
-              </label>
-              <label className="checkbox-item">
-                <input type="checkbox" />
-                <span className="checkbox-box" aria-hidden="true"></span>
-                Soin spa
-              </label>
-              <label className="checkbox-item">
-                <input type="checkbox" />
-                <span className="checkbox-box" aria-hidden="true"></span>
-                Massages corps
-              </label>
-              <label className="checkbox-item">
-                <input type="checkbox" />
-                <span className="checkbox-box" aria-hidden="true"></span>
-                Beauté du regard
-              </label>
-              <label className="checkbox-item">
-                <input type="checkbox" />
-                <span className="checkbox-box" aria-hidden="true"></span>
-                Onglerie
-              </label>
-            </div>
-
-            <button type="submit" className="btn-submit">- Envoyer la demande -</button>
+            <button type="submit" className="btn-submit">- Envoyer -</button>
           </form>
+          )}
         </div>
       </section>
 
