@@ -1,5 +1,5 @@
 // Service Worker pour Mey Beauty - Cache et Performance
-const CACHE_NAME = 'meybeauty-v3-zoom100';
+const CACHE_NAME = 'meybeauty-v4-instagram';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
