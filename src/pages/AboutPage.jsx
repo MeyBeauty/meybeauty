@@ -258,7 +258,7 @@ export default function AboutPage() {
 
           <div className="ni-salon-card">
             <div className="ni-salon-image">
-              <img src="/mey-beauty%20(5).jpeg" alt="Mey Beauty — Boulevard Gabriel Péri" />
+              <img src="/Institut Mey Beauty Boulevard Gabriel Péri.png" alt="Mey Beauty — Boulevard Gabriel Péri" />
               <div className="ni-salon-image-overlay" />
               <div className="ni-salon-image-content">
                 <p className="ni-salon-label">Institut Mey Beauty</p>

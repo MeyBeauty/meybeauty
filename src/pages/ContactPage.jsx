@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
+import { Mail, Phone, ExternalLink } from 'lucide-react';
 import SEO from '../components/SEO.jsx';
 
 const PLANITY_URL = 'https://www.planity.com/mey-beauty-91170-viry-chatillon-v8i';
@@ -11,7 +11,7 @@ const SUBJECTS = [
 ];
 
 export default function ContactPage() {
-  const [subject, setSubject] = useState('reservation');
+  const [subject, setSubject] = useState('renseignement');
   const [otherSubject, setOtherSubject] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
@@ -40,9 +40,7 @@ export default function ContactPage() {
       <section className="contact-section" aria-label="Formulaire de contact">
         <div className="contact-left">
           <p className="contact-label">Nous contacter</p>
-          <h2>Notre institut</h2>
-
-          <p className="branch-title">Mey Beauty - Viry‑Châtillon</p>
+          <h2>Nos instituts</h2>
 
           <div className="contact-infos">
             <div className="contact-info-item">
@@ -57,19 +55,6 @@ export default function ContactPage() {
 
             <div className="contact-info-item">
               <div className="info-icon" aria-hidden="true">
-                <MapPin size={16} />
-              </div>
-              <div className="info-content">
-                <div className="info-title">Adresse</div>
-                <div className="info-text">
-                  6 Place des Martyrs de Châteaubriand<br />
-                  91170 Viry‑Châtillon
-                </div>
-              </div>
-            </div>
-
-            <div className="contact-info-item">
-              <div className="info-icon" aria-hidden="true">
                 <Phone size={16} />
               </div>
               <div className="info-content">
@@ -79,12 +64,41 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <img
-            src="/mey-beauty (1).jpeg"
-            alt="Espace spa et bien‑être"
-            className="spa-photo"
-            loading="lazy"
-          />
+          <div className="contact-instituts-marquee">
+            <div className="contact-instituts-track">
+              <div className="contact-institut-card">
+                <img
+                  src="/mey-beauty (1).jpeg"
+                  alt="Mey Beauty — Place du Marché"
+                  className="contact-institut-img"
+                  loading="lazy"
+                />
+                <div className="contact-institut-info">
+                  <p className="contact-institut-name">Place du Marché</p>
+                  <p className="contact-institut-city">Viry‑Châtillon</p>
+                  <p className="contact-institut-address">
+                    6 Place des Martyrs de Châteaubriand, 91170
+                  </p>
+                </div>
+              </div>
+
+              <div className="contact-institut-card">
+                <img
+                  src="/Institut Mey Beauty Boulevard Gabriel Péri.png"
+                  alt="Mey Beauty — Boulevard Gabriel Péri"
+                  className="contact-institut-img"
+                  loading="lazy"
+                />
+                <div className="contact-institut-info">
+                  <p className="contact-institut-name">Boulevard Gabriel Péri</p>
+                  <p className="contact-institut-city">Viry‑Châtillon</p>
+                  <p className="contact-institut-address">
+                    Boulevard Gabriel Péri, 91170
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="form-panel">
