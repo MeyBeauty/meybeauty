@@ -339,6 +339,18 @@ export async function updateOrderStatus(id, status) {
   );
 }
 
+export async function updateOrderShipping(id, shippingData) {
+  const ref = doc(db, 'orders', id);
+  await setDoc(
+    ref,
+    {
+      shipping: shippingData,
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true }
+  );
+}
+
 export async function deleteOrder(id) {
   await deleteDoc(doc(db, 'orders', id));
 }

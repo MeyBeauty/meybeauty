@@ -14,6 +14,8 @@ import {
   MapPin,
   Building2,
   Sparkles,
+  Truck,
+  Package,
 } from 'lucide-react';
 import { getProductById as getLocalProductById, formatPriceEUR } from '../data/products.js';
 import { useCart } from '../context/CartContext.jsx';
@@ -43,6 +45,7 @@ export default function CartPage() {
     city: '',
     postalCode: ''
   });
+  const [shippingInfo, setShippingInfo] = useState(null); // { shippingOptionCode, name, priceCents, carrier }
 
   // Build cart lines with correct pricing
   const lines = useMemo(() => {
@@ -76,6 +79,15 @@ export default function CartPage() {
     [lines]
   );
 
+  const shippingCents = shippingInfo?.priceCents || 0;
+  const totalCents = subtotalCents + shippingCents;
+
+  // Total weight in grams (default 500g per item — cosmetics are lightweight)
+  const totalWeightGrams = useMemo(
+    () => lines.reduce((sum, l) => sum + (l.product.weightGrams || 500) * l.quantity, 0),
+    [lines]
+  );
+
   const hasOutOfStock = useMemo(() => lines.some((l) => l.outOfStock), [lines]);
 
   const hasPromotions = useMemo(() => lines.some((l) => l.promotionId), [lines]);
@@ -89,7 +101,11 @@ export default function CartPage() {
   }, [lines]);
 
   const handlePaymentSuccess = useCallback(async (amount, paymentMethod, customerInfo = {}) => {
-    const finalAmount = amount || subtotalCents;
+    if (!lines || lines.length === 0) {
+      console.warn('[Order] Cannot create order: cart is empty');
+      return;
+    }
+    const finalAmount = amount || totalCents;
     setPaidAmount(finalAmount);
 
     // Create order in Firebase
@@ -111,9 +127,18 @@ export default function CartPage() {
           priceCents: line.priceCents,
           totalCents: line.lineTotalCents,
         })),
+        subtotalCents,
+        shippingCents,
         totalAmountCents: finalAmount,
         paymentMethod: paymentMethod || 'unknown',
         status: 'paid',
+        shipping: shippingInfo ? {
+          shippingOptionCode: shippingInfo.shippingOptionCode,
+          name: shippingInfo.name,
+          carrier: shippingInfo.carrier,
+          priceCents: shippingInfo.priceCents,
+          status: 'pending',
+        } : null,
         createdAt: new Date().toISOString(),
       };
 
@@ -126,7 +151,7 @@ export default function CartPage() {
     setOrderComplete(true);
     clearCart();
     setIsProcessing(false);
-  }, [clearCart, subtotalCents, lines]);
+  }, [clearCart, totalCents, lines, subtotalCents, shippingCents, shippingInfo]);
 
   return (
     <>
@@ -276,11 +301,11 @@ export default function CartPage() {
             </div>
             <div className="cart-summary-line">
               <span>Livraison</span>
-              <span>Selon options</span>
+              <span>{shippingCents > 0 ? formatPriceEUR(shippingCents) : 'Selon options'}</span>
             </div>
             <div className="cart-summary-total">
               <span>Total</span>
-              <span>{formatPriceEUR(subtotalCents)}</span>
+              <span>{formatPriceEUR(totalCents)}</span>
             </div>
 
             {orderComplete ? (
@@ -312,7 +337,7 @@ export default function CartPage() {
                   disabled={subtotalCents === 0 || hasOutOfStock}
                 >
                   <CreditCard size={18} strokeWidth={1.8} />
-                  Payer {formatPriceEUR(subtotalCents)}
+                  Commander {formatPriceEUR(totalCents)}
                   <ArrowRight size={16} />
                 </button>
                 <p className="cart-pay-main-note">
@@ -329,10 +354,15 @@ export default function CartPage() {
             {showCheckout && (
               <Elements stripe={stripePromise}>
                 <CheckoutModal
-                  amount={subtotalCents}
+                  amount={totalCents}
+                  subtotalCents={subtotalCents}
+                  shippingCents={shippingCents}
                   totalSavings={totalSavings}
                   customerInfo={customerInfo}
                   setCustomerInfo={setCustomerInfo}
+                  shippingInfo={shippingInfo}
+                  setShippingInfo={setShippingInfo}
+                  totalWeightGrams={totalWeightGrams}
                   onSuccess={handlePaymentSuccess}
                   isProcessing={isProcessing}
                   setIsProcessing={setIsProcessing}
@@ -348,13 +378,20 @@ export default function CartPage() {
   );
 }
 
-// Checkout modal with two steps:
+// Checkout modal with three steps:
 // 1. Customer information
-// 2. Payment method selection (Card or PayPal)
-function CheckoutModal({ amount, totalSavings, customerInfo, setCustomerInfo, onSuccess, isProcessing, setIsProcessing, onClose }) {
-  const [step, setStep] = useState('customer'); // 'customer' | 'payment' | 'card' | 'paypal'
+// 2. Shipping method selection (Sendcloud delivery options)
+// 3. Payment method selection (Card or PayPal)
+function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, customerInfo, setCustomerInfo, shippingInfo, setShippingInfo, totalWeightGrams, onSuccess, isProcessing, setIsProcessing, onClose }) {
+  const [step, setStep] = useState('customer'); // 'customer' | 'shipping' | 'payment' | 'card' | 'paypal'
   const [paypalReady, setPaypalReady] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [deliveryOptions, setDeliveryOptions] = useState([]);
+  const [deliveryLoading, setDeliveryLoading] = useState(false);
+  const [deliveryError, setDeliveryError] = useState('');
+  const [addressSuggestions, setAddressSuggestions] = useState([]);
+  const [showAddressSuggestions, setShowAddressSuggestions] = useState(false);
+  const [addressSearchTimeout, setAddressSearchTimeout] = useState(null);
 
   const paypalButtonRef = useRef(null);
   const paypalButtonsRef = useRef(null);
@@ -396,11 +433,87 @@ function CheckoutModal({ amount, totalSavings, customerInfo, setCustomerInfo, on
       return;
     }
     setErrorMsg('');
-    setStep('payment');
+    setStep('shipping');
   };
+
+  // Fetch delivery options from Sendcloud via Netlify function
+  const fetchDeliveryOptions = useCallback(async () => {
+    setDeliveryLoading(true);
+    setDeliveryError('');
+    try {
+      const info = customerInfoRef.current;
+      const totalOrderValue = (subtotalCents / 100).toFixed(2);
+      const resp = await fetch('/api/sendcloud-delivery-options', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          weightGrams: totalWeightGrams || 500,
+          totalOrderValue,
+          toCountryCode: 'FR',
+          toPostalCode: info.postalCode,
+        }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) {
+        throw new Error(data.error || 'Erreur lors de la récupération des options de livraison');
+      }
+      setDeliveryOptions(data.options || []);
+    } catch (err) {
+      console.error('[Delivery] fetch error:', err);
+      setDeliveryError(err.message);
+      setDeliveryOptions([]);
+    } finally {
+      setDeliveryLoading(false);
+    }
+  }, [subtotalCents, totalWeightGrams]);
+
+  // Fetch delivery options when entering the shipping step
+  useEffect(() => {
+    if (step === 'shipping' && deliveryOptions.length === 0 && !deliveryLoading && !deliveryError) {
+      fetchDeliveryOptions();
+    }
+  }, [step, deliveryOptions.length, deliveryLoading, deliveryError, fetchDeliveryOptions]);
 
   const updateField = (field, value) => {
     setCustomerInfo(prev => ({ ...prev, [field]: value }));
+    customerInfoRef.current = { ...customerInfoRef.current, [field]: value };
+  };
+
+  // Search address using French government API
+  const searchAddress = async (query) => {
+    if (!query || query.length < 3) {
+      setAddressSuggestions([]);
+      setShowAddressSuggestions(false);
+      return;
+    }
+
+    try {
+      const resp = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`);
+      const data = await resp.json();
+      setAddressSuggestions(data.features || []);
+      setShowAddressSuggestions(true);
+    } catch (err) {
+      console.error('[Address API] error:', err);
+      setAddressSuggestions([]);
+    }
+  };
+
+  const handleAddressChange = (value) => {
+    updateField('address', value);
+    
+    // Debounce API call
+    if (addressSearchTimeout) clearTimeout(addressSearchTimeout);
+    const timeout = setTimeout(() => searchAddress(value), 300);
+    setAddressSearchTimeout(timeout);
+  };
+
+  const selectAddress = (feature) => {
+    const props = feature.properties;
+    updateField('address', props.name || '');
+    updateField('city', props.city || '');
+    updateField('postalCode', props.postcode || '');
+    setShowAddressSuggestions(false);
+    setAddressSuggestions([]);
   };
 
   // Load PayPal SDK and render button
@@ -526,12 +639,13 @@ function CheckoutModal({ amount, totalSavings, customerInfo, setCustomerInfo, on
 
   const stepTitle = {
     customer: 'Vos informations',
+    shipping: 'Mode de livraison',
     payment: 'Mode de paiement',
     card: 'Paiement par carte',
     paypal: 'Paiement PayPal'
   }[step];
 
-  const stepIcon = step === 'paypal' ? <Wallet size={18} strokeWidth={1.8} /> : <CreditCard size={18} strokeWidth={1.8} />;
+  const stepIcon = step === 'paypal' ? <Wallet size={18} strokeWidth={1.8} /> : step === 'shipping' ? <Truck size={18} strokeWidth={1.8} /> : <CreditCard size={18} strokeWidth={1.8} />;
 
   return (
     <div className="checkout-modal-overlay open" onClick={onClose}>
@@ -554,13 +668,18 @@ function CheckoutModal({ amount, totalSavings, customerInfo, setCustomerInfo, on
         <div className="checkout-modal-body">
           {/* Step progress */}
           <div className="checkout-progress">
-            <div className={`checkout-progress-step${step === 'customer' || step === 'payment' || step === 'card' || step === 'paypal' ? ' active' : ''}`}>
+            <div className={`checkout-progress-step${step !== 'customer' ? ' active' : ''}${step === 'customer' ? ' current' : ''}`}>
               <span className="checkout-progress-num">1</span>
               <span className="checkout-progress-label">Informations</span>
             </div>
-            <div className={`checkout-progress-line${step === 'payment' || step === 'card' || step === 'paypal' ? ' active' : ''}`} />
-            <div className={`checkout-progress-step${step === 'payment' || step === 'card' || step === 'paypal' ? ' active' : ''}`}>
+            <div className={`checkout-progress-line${step === 'shipping' || step === 'payment' || step === 'card' || step === 'paypal' ? ' active' : ''}`} />
+            <div className={`checkout-progress-step${step === 'payment' || step === 'card' || step === 'paypal' ? ' active' : ''}${step === 'shipping' ? ' current' : ''}`}>
               <span className="checkout-progress-num">2</span>
+              <span className="checkout-progress-label">Livraison</span>
+            </div>
+            <div className={`checkout-progress-line${step === 'payment' || step === 'card' || step === 'paypal' ? ' active' : ''}`} />
+            <div className={`checkout-progress-step${step === 'card' || step === 'paypal' ? ' active' : ''}${step === 'payment' ? ' current' : ''}`}>
+              <span className="checkout-progress-num">3</span>
               <span className="checkout-progress-label">Paiement</span>
             </div>
           </div>
@@ -622,15 +741,39 @@ function CheckoutModal({ amount, totalSavings, customerInfo, setCustomerInfo, on
                 </div>
 
                 <div className="cart-form-row cart-form-row-address">
-                  <div className="cart-input-group cart-input-group-full">
+                  <div className="cart-input-group cart-input-group-full address-autocomplete-wrapper">
                     <MapPin size={15} className="cart-input-icon" />
                     <input
                       type="text"
-                      placeholder="Adresse"
+                      placeholder="Adresse (commencez à taper...)"
                       value={customerInfo.address}
-                      onChange={(e) => updateField('address', e.target.value)}
+                      onChange={(e) => handleAddressChange(e.target.value)}
+                      onBlur={() => setTimeout(() => setShowAddressSuggestions(false), 200)}
                       className="cart-form-input"
+                      autoComplete="off"
                     />
+                    {showAddressSuggestions && addressSuggestions.length > 0 && (
+                      <div className="address-suggestions">
+                        {addressSuggestions.map((feature, idx) => {
+                          const props = feature.properties;
+                          return (
+                            <div
+                              key={idx}
+                              className="address-suggestion-item"
+                              onClick={() => selectAddress(feature)}
+                            >
+                              <MapPin size={14} className="suggestion-icon" />
+                              <div className="suggestion-content">
+                                <div className="suggestion-name">{props.name}</div>
+                                <div className="suggestion-meta">
+                                  {props.postcode} {props.city}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -661,13 +804,112 @@ function CheckoutModal({ amount, totalSavings, customerInfo, setCustomerInfo, on
                 onClick={handleCustomerSubmit}
                 disabled={isProcessing}
               >
-                Continuer vers le paiement
+                Continuer
                 <ArrowRight size={16} />
               </button>
             </div>
           )}
 
-          {/* Step 2: Payment method selection */}
+          {/* Step 2: Shipping method selection */}
+          {step === 'shipping' && (
+            <div className="checkout-step">
+              {deliveryLoading && (
+                <div className="shipping-loading">
+                  <Truck size={20} className="shipping-loading-icon" />
+                  <span>Recherche des options de livraison…</span>
+                </div>
+              )}
+
+              {deliveryError && !deliveryLoading && (
+                <div className="cart-pay-alert cart-pay-alert-warning">
+                  {deliveryError}
+                </div>
+              )}
+
+              {!deliveryLoading && !deliveryError && deliveryOptions.length === 0 && (
+                <div className="cart-pay-alert cart-pay-alert-warning">
+                  Aucune option de livraison trouvée pour cette adresse.
+                </div>
+              )}
+
+              {!deliveryLoading && deliveryOptions.length > 0 && (
+                <div className="shipping-options-list">
+                  {deliveryOptions.map((opt) => {
+                    const isSelected = shippingInfo?.shippingOptionCode === opt.shippingOptionCode;
+                    const priceCents = opt.price != null ? Math.round(opt.price * 100) : null;
+                    const leadTimeText = opt.leadTimeHours
+                      ? (opt.leadTimeHours >= 24
+                          ? `~${Math.ceil(opt.leadTimeHours / 24)} jour(s)`
+                          : `~${opt.leadTimeHours}h`)
+                      : null;
+                    return (
+                      <label
+                        key={opt.shippingOptionCode}
+                        className={`shipping-option-card${isSelected ? ' selected' : ''}`}
+                      >
+                        <input
+                          type="radio"
+                          name="shipping-option"
+                          value={opt.shippingOptionCode}
+                          checked={isSelected}
+                          onChange={() => setShippingInfo({
+                            shippingOptionCode: opt.shippingOptionCode,
+                            name: opt.name,
+                            carrier: opt.carrier,
+                            priceCents: priceCents || 0,
+                          })}
+                        />
+                        <span className="shipping-option-radio" />
+                        {opt.logoUrl && (
+                          <img src={opt.logoUrl} alt={opt.carrier} className="shipping-option-logo" />
+                        )}
+                        <span className="shipping-option-content">
+                          <span className="shipping-option-header">
+                            <span className="shipping-option-name">{opt.name}</span>
+                            <span className="shipping-option-price">
+                              {priceCents != null
+                                ? (priceCents > 0 ? formatPriceEUR(priceCents) : 'Gratuit')
+                                : 'À calculer'}
+                            </span>
+                          </span>
+                          <span className="shipping-option-meta">
+                            {opt.carrier && <span className="shipping-option-carrier">{opt.carrier}</span>}
+                            {leadTimeText && (
+                              <span className="shipping-option-delay">
+                                {leadTimeText}
+                              </span>
+                            )}
+                          </span>
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div className="shipping-actions">
+                <button
+                  type="button"
+                  className="checkout-back-btn"
+                  onClick={() => setStep('customer')}
+                  disabled={isProcessing}
+                >
+                  ← Modifier mes informations
+                </button>
+                <button
+                  type="button"
+                  className="cart-pay-main-btn"
+                  onClick={() => setStep('payment')}
+                  disabled={isProcessing || !shippingInfo}
+                >
+                  Continuer vers le paiement
+                  <ArrowRight size={16} />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Payment method selection */}
           {step === 'payment' && (
             <div className="checkout-step">
               <div className="pay-method-grid">
@@ -709,10 +951,10 @@ function CheckoutModal({ amount, totalSavings, customerInfo, setCustomerInfo, on
               <button
                 type="button"
                 className="checkout-back-btn"
-                onClick={() => setStep('customer')}
+                onClick={() => setStep('shipping')}
                 disabled={isProcessing}
               >
-                ← Modifier mes informations
+                ← Modifier la livraison
               </button>
             </div>
           )}
