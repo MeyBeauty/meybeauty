@@ -185,6 +185,80 @@ const SERVICES = {
       { q: 'La pose abîme-t-elle l’ongle naturel ?', a: 'Non, nos techniques de pose et de dépose préservent la structure de l’ongle lorsqu’elles sont réalisées et retirées en institut.' },
     ],
   },
+  'epilation-cire': {
+    slug: 'epilation-cire',
+    kicker: 'Épilation',
+    title: 'Épilation à la cire',
+    image: '/epilation-a-la-cire.jpg',
+    video: '/epilation.mp4',
+    planityServiceSetIds: ['-Ol37IE9hHjduXLe5euh'],
+    intro: 'Une peau lisse, nette et soyeuse dès la première séance. Nos cires professionnelles tièdes et sans colophane sont formulées pour respecter le confort de votre épiderme sur toutes les zones du corps et du visage.',
+    paragraphs: [
+      'L’épilation à la cire reste la méthode incontournable pour éliminer les poils avec précision et netteté : jambes entières, demi-jambes, aisselles, maillot classique ou échancré, bras, sourcils et duvet du visage.',
+      'Nos esthéticiennes qualifiées adaptent le type de cire selon la délicatesse de chaque zone (cire pelable pour les zones sensibles, cire tiède avec bandes pour les grandes zones) afin d’atténuer la sensation d’inconfort.',
+      'Chaque séance se termine par l’application d’une huile ou lotion post-épilatoire apaisante et hydratante qui calme les rougeurs et retarde naturellement la repousse.',
+    ],
+    benefits: [
+      'Cires professionnelles haute tolérance hypoallergéniques',
+      'Épilation nette et précise de toutes les zones',
+      'Application d’un soin post-épilatoire apaisant',
+      'Hygiène irréprochable et spatules à usage unique',
+    ],
+    duration: '15 à 45 minutes selon la zone',
+    price: 'À partir de 12 €',
+    perks: [
+      { icon: Scissors, label: 'Cire tiède' },
+      { icon: Sparkles, label: 'Peau douce' },
+      { icon: ShieldCheck, label: 'Hygiène 100%' },
+    ],
+    testimonials: [
+      { name: 'Émilie', note: 5, quote: 'Une épilation rapide, quasiment indolore grâce à la technique des esthéticiennes. Je ressors toujours avec une peau impeccable.' },
+      { name: 'Fatima', note: 5, quote: 'Très douce et à l’écoute. La cire utilisée ne m’a laissé aucune rougeur, même sur le maillot intégral.' },
+      { name: 'Clara', note: 5, quote: 'Je fais mes sourcils et mes jambes ici depuis 2 ans, le résultat est toujours net et régulier.' },
+    ],
+    faqs: [
+      { q: 'Quelle est la longueur de poil idéale avant une séance ?', a: 'Une longueur de 4 à 5 mm (environ 2 à 3 semaines après le dernier rasage) permet à la cire d’adhérer parfaitement pour une extraction nette.' },
+      { q: 'Combien de temps dure le résultat de la cire ?', a: 'Le résultat reste net pendant 3 à 4 semaines en moyenne selon votre cycle de repousse individuel.' },
+      { q: 'Que faire avant et après la séance ?', a: 'Nous recommandons un gommage doux 24h avant, et d’éviter les bains chauds, le sauna et le soleil direct pendant les 24h suivant l’épilation.' },
+    ],
+  },
+  'epilation-definitive': {
+    slug: 'epilation-definitive',
+    kicker: 'Haute technologie',
+    title: 'Épilation définitive',
+    image: '',
+    video: '/epilation.mp4',
+    planityServiceSetIds: ['-Ol3CsevbpSXybi9euiF'],
+    intro: 'Dites adieu durablement à la corvée du rasage et de la cire. Grâce à notre technologie de pointe et nos protocoles personnalisés, affinez et détruisez la racine du poil en toute sécurité pour une peau durablement lisse.',
+    paragraphs: [
+      'L’épilation définitive par laser / lumière pulsée de dernière génération cible directement la mélanine du bulbe pileux en phase de croissance (phase anagène) pour neutraliser la repousse sans altérer la peau environnante.',
+      'Un bilan diagnostic personnalisé et un test cutané sont systématiquement réalisés avant tout protocole afin d’adapter les paramètres à votre phototype, couleur de poil et zone traitée.',
+      'Au fil des séances, la pilosité s’éclaircit, devient plus fine et disparaît progressivement. C’est également le traitement de référence pour éradiquer définitivement les poils incarnés et irritations récurrentes.',
+    ],
+    benefits: [
+      'Réduction durable et progressive de la pilosité',
+      'Bilan personnalisé et flash test de sécurité préalable',
+      'Fin définitive des poils incarnés et rougeurs',
+      'Système de refroidissement cutané pour un confort optimal',
+    ],
+    duration: '20 à 60 minutes selon la zone',
+    price: 'Sur devis / Forfaits personnalisés',
+    perks: [
+      { icon: Flame, label: 'Laser & IPL' },
+      { icon: Sparkles, label: 'Durable' },
+      { icon: ShieldCheck, label: 'Bilan offert' },
+    ],
+    testimonials: [
+      { name: 'Sarah', note: 5, quote: 'Après 6 séances sur les demi-jambes et aisselles, je n’ai pratiquement plus rien. C’est un vrai gain de temps au quotidien !' },
+      { name: 'Nadia', note: 5, quote: 'Très professionnelle, les explications lors du bilan étaient claires et rassurantes. L’appareil ne fait pas mal avec le froid.' },
+      { name: 'Aurélie', note: 5, quote: 'Fini les poils incarnés au maillot qui me complexaient tant. La peau est devenue complètement lisse.' },
+    ],
+    faqs: [
+      { q: 'Combien de séances sont nécessaires pour un résultat optimal ?', a: 'Il faut généralement compter entre 6 et 8 séances espacées de 4 à 8 semaines selon la zone et le profil pour traiter l’ensemble des cycles de pousse.' },
+      { q: 'La séance est-elle douloureuse ?', a: 'Nos appareils sont équipés d’un système de refroidissement en continu qui anesthésie la zone au contact, procurant une sensation de picotement léger très supportable.' },
+      { q: 'Quelles sont les contre-indications ?', a: 'L’exposition solaire récente (bronzage), la grossesse, l’allaitement et la prise de médicaments photosensibilisants sont les principales contre-indications temporaires.' },
+    ],
+  },
   epilation: {
     slug: 'epilation',
     kicker: 'Épilation',
@@ -227,7 +301,8 @@ const OTHERS = [
   { slug: 'visage', kicker: 'Éclat', title: 'Soin du visage', image: '/soin visage (2).PNG', video: 'https://www.pexels.com/fr-fr/download/video/9335813/' },
   { slug: 'minceur', kicker: 'Silhouette', title: 'Minceur', image: '/soin-minceur.PNG', video: 'https://www.pexels.com/fr-fr/download/video/32828416/' },
   { slug: 'regard', kicker: 'Regard', title: 'Beauté du regard', image: '/mey-beauty (6).jpeg', video: 'https://www.pexels.com/fr-fr/download/video/8502623/' },
-  { slug: 'epilation', kicker: 'Épilation', title: 'Épilation\nCire & définitive', image: '/epilation-a-la-cire.jpg', video: '/epilation.mp4' },
+  { slug: 'epilation-cire', kicker: 'Épilation', title: 'Épilation à la cire', image: '/epilation-a-la-cire.jpg', video: '/epilation.mp4' },
+  { slug: 'epilation-definitive', kicker: 'Haute technologie', title: 'Épilation définitive', image: '', video: '/epilation.mp4' },
   { slug: 'maillot', kicker: 'Maillot', title: 'Soin du maillot', image: '/Vajacial Le soin intime tendance pour une peau saine et sans imperfections.webp', video: '/epilation du maillot.mp4' },
   { slug: 'mains', kicker: 'Mains', title: 'Onglerie premium', image: '/meybeauty.jpg', video: '' },
 ];
@@ -278,8 +353,8 @@ function VideoOrImage({ src, video, alt, className }) {
         muted
         loop
         playsInline
+        preload="auto"
         className={className}
-        poster={src}
         aria-label={alt}
       />
     );
@@ -294,6 +369,8 @@ const CAT_CLASS = {
   maillot: 'cat-5',
   mains: 'cat-4',
   epilation: 'cat-6',
+  'epilation-cire': 'cat-6',
+  'epilation-definitive': 'cat-6',
 };
 
 export default function ServiceDetailPage({ slug }) {
@@ -511,13 +588,14 @@ export default function ServiceDetailPage({ slug }) {
           gap: 56px;
           align-items: start;
         }
-        .sd-intro-visual { border-radius: 2px; overflow: hidden; position: relative; }
+        .sd-intro-visual { border-radius: 2px; overflow: hidden; position: relative; background: var(--nude-light); }
         .sd-intro-img, .sd-intro-visual video {
           width: 100%;
           aspect-ratio: 4/5;
           object-fit: cover;
           display: block;
           border-radius: 2px;
+          background: var(--nude-light);
         }
         .sd-intro-perks {
           display: grid;

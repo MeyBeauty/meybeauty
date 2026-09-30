@@ -79,8 +79,8 @@ export default function EventsPage() {
               <img src="/evg mey beauty.png" alt="Moments privilégiés chez Mey Beauty" />
             </div>
             <div className="ev-intro-badge">
-              <span className="ev-intro-badge-number">2</span>
-              <span className="ev-intro-badge-label">Instituts à<br />Viry-Châtillon</span>
+              <span className="ev-intro-badge-number">100%</span>
+              <span className="ev-intro-badge-label">Privatisé &<br />Sur‑mesure</span>
             </div>
           </div>
 
@@ -89,7 +89,7 @@ export default function EventsPage() {
               Vos moments d'exception, privés.
             </h2>
             <p className="ev-intro-lead">
-              Que ce soit pour célébrer un EVJF, fêter un anniversaire ou simplement savourer une pause bien-être, nos deux instituts de Viry-Châtillon se transforment selon vos désirs. Dans un cadre chaleureux et raffiné, nos équipes expertes orchestrent chaque détail pour vous offrir une expérience inoubliable, élégante et totalement détendue.
+              Que ce soit pour célébrer un EVJF, fêter un anniversaire ou simplement savourer une pause bien-être, notre institut de Viry-Châtillon se transforme selon vos désirs. Dans un cadre chaleureux et raffiné, nos équipes expertes orchestrent chaque détail pour vous offrir une expérience inoubliable, élégante et totalement détendue.
             </p>
             <p className="ev-intro-text">
               Offrez-vous le luxe d'un accès entièrement privé et d'un service haut de gamme personnalisé. Nous co-créons votre événement idéal en adaptant les soins et les rituels beauté à vos envies, à votre budget ainsi qu'au nombre de vos invitées pour que la magie opère pleinement.

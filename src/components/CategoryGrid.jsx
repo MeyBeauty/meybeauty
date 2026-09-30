@@ -23,13 +23,21 @@ const CATS = [
   },
   {
     id: 'cat-6',
-    className: 'cat-item cat-6',
-    kicker: 'Épilation',
-    title: 'Épilation\nCire & définitive',
-    cta: '— Découvrir ce service —',
-    href: '#service/epilation',
+    className: 'cat-item cat-6 cat-split-item',
+    isSplit: true,
     video: '/epilation.mp4',
-    image: '',
+    left: {
+      kicker: 'Épilation',
+      title: 'Épilation\nà la cire',
+      cta: '— Découvrir ce service —',
+      href: '#service/epilation-cire',
+    },
+    right: {
+      kicker: 'Épilation',
+      title: 'Épilation\ndéfinitive',
+      cta: '— Découvrir ce service —',
+      href: '#service/epilation-definitive',
+    },
   },
   {
     id: 'cat-3',
@@ -78,7 +86,6 @@ function TitleWithBreaks({ text }) {
 
 function CatBgVideo({ src, label }) {
   const videoRef = useRef(null);
-  const [shouldLoad, setShouldLoad] = useState(false);
 
   const allowVideo = useMemo(() => {
     const reduceMotion =
@@ -104,14 +111,13 @@ function CatBgVideo({ src, label }) {
         const entry = entries[0];
         if (!entry) return;
         if (entry.isIntersecting) {
-          setShouldLoad(true);
           const p = node.play();
           if (p && typeof p.catch === 'function') p.catch(() => {});
         } else {
           node.pause();
         }
       },
-      { threshold: 0.35 }
+      { threshold: 0.15 }
     );
 
     io.observe(node);
@@ -124,12 +130,12 @@ function CatBgVideo({ src, label }) {
     <video
       className="cat-bg-video"
       ref={videoRef}
-      src={shouldLoad ? src : undefined}
+      src={src}
       autoPlay
       muted
       loop
       playsInline
-      preload="none"
+      preload="auto"
       aria-label={label}
     />
   );
@@ -142,21 +148,54 @@ export default function CategoryGrid({ items = CATS, className = 'cat-grid' }) {
         <div key={cat.id} className={cat.className}>
           <div className="cat-bg">
             {cat.video ? (
-              <CatBgVideo src={cat.video} label={cat.kicker} />
+              <CatBgVideo src={cat.video} label={cat.kicker || cat.left?.kicker} />
             ) : null}
 
             {cat.imageOnly ? (
               <img className="cat-bg-photo" src={cat.image} alt={cat.kicker} />
             ) : null}
           </div>
+
           <div className="cat-overlay"></div>
-          <div className="cat-content">
-            <div className="cat-kicker">{cat.kicker}</div>
-            <h3 className="cat-title">
-              <TitleWithBreaks text={cat.title} />
-            </h3>
-            <a href={cat.href} className="btn-cta-outline">{cat.cta || '— Découvrir ce service —'}</a>
-          </div>
+
+          {cat.isSplit ? (
+            <div className="cat-split-wrapper">
+              <div className="cat-split-side cat-split-left">
+                <div className="cat-split-content">
+                  <div className="cat-kicker">{cat.left.kicker}</div>
+                  <h3 className="cat-title">
+                    <TitleWithBreaks text={cat.left.title} />
+                  </h3>
+                  <a href={cat.left.href} className="btn-cta-outline">{cat.left.cta || '— Découvrir ce service —'}</a>
+                </div>
+              </div>
+
+              <svg className="cat-split-svg-divider" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <line x1="58" y1="0" x2="42" y2="100" stroke="#FFFFFF" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
+              </svg>
+
+              <div className="cat-split-side cat-split-right">
+                <div className="cat-split-content">
+                  <div className="cat-kicker">{cat.right.kicker}</div>
+                  <h3 className="cat-title">
+                    <TitleWithBreaks text={cat.right.title} />
+                  </h3>
+                  <a href={cat.right.href} className="btn-cta-outline">{cat.right.cta || '— Découvrir ce service —'}</a>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="cat-overlay"></div>
+              <div className="cat-content">
+                <div className="cat-kicker">{cat.kicker}</div>
+                <h3 className="cat-title">
+                  <TitleWithBreaks text={cat.title} />
+                </h3>
+                <a href={cat.href} className="btn-cta-outline">{cat.cta || '— Découvrir ce service —'}</a>
+              </div>
+            </>
+          )}
         </div>
       ))}
     </section>

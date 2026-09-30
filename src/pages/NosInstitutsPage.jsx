@@ -145,7 +145,7 @@ function Fiche({ service, index, onClick }) {
       onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 18px 40px rgba(26,20,8,0.14)'; }}
       onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
     >
-      <div style={{ height: 140, position: 'relative', overflow: 'hidden', backgroundColor: '#1a1408' }}>
+      <div style={{ height: 140, position: 'relative', overflow: 'hidden', backgroundColor: 'var(--nude-light, #EDE3DA)' }}>
         <video
           key={service.video}
           autoPlay
@@ -153,7 +153,7 @@ function Fiche({ service, index, onClick }) {
           loop
           playsInline
           poster=""
-          preload="metadata"
+          preload="auto"
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         >
           <source src={service.video ? encodeURI(service.video) : undefined} type="video/mp4" />
@@ -185,7 +185,7 @@ function ServiceDrawer({ service, index, onClose }) {
       className="ni-drawer-overlay"
     >
       <div className="ni-drawer" >
-        <div className="ni-drawer-media" style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff', backgroundColor: '#1a1408', zIndex: 10, flexShrink: 0, borderRadius: '12px 12px 0 0' }}>
+        <div className="ni-drawer-media" style={{ height: 170, position: 'relative', overflow: 'hidden', color: '#fff', backgroundColor: 'var(--nude-light, #EDE3DA)', zIndex: 10, flexShrink: 0, borderRadius: '12px 12px 0 0' }}>
           {service.video ? (
             <video
               key={service.video}
