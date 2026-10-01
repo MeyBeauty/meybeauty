@@ -75,13 +75,15 @@ export const handler = async (event) => {
     const options = (data.delivery_options || []).map((opt) => ({
       id: opt.id,
       shippingOptionCode: opt.checkout_identifier?.value || opt.checkout_identifier || null,
-      carrier: opt.carrier || opt.carrier_name || '',
-      deliveryMethod: opt.delivery_method?.name || opt.delivery_method_name || '',
-      name: opt.name || `${opt.carrier || ''} ${opt.delivery_method?.name || ''}`.trim(),
-      price: opt.price ?? opt.shipping_price ?? 0,
-      currency: opt.currency || 'EUR',
+      carrier: opt.carrier?.name || opt.carrier?.code || opt.carrier_name || '',
+      carrierCode: opt.carrier?.code || '',
+      deliveryMethod: opt.delivery_method_type || '',
+      name: opt.title || opt.internal_title || `${opt.carrier?.name || ''}`.trim(),
+      price: opt.shipping_rate?.value ?? opt.price ?? opt.shipping_price ?? null,
+      currency: opt.shipping_rate?.currency || opt.currency || 'EUR',
       estimatedDeliveryDays: opt.estimated_delivery_days || opt.delivery_days || null,
-      logoUrl: opt.carrier_logo_url || opt.logo_url || null,
+      leadTimeHours: opt.lead_time_hours?.p50 || null,
+      logoUrl: opt.carrier?.logo_url || opt.carrier_logo_url || opt.logo_url || null,
     })).filter((o) => o.shippingOptionCode);
 
     return json(200, { options, configurationId: data.configuration_id || configId });

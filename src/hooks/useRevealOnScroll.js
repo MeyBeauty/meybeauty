@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 
 export default function useRevealOnScroll(selector = '.reveal', options = { threshold: 0.1 }) {
+  const threshold = options?.threshold || 0.1;
+
   useEffect(() => {
     const elements = document.querySelectorAll(selector);
     if (!elements.length) return;
@@ -17,10 +19,10 @@ export default function useRevealOnScroll(selector = '.reveal', options = { thre
           observer.unobserve(e.target);
         }
       });
-    }, options);
+    }, { threshold });
 
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [selector, JSON.stringify(options)]);
+  }, [selector, threshold]);
 }

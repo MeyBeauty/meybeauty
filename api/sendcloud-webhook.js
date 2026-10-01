@@ -4,113 +4,123 @@
 
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
+import { sendOrderEmail } from '../server/send-order-email.js';
+import { extractSendcloudWebhook, verifySendcloudSignature } from '../server/sendcloud-webhook-utils.js';
+
+export const config = {
+  api: { bodyParser: false },
+};
 
 function getDb() {
   if (getApps().length === 0) {
     const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-    if (!serviceAccountJson) {
-      throw new Error('FIREBASE_SERVICE_ACCOUNT_KEY manquant');
-    }
+    if (!serviceAccountJson) throw new Error('FIREBASE_SERVICE_ACCOUNT_KEY manquant');
     const serviceAccount = JSON.parse(serviceAccountJson);
-    initializeApp({
-      credential: cert(serviceAccount),
-      projectId: serviceAccount.project_id,
-    });
+    initializeApp({ credential: cert(serviceAccount), projectId: serviceAccount.project_id });
   }
   return getFirestore();
 }
 
-function mapSendcloudStatus(sendcloudStatus) {
-  const statusMap = {
-    'announcement_succeeded': 'label_created',
-    'shipment_announced': 'label_created',
-    'ready_to_send': 'label_created',
-    'handed_to_carrier': 'shipped',
-    'shipment_taken_over_by_carrier': 'shipped',
-    'delivered_to_consumer': 'delivered',
-    'delivered': 'delivered',
-    'delivery_failed': 'failed',
-    'returned_to_sender': 'returned',
-    'cancelled': 'cancelled',
-  };
-  return statusMap[sendcloudStatus] || sendcloudStatus;
+async function readRawBody(req) {
+  const chunks = [];
+  for await (const chunk of req) chunks.push(chunk);
+  return Buffer.concat(chunks);
+}
+
+async function findOrder(db, shipmentId, parcelId) {
+  const ordersRef = db.collection('orders');
+
+  if (shipmentId) {
+    const snapshot = await ordersRef.where('shipping.sendcloudShipmentId', '==', String(shipmentId)).limit(1).get();
+    if (!snapshot.empty) return snapshot.docs[0];
+  }
+
+  if (parcelId != null) {
+    const numericParcelId = Number(parcelId);
+    const storedParcelId = Number.isFinite(numericParcelId) ? numericParcelId : String(parcelId);
+    const snapshot = await ordersRef.where('shipping.parcelId', '==', storedParcelId).limit(1).get();
+    if (!snapshot.empty) return snapshot.docs[0];
+  }
+
+  return null;
 }
 
 export default async function handler(req, res) {
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const body = req.body;
-    console.log('[Sendcloud Webhook] Received:', JSON.stringify(body, null, 2));
-
-    const shipmentId = body.shipment?.id || body.id || body.shipment_id;
-    const sendcloudStatus = body.action || body.status || body.shipment?.status || '';
-    const trackingNumber = body.parcel?.tracking_number || body.shipment?.tracking_number || null;
-    const trackingUrl = body.parcel?.tracking_url || body.shipment?.tracking_url || body.tracking_url || null;
-
-    if (!shipmentId) {
-      console.warn('[Sendcloud Webhook] No shipment ID found in payload');
-      return res.status(200).json({ received: true, message: 'No shipment ID — ignored' });
+    const rawBody = await readRawBody(req);
+    const signature = req.headers['sendcloud-signature'];
+    if (!verifySendcloudSignature(rawBody, signature)) {
+      return res.status(401).json({ error: 'Signature Sendcloud invalide' });
     }
 
-    const mappedStatus = mapSendcloudStatus(sendcloudStatus);
-    console.log(`[Sendcloud Webhook] Shipment ${shipmentId} → status: ${sendcloudStatus} → ${mappedStatus}`);
+    const body = JSON.parse(rawBody.toString('utf8'));
+    const webhook = extractSendcloudWebhook(body);
+    const { shipmentId, parcelId, sendcloudStatus, mappedStatus, trackingNumber, trackingUrl, timestamp } = webhook;
+
+    if (!shipmentId && !parcelId) {
+      return res.status(200).json({ received: true, message: 'No shipment or parcel ID — ignored' });
+    }
 
     const db = getDb();
-    const ordersRef = db.collection('orders');
-    const snapshot = await ordersRef
-      .where('shipping.sendcloudShipmentId', '==', String(shipmentId))
-      .limit(1)
-      .get();
-
-    if (snapshot.empty) {
-      console.warn(`[Sendcloud Webhook] No order found for shipment ${shipmentId}`);
+    const orderDoc = await findOrder(db, shipmentId, parcelId);
+    if (!orderDoc) {
       return res.status(200).json({ received: true, message: 'No matching order — ignored' });
     }
 
-    const orderDoc = snapshot.docs[0];
     const orderId = orderDoc.id;
     const orderData = orderDoc.data();
     const currentShipping = orderData.shipping || {};
+    const lastWebhookTimestamp = Number(currentShipping.lastWebhookTimestamp || 0);
+    if (timestamp && lastWebhookTimestamp && timestamp < lastWebhookTimestamp) {
+      return res.status(200).json({ received: true, ignored: 'stale_webhook' });
+    }
 
     const updatedShipping = {
       ...currentShipping,
-      sendcloudShipmentId: String(shipmentId),
       status: mappedStatus,
       lastWebhookStatus: sendcloudStatus,
+      lastWebhookTimestamp: timestamp,
       trackingNumber: trackingNumber || currentShipping.trackingNumber || null,
       trackingUrl: trackingUrl || currentShipping.trackingUrl || null,
       updatedAt: new Date().toISOString(),
     };
+    if (shipmentId) updatedShipping.sendcloudShipmentId = String(shipmentId);
+    if (parcelId != null) updatedShipping.parcelId = Number.isFinite(Number(parcelId)) ? Number(parcelId) : String(parcelId);
 
     let orderStatus = orderData.status;
-    if (mappedStatus === 'shipped' && orderStatus === 'paid') {
-      orderStatus = 'shipped';
-    } else if (mappedStatus === 'delivered') {
-      orderStatus = 'delivered';
+    if (mappedStatus === 'shipped' && orderStatus === 'paid') orderStatus = 'shipped';
+    if (mappedStatus === 'delivered') orderStatus = 'delivered';
+    if (mappedStatus === 'cancelled' && orderStatus !== 'delivered') orderStatus = 'cancelled';
+
+    await orderDoc.ref.update({ shipping: updatedShipping, status: orderStatus, updatedAt: new Date() });
+
+    let trackingEmailSent = false;
+    const canSendTrackingEmail = orderData.customer?.email
+      && !currentShipping.trackingEmailSentAt
+      && (updatedShipping.trackingNumber || updatedShipping.trackingUrl);
+
+    if (canSendTrackingEmail) {
+      const emailResult = await sendOrderEmail({
+        type: 'shipping_tracking',
+        order: { id: orderId, ...orderData, shipping: updatedShipping },
+        recipientEmail: orderData.customer.email,
+        recipientName: `${orderData.customer.firstName || ''} ${orderData.customer.lastName || ''}`.trim(),
+        trackingNumber: updatedShipping.trackingNumber,
+        trackingUrl: updatedShipping.trackingUrl,
+        carrier: updatedShipping.carrier,
+        env: process.env,
+      });
+      trackingEmailSent = emailResult.ok;
+      if (emailResult.ok) {
+        updatedShipping.trackingEmailSentAt = new Date().toISOString();
+        await orderDoc.ref.update({ shipping: updatedShipping });
+      }
     }
 
-    await orderDoc.ref.update({
-      shipping: updatedShipping,
-      status: orderStatus,
-      updatedAt: new Date(),
-    });
-
-    console.log(`[Sendcloud Webhook] Order ${orderId} updated: shipping.status=${mappedStatus}, order.status=${orderStatus}`);
-
-    return res.status(200).json({
-      received: true,
-      orderId,
-      shipmentId: String(shipmentId),
-      status: mappedStatus,
-      trackingNumber,
-    });
+    return res.status(200).json({ received: true, orderId, shipmentId, parcelId, status: mappedStatus, trackingNumber, trackingEmailSent });
   } catch (err) {
     console.error('[Sendcloud Webhook] Error:', err);
     return res.status(200).json({ received: true, error: err.message });

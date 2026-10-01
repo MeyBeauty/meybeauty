@@ -5,8 +5,7 @@ import { useCatalog } from '../context/CatalogContext.jsx';
 import { useCart } from '../context/CartContext.jsx';
 
 const IMAGES = {
-  arch:
-    'https://amiy.wpenginepowered.com/wp-content/uploads/2023/10/product-with-img-1.webp',
+  arch: '/produits/spray-bronzant-intense.jpg',
 };
 
 // Product ID for the featured product (Spray bronzant intense - not in popular products)

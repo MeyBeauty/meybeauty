@@ -3,6 +3,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  increment,
   limit,
   onSnapshot,
   orderBy,
@@ -46,6 +47,31 @@ export async function upsertProduct(product) {
 
 export async function deleteProduct(id) {
   await deleteDoc(doc(db, 'products', id));
+}
+
+// Automatically decrement stock when order is placed
+export async function decrementProductStock(items) {
+  if (!Array.isArray(items) || items.length === 0) return;
+  await Promise.all(
+    items.map(async (item) => {
+      try {
+        const pId = String(item.productId || '').trim();
+        if (!pId) return;
+        const ref = doc(db, 'products', pId);
+        const qty = Number(item.quantity) || 1;
+        await setDoc(
+          ref,
+          {
+            stock: increment(-qty),
+            updatedAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+      } catch (err) {
+        console.error('[decrementProductStock] Error for product:', item.productId, err);
+      }
+    })
+  );
 }
 
 export function listenPosts(onData, onError) {

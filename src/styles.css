@@ -563,6 +563,22 @@ a { text-decoration: none; color: inherit; }
   font-size: 12px;
 }
 
+.status-badge.shipped {
+  color: #065f46;
+  background: #d1fae5;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.status-badge.delivered {
+  color: #3730a3;
+  background: #e0e7ff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
 .status-badge.cancelled {
   color: #dc2626;
   background: #fee2e2;
@@ -5674,6 +5690,17 @@ a { text-decoration: none; color: inherit; }
   font-size: 13px;
 }
 
+.admin-page .admin-inline-error {
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #e7c3bd;
+  background: #fdf2f1;
+  color: #991b1b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
 .admin-page .admin-stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -8691,13 +8718,41 @@ a { text-decoration: none; color: inherit; }
   }
 }
 
-/* Order Success - Elegant Mey Beauty Style */
+/* Order processing / success - Elegant Mey Beauty Style */
+.cart-order-processing,
 .cart-order-success {
   text-align: center;
   padding: 28px 20px;
   background: var(--nude-lighter);
   border-radius: 10px;
   border: 1px solid var(--nude);
+}
+
+.cart-processing-spinner {
+  width: 46px;
+  height: 46px;
+  display: inline-block;
+  margin-bottom: 16px;
+  border: 3px solid rgba(82, 58, 40, 0.18);
+  border-top-color: var(--brun);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+.cart-order-processing h3 {
+  font-family: var(--font-titre);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--brun);
+  margin-bottom: 10px;
+}
+
+.cart-order-processing p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--brun-medium);
+  margin: 0 auto;
+  max-width: 280px;
 }
 
 .cart-success-icon {
@@ -10526,6 +10581,14 @@ a { text-decoration: none; color: inherit; }
   background: rgba(196,163,90,0.06);
   box-shadow: 0 4px 16px rgba(26,20,16,0.08);
 }
+.shipping-option-card.unavailable {
+  opacity: 0.58;
+  cursor: not-allowed;
+}
+.shipping-option-card.unavailable:hover {
+  border-color: var(--gris-border);
+  box-shadow: none;
+}
 .shipping-option-card input[type="radio"] {
   position: absolute;
   opacity: 0;
@@ -10666,6 +10729,10 @@ a { text-decoration: none; color: inherit; }
   transition: background var(--transition);
 }
 .admin-label-btn:hover { background: var(--brun-dark); }
+.admin-label-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
 .admin-label-btn.secondary {
   background: transparent;
   color: var(--brun);
@@ -10673,6 +10740,9 @@ a { text-decoration: none; color: inherit; }
 }
 .admin-label-btn.secondary:hover {
   background: rgba(196,163,90,0.08);
+}
+.admin-refresh-tracking-btn {
+  margin: 8px 0 12px;
 }
 .admin-pdf-viewer {
   width: 100%;
@@ -10723,6 +10793,271 @@ a { text-decoration: none; color: inherit; }
   border-radius: 4px;
   display: inline-block;
   margin-top: 6px;
+}
+
+/* Admin Cancel Label Button */
+.admin-cancel-label-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #FEF2F2;
+  color: #B91C1C;
+  border: 1px solid #FECACA;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.admin-cancel-label-btn:hover {
+  background: #FEE2E2;
+}
+
+/* Free Shipping Progress Bar */
+.free-shipping-progress-container {
+  background: #FBF8F5;
+  border: 1px solid rgba(196, 163, 90, 0.25);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+.free-shipping-text {
+  font-size: 12.5px;
+  color: var(--noir);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.free-shipping-success {
+  color: #065F46;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.free-shipping-bar-track {
+  width: 100%;
+  height: 6px;
+  background: #EAE3DC;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.free-shipping-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--brun) 0%, #059669 100%);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+.free-shipping-tag {
+  color: #059669;
+  font-weight: 700;
+}
+
+/* Click & Collect and Institute Selector */
+.click-collect-card {
+  border-color: #A7F3D0 !important;
+  background: #F0FDF4 !important;
+}
+.click-collect-card.selected {
+  border-color: #059669 !important;
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.12) !important;
+}
+.shipping-option-price.free {
+  color: #059669 !important;
+  font-weight: 700;
+}
+.pickup-institute-box {
+  background: #F0FDF4;
+  border: 1px solid #A7F3D0;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: -4px;
+  margin-bottom: 8px;
+}
+.pickup-institute-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #065F46;
+  margin-bottom: 8px;
+}
+.pickup-institute-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pickup-institute-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1.5px solid #D1FAE5;
+  border-radius: 6px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.pickup-institute-item input[type="radio"] {
+  display: none;
+}
+.pickup-institute-item.selected {
+  border-color: #059669;
+  background: #ECFDF5;
+}
+.pickup-inst-radio {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #9CA3AF;
+  border-radius: 50%;
+  margin-top: 2px;
+  flex-shrink: 0;
+  position: relative;
+}
+.pickup-institute-item.selected .pickup-inst-radio {
+  border-color: #059669;
+}
+.pickup-institute-item.selected .pickup-inst-radio::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #059669;
+}
+.pickup-inst-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+}
+.pickup-inst-text strong {
+  color: #065F46;
+}
+.pickup-inst-text span {
+  color: #4B5563;
+}
+
+/* Service Point (Point Relais) Picker */
+.service-point-picker-container {
+  background: #FDFBF8;
+  border: 1px solid var(--gris-border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+.service-point-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.service-point-picker-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--brun-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.service-point-loading-text {
+  font-size: 11px;
+  color: var(--brun);
+}
+.service-point-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.service-point-choice-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--gris-border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.service-point-choice-card:hover {
+  border-color: var(--brun);
+}
+.service-point-choice-card.selected {
+  border-color: var(--brun);
+  background: rgba(196, 163, 90, 0.08);
+  box-shadow: 0 2px 8px rgba(26, 20, 16, 0.06);
+}
+.service-point-choice-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.service-point-choice-radio {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #9CA3AF;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--blanc);
+  background: var(--blanc);
+}
+.service-point-choice-radio.checked {
+  border-color: var(--brun);
+  background: var(--brun);
+}
+.service-point-choice-name-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.service-point-choice-name {
+  font-size: 13px;
+  color: var(--noir);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.service-point-locker-badge {
+  background: #E0E7FF;
+  color: #3730A3;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.service-point-choice-dist {
+  font-size: 11px;
+  color: #6B7280;
+  font-weight: 500;
+}
+.service-point-choice-addr {
+  font-size: 11.5px;
+  color: #6B7280;
+  padding-left: 24px;
+}
+.service-point-selected-summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #065F46;
 }
 
 /* Address autocomplete */
@@ -10791,6 +11126,13 @@ a { text-decoration: none; color: inherit; }
 .shipping-badge.label-ready {
   background: #D1FAE5;
   color: #065F46;
+}
+.shipping-badge-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+.shipping-badge-link:hover {
+  filter: brightness(0.96);
 }
 .shipping-badge.pending {
   background: #FEF3C7;

@@ -1,5 +1,5 @@
 const PHOTOS = [
-  'https://amiy.wpenginepowered.com/wp-content/uploads/2023/10/home-1-instagram-1-300x234.webp',
+  '/mey-beauty (1).jpeg',
   'https://images.pexels.com/photos/19101350/pexels-photo-19101350.jpeg',
   'https://images.pexels.com/photos/29745246/pexels-photo-29745246.jpeg',
   'https://images.pexels.com/photos/10460940/pexels-photo-10460940.jpeg',

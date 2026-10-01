@@ -16,6 +16,9 @@ import {
   Sparkles,
   Truck,
   Package,
+  Building,
+  FileText,
+  Check,
 } from 'lucide-react';
 import { getProductById as getLocalProductById, formatPriceEUR } from '../data/products.js';
 import { useCart } from '../context/CartContext.jsx';
@@ -23,16 +26,19 @@ import { useCatalog } from '../context/CatalogContext.jsx';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardPaymentForm } from '../components/StripeCardForm.jsx';
-import { createOrder } from '../firebase/collections.js';
+import { createOrder, decrementProductStock } from '../firebase/collections.js';
 import SEO from '../components/SEO.jsx';
 
 // Initialize Stripe with publishable key
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
+const FREE_SHIPPING_THRESHOLD_CENTS = 6000; // 60,00 € for free shipping
+
 export default function CartPage() {
   const { items, removeItem, setQuantity, clearCart } = useCart();
   const { getProductById: getCatalogProductById, loading: catalogLoading } = useCatalog();
   const [orderComplete, setOrderComplete] = useState(false);
+  const [orderFinalizing, setOrderFinalizing] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [paidAmount, setPaidAmount] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
@@ -42,6 +48,8 @@ export default function CartPage() {
     email: '',
     phone: '',
     address: '',
+    addressComplement: '',
+    deliveryNotes: '',
     city: '',
     postalCode: ''
   });
@@ -106,7 +114,10 @@ export default function CartPage() {
       return;
     }
     const finalAmount = amount || totalCents;
+    const processingStartedAt = Date.now();
     setPaidAmount(finalAmount);
+    setOrderFinalizing(true);
+    setIsProcessing(true);
 
     // Create order in Firebase
     try {
@@ -117,6 +128,8 @@ export default function CartPage() {
           email: customerInfo.email || '',
           phone: customerInfo.phone || '',
           address: customerInfo.address || '',
+          addressComplement: customerInfo.addressComplement || '',
+          deliveryNotes: customerInfo.deliveryNotes || '',
           city: customerInfo.city || '',
           postalCode: customerInfo.postalCode || ''
         },
@@ -136,20 +149,68 @@ export default function CartPage() {
           shippingOptionCode: shippingInfo.shippingOptionCode,
           name: shippingInfo.name,
           carrier: shippingInfo.carrier,
+          carrierCode: shippingInfo.carrierCode || '',
+          deliveryMethod: shippingInfo.deliveryMethod || '',
+          isServicePoint: !!shippingInfo.isServicePoint,
           priceCents: shippingInfo.priceCents,
+          servicePoint: shippingInfo.servicePoint || null,
+          pickupLocation: shippingInfo.pickupLocation || null,
           status: 'pending',
         } : null,
         createdAt: new Date().toISOString(),
       };
 
-      await createOrder(orderData);
+      const saved = await createOrder(orderData);
       console.log('[Order] Order saved successfully');
+
+      // 1. Decrement product stock in Firestore
+      try {
+        await decrementProductStock(orderData.items);
+      } catch (stockErr) {
+        console.warn('[Order] Stock decrement failed:', stockErr);
+      }
+
+      // 2. Send automatic confirmation email to customer
+      try {
+        await fetch('/api/send-order-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'order_confirmation',
+            order: saved || orderData,
+            recipientEmail: customerInfo.email,
+            recipientName: `${customerInfo.firstName || ''} ${customerInfo.lastName || ''}`.trim(),
+          }),
+        });
+      } catch (emailErr) {
+        console.warn('[Order] Customer confirmation email failed:', emailErr);
+      }
+
+      // 3. Send instant notification email to Admin(s)
+      try {
+        await fetch('/api/send-order-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'admin_order_notification',
+            order: saved || orderData,
+          }),
+        });
+      } catch (adminEmailErr) {
+        console.warn('[Order] Admin order alert email failed:', adminEmailErr);
+      }
     } catch (err) {
       console.error('[Order] Failed to save order:', err);
     }
 
+    const elapsed = Date.now() - processingStartedAt;
+    if (elapsed < 900) {
+      await new Promise((resolve) => setTimeout(resolve, 900 - elapsed));
+    }
+
     setOrderComplete(true);
     clearCart();
+    setOrderFinalizing(false);
     setIsProcessing(false);
   }, [clearCart, totalCents, lines, subtotalCents, shippingCents, shippingInfo]);
 
@@ -308,7 +369,16 @@ export default function CartPage() {
               <span>{formatPriceEUR(totalCents)}</span>
             </div>
 
-            {orderComplete ? (
+            {orderFinalizing ? (
+              <div className="cart-order-processing" aria-live="polite">
+                <span className="cart-processing-spinner" aria-hidden="true" />
+                <h3>Finalisation de votre commande…</h3>
+                <p>
+                  Nous enregistrons votre commande et préparons vos confirmations.
+                  Merci de ne pas fermer cette page.
+                </p>
+              </div>
+            ) : orderComplete ? (
               <div className="cart-order-success">
                 <div className="cart-success-icon">
                   <CheckCircle size={32} strokeWidth={2} />
@@ -389,6 +459,9 @@ function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, cus
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [deliveryLoading, setDeliveryLoading] = useState(false);
   const [deliveryError, setDeliveryError] = useState('');
+  const [servicePoints, setServicePoints] = useState([]);
+  const [servicePointsLoading, setServicePointsLoading] = useState(false);
+  const [servicePointsError, setServicePointsError] = useState('');
   const [addressSuggestions, setAddressSuggestions] = useState([]);
   const [showAddressSuggestions, setShowAddressSuggestions] = useState(false);
   const [addressSearchTimeout, setAddressSearchTimeout] = useState(null);
@@ -400,6 +473,9 @@ function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, cus
 
   const amountEuros = (amount / 100).toFixed(2);
   const paypalClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
+
+  // Free shipping booster temporarily disabled (kept for future version)
+  const isFreeShipping = false;
 
   useEffect(() => {
     customerInfoRef.current = customerInfo;
@@ -436,7 +512,34 @@ function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, cus
     setStep('shipping');
   };
 
-  // Fetch delivery options from Sendcloud via Netlify function
+  const isServicePointOption = useCallback((opt) => {
+    if (!opt) return false;
+    const code = String(opt.shippingOptionCode || '').toLowerCase();
+    const method = String(opt.deliveryMethod || '').toLowerCase();
+    const optionCode = code.includes(':') ? code.split(':').slice(1).join(':') : code;
+    return optionCode.includes('service_point') || optionCode.includes('post-office') || optionCode.includes('locker_delivery') || optionCode.includes('relay') || method.includes('service_point');
+  }, []);
+
+  // Fetch service points (relais) for chosen carrier & postal code
+  const fetchServicePoints = useCallback(async (carrier, postalCode) => {
+    if (!postalCode) return;
+    setServicePointsLoading(true);
+    setServicePointsError('');
+    try {
+      const resp = await fetch(`/api/sendcloud-service-points?postalCode=${encodeURIComponent(postalCode)}&carrier=${encodeURIComponent(carrier || '')}`);
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.error || 'Erreur lors du chargement des points relais');
+      setServicePoints(data.points || []);
+    } catch (err) {
+      console.error('[ServicePoints] error:', err);
+      setServicePointsError(err.message);
+      setServicePoints([]);
+    } finally {
+      setServicePointsLoading(false);
+    }
+  }, []);
+
+  // Fetch delivery options from Sendcloud via Netlify / Vercel API
   const fetchDeliveryOptions = useCallback(async () => {
     setDeliveryLoading(true);
     setDeliveryError('');
@@ -473,6 +576,64 @@ function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, cus
       fetchDeliveryOptions();
     }
   }, [step, deliveryOptions.length, deliveryLoading, deliveryError, fetchDeliveryOptions]);
+
+  const handleShippingOptionSelect = (opt) => {
+    if (opt.price == null && !isFreeShipping) {
+      setErrorMsg('Le tarif de cette livraison n’est pas encore configuré dans Sendcloud.');
+      return;
+    }
+
+    const rawPriceCents = opt.price != null ? Math.round(opt.price * 100) : 0;
+    const finalPriceCents = isFreeShipping ? 0 : rawPriceCents;
+    const isRelais = isServicePointOption(opt);
+    setErrorMsg('');
+
+    setShippingInfo({
+      shippingOptionCode: opt.shippingOptionCode,
+      name: opt.name,
+      carrier: opt.carrier,
+      carrierCode: opt.carrierCode,
+      deliveryMethod: opt.deliveryMethod || '',
+      priceCents: finalPriceCents,
+      isServicePoint: isRelais,
+      servicePoint: null,
+      pickupLocation: null,
+    });
+
+    if (isRelais) {
+      const info = customerInfoRef.current;
+      fetchServicePoints(opt.carrierCode || opt.carrier, info.postalCode);
+    }
+  };
+
+  const handlePickupStoreSelect = (location) => {
+    setShippingInfo({
+      shippingOptionCode: 'pickup:store',
+      name: 'Retrait en Institut (Click & Collect)',
+      carrier: 'Mey Beauty',
+      priceCents: 0,
+      isServicePoint: false,
+      servicePoint: null,
+      pickupLocation: location,
+    });
+  };
+
+  const handleShippingSubmit = () => {
+    if (!shippingInfo) {
+      setErrorMsg('Veuillez choisir un mode de livraison.');
+      return;
+    }
+    if (shippingInfo.shippingOptionCode === 'pickup:store' && !shippingInfo.pickupLocation) {
+      setErrorMsg('Veuillez sélectionner votre institut de retrait.');
+      return;
+    }
+    if (shippingInfo.isServicePoint && !shippingInfo.servicePoint) {
+      setErrorMsg('Veuillez sélectionner votre point relais / consigne dans la liste ci-dessous.');
+      return;
+    }
+    setErrorMsg('');
+    setStep('payment');
+  };
 
   const updateField = (field, value) => {
     setCustomerInfo(prev => ({ ...prev, [field]: value }));
@@ -796,6 +957,32 @@ function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, cus
                     className="cart-form-input cart-form-input-postal"
                   />
                 </div>
+
+                <div className="cart-form-row">
+                  <div className="cart-input-group cart-input-group-full">
+                    <Building size={15} className="cart-input-icon" />
+                    <input
+                      type="text"
+                      placeholder="Complément d'adresse (Bâtiment, étage, digicode, apt...)"
+                      value={customerInfo.addressComplement || ''}
+                      onChange={(e) => updateField('addressComplement', e.target.value)}
+                      className="cart-form-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="cart-form-row">
+                  <div className="cart-input-group cart-input-group-full">
+                    <FileText size={15} className="cart-input-icon" />
+                    <input
+                      type="text"
+                      placeholder="Instructions de livraison (ex: laisser au gardien...)"
+                      value={customerInfo.deliveryNotes || ''}
+                      onChange={(e) => updateField('deliveryNotes', e.target.value)}
+                      className="cart-form-input"
+                    />
+                  </div>
+                </div>
               </div>
 
               <button
@@ -826,38 +1013,98 @@ function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, cus
                 </div>
               )}
 
-              {!deliveryLoading && !deliveryError && deliveryOptions.length === 0 && (
-                <div className="cart-pay-alert cart-pay-alert-warning">
-                  Aucune option de livraison trouvée pour cette adresse.
-                </div>
-              )}
+              <div className="shipping-options-list">
+                {/* 1. Click & Collect (Retrait en Institut Gratuit) */}
+                <label
+                  className={`shipping-option-card click-collect-card${shippingInfo?.shippingOptionCode === 'pickup:store' ? ' selected' : ''}`}
+                >
+                  <input
+                    type="radio"
+                    name="shipping-option"
+                    value="pickup:store"
+                    checked={shippingInfo?.shippingOptionCode === 'pickup:store'}
+                    onChange={() => handlePickupStoreSelect(selectedPickupInstitute)}
+                  />
+                  <span className="shipping-option-radio" />
+                  <span className="shipping-option-content">
+                    <span className="shipping-option-header">
+                      <span className="shipping-option-name">Retrait en Institut (Click & Collect)</span>
+                      <span className="shipping-option-price free">Gratuit</span>
+                    </span>
+                    <span className="shipping-option-meta">
+                      <span className="shipping-option-carrier">Mey Beauty • Viry-Châtillon</span>
+                      <span className="shipping-option-delay">Prêt sous 2h</span>
+                    </span>
+                  </span>
+                </label>
 
-              {!deliveryLoading && deliveryOptions.length > 0 && (
-                <div className="shipping-options-list">
-                  {deliveryOptions.map((opt) => {
-                    const isSelected = shippingInfo?.shippingOptionCode === opt.shippingOptionCode;
-                    const priceCents = opt.price != null ? Math.round(opt.price * 100) : null;
-                    const leadTimeText = opt.leadTimeHours
-                      ? (opt.leadTimeHours >= 24
-                          ? `~${Math.ceil(opt.leadTimeHours / 24)} jour(s)`
-                          : `~${opt.leadTimeHours}h`)
-                      : null;
-                    return (
+                {/* Institute selector if Click & Collect is selected */}
+                {shippingInfo?.shippingOptionCode === 'pickup:store' && (
+                  <div className="pickup-institute-box">
+                    <p className="pickup-institute-title">Choisissez votre institut de retrait :</p>
+                    <div className="pickup-institute-list">
+                      <label className={`pickup-institute-item${shippingInfo.pickupLocation === 'Mey Beauty — Place du Marché' ? ' selected' : ''}`}>
+                        <input
+                          type="radio"
+                          name="pickup-inst-choice"
+                          checked={shippingInfo.pickupLocation === 'Mey Beauty — Place du Marché'}
+                          onChange={() => {
+                            setSelectedPickupInstitute('Mey Beauty — Place du Marché');
+                            handlePickupStoreSelect('Mey Beauty — Place du Marché');
+                          }}
+                        />
+                        <span className="pickup-inst-radio" />
+                        <div className="pickup-inst-text">
+                          <strong>Mey Beauty — Place du Marché</strong>
+                          <span>6 Place des Martyrs de Châteaubriand, 91170 Viry-Châtillon</span>
+                        </div>
+                      </label>
+                      <label className={`pickup-institute-item${shippingInfo.pickupLocation === 'Mey Beauty — Boulevard Gabriel Péri' ? ' selected' : ''}`}>
+                        <input
+                          type="radio"
+                          name="pickup-inst-choice"
+                          checked={shippingInfo.pickupLocation === 'Mey Beauty — Boulevard Gabriel Péri'}
+                          onChange={() => {
+                            setSelectedPickupInstitute('Mey Beauty — Boulevard Gabriel Péri');
+                            handlePickupStoreSelect('Mey Beauty — Boulevard Gabriel Péri');
+                          }}
+                        />
+                        <span className="pickup-inst-radio" />
+                        <div className="pickup-inst-text">
+                          <strong>Mey Beauty — Boulevard Gabriel Péri</strong>
+                          <span>Boulevard Gabriel Péri, 91170 Viry-Châtillon</span>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                )}
+
+                {/* 2. Sendcloud Delivery Options */}
+                {!deliveryLoading && deliveryOptions.length > 0 && deliveryOptions.map((opt) => {
+                  const isSelected = shippingInfo?.shippingOptionCode === opt.shippingOptionCode;
+                  const isRelais = isServicePointOption(opt);
+                  const rawPriceCents = opt.price != null ? Math.round(opt.price * 100) : null;
+                  const priceCents = isFreeShipping ? 0 : rawPriceCents;
+                  const isUnavailable = opt.price == null && !isFreeShipping;
+                  const leadTimeText = opt.leadTimeHours
+                    ? (opt.leadTimeHours >= 24
+                        ? `~${Math.ceil(opt.leadTimeHours / 24)} jour(s)`
+                        : `~${opt.leadTimeHours}h`)
+                    : null;
+
+                  return (
+                    <div key={opt.shippingOptionCode} className="shipping-option-item-group">
                       <label
-                        key={opt.shippingOptionCode}
-                        className={`shipping-option-card${isSelected ? ' selected' : ''}`}
+                        className={`shipping-option-card${isSelected ? ' selected' : ''}${isUnavailable ? ' unavailable' : ''}`}
+                        title={isUnavailable ? 'Tarif à configurer dans Sendcloud' : undefined}
                       >
                         <input
                           type="radio"
                           name="shipping-option"
                           value={opt.shippingOptionCode}
                           checked={isSelected}
-                          onChange={() => setShippingInfo({
-                            shippingOptionCode: opt.shippingOptionCode,
-                            name: opt.name,
-                            carrier: opt.carrier,
-                            priceCents: priceCents || 0,
-                          })}
+                          disabled={isUnavailable}
+                          onChange={() => handleShippingOptionSelect(opt)}
                         />
                         <span className="shipping-option-radio" />
                         {opt.logoUrl && (
@@ -867,9 +1114,13 @@ function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, cus
                           <span className="shipping-option-header">
                             <span className="shipping-option-name">{opt.name}</span>
                             <span className="shipping-option-price">
-                              {priceCents != null
-                                ? (priceCents > 0 ? formatPriceEUR(priceCents) : 'Gratuit')
-                                : 'À calculer'}
+                              {isFreeShipping ? (
+                                <span className="free-shipping-tag">Offert</span>
+                              ) : priceCents != null ? (
+                                priceCents > 0 ? formatPriceEUR(priceCents) : 'Gratuit'
+                              ) : (
+                                'Tarif indisponible'
+                              )}
                             </span>
                           </span>
                           <span className="shipping-option-meta">
@@ -882,10 +1133,83 @@ function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, cus
                           </span>
                         </span>
                       </label>
-                    );
-                  })}
-                </div>
-              )}
+
+                      {/* Service Point (Point Relais) Picker when this option is selected */}
+                      {isSelected && isRelais && (
+                        <div className="service-point-picker-container">
+                          <div className="service-point-picker-header">
+                            <span className="service-point-picker-title">
+                              <MapPin size={15} /> Points relais / consignes à proximité ({customerInfo.postalCode || '91170'}) :
+                            </span>
+                            {servicePointsLoading && <span className="service-point-loading-text">Recherche…</span>}
+                          </div>
+
+                          {servicePointsError && (
+                            <div className="cart-pay-alert cart-pay-alert-warning">{servicePointsError}</div>
+                          )}
+
+                          {!servicePointsLoading && servicePoints.length === 0 && !servicePointsError && (
+                            <p className="service-point-empty">Aucun point relais trouvé pour ce code postal.</p>
+                          )}
+
+                          {!servicePointsLoading && servicePoints.length > 0 && (
+                            <div className="service-point-cards-grid">
+                              {servicePoints.slice(0, 6).map((pt) => {
+                                const isPtSelected = shippingInfo.servicePoint?.id === pt.id;
+                                return (
+                                  <div
+                                    key={pt.id}
+                                    className={`service-point-choice-card${isPtSelected ? ' selected' : ''}`}
+                                    onClick={() => setShippingInfo(prev => ({
+                                      ...prev,
+                                      servicePoint: {
+                                        id: pt.id,
+                                        code: pt.code,
+                                        name: pt.name,
+                                        address: pt.address,
+                                        postalCode: pt.postalCode,
+                                        city: pt.city,
+                                        carrier: pt.carrier,
+                                      }
+                                    }))}
+                                  >
+                                    <div className="service-point-choice-top">
+                                      <div className={`service-point-choice-radio${isPtSelected ? ' checked' : ''}`}>
+                                        {isPtSelected && <Check size={11} strokeWidth={3} />}
+                                      </div>
+                                      <div className="service-point-choice-name-wrap">
+                                        <strong className="service-point-choice-name">{pt.name}</strong>
+                                        {pt.isLocker && <span className="service-point-locker-badge">Consigne 24/7</span>}
+                                      </div>
+                                      {pt.distanceMeters && (
+                                        <span className="service-point-choice-dist">
+                                          {pt.distanceMeters < 1000 ? `${pt.distanceMeters} m` : `${(pt.distanceMeters / 1000).toFixed(1)} km`}
+                                        </span>
+                                      )}
+                                    </div>
+                                    <div className="service-point-choice-addr">
+                                      {pt.address}, {pt.postalCode} {pt.city}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+
+                          {shippingInfo.servicePoint && (
+                            <div className="service-point-selected-summary">
+                              <CheckCircle size={15} color="#065F46" />
+                              <span>
+                                Relais sélectionné : <strong>{shippingInfo.servicePoint.name}</strong> ({shippingInfo.servicePoint.address}, {shippingInfo.servicePoint.city})
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
 
               <div className="shipping-actions">
                 <button
@@ -899,7 +1223,7 @@ function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, cus
                 <button
                   type="button"
                   className="cart-pay-main-btn"
-                  onClick={() => setStep('payment')}
+                  onClick={handleShippingSubmit}
                   disabled={isProcessing || !shippingInfo}
                 >
                   Continuer vers le paiement

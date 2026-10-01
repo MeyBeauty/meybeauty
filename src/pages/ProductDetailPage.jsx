@@ -60,7 +60,8 @@ function DealTimer({ endsAt }) {
 }
 
 const premiumDetails = "Parce que chaque peau est unique, les résultats s'adaptent à votre épiderme. Pour une expérience sur-mesure en toute sérénité, nous vous conseillons d'effectuer un test de tolérance sur le poignet si vous avez la peau particulièrement sensible.";
-const premiumDelivery = "Recevez votre rituel beauté directement chez vous en un clic. Notre service client est à votre entière disposition pour vous guider à chaque étape de votre commande et faciliter vos retours.";
+const legacyDelivery = "Recevez votre rituel beauté directement chez vous en un clic. Notre service client est à votre entière disposition pour vous guider à chaque étape de votre commande et faciliter vos retours.";
+const premiumDelivery = "Livraison en France via Chronopost, Colissimo ou Mondial Relay selon l’option choisie lors du paiement. Les points relais sont disponibles lorsque le transporteur les propose. Le retrait Click & Collect est gratuit dans nos instituts de Viry-Châtillon et un email de suivi vous est envoyé dès la génération de l’étiquette. Pour un retour, contactez notre équipe sous 14 jours après réception : le produit doit être neuf, non ouvert et dans son emballage d’origine.";
 
 function AccordionItem({ title, children, defaultOpen }) {
   const [open, setOpen] = useState(Boolean(defaultOpen));
@@ -399,7 +400,7 @@ export default function ProductDetailPage() {
                 </ul>
               </AccordionItem>
               <AccordionItem title="Livraison & retours">
-                <p>{product.delivery || premiumDelivery}</p>
+                <p>{product.delivery && product.delivery !== legacyDelivery ? product.delivery : premiumDelivery}</p>
               </AccordionItem>
             </div>
           </div>

@@ -1,8 +1,25 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { listenOrders, updateOrderStatus, updateOrderShipping, deleteOrder } from '../firebase/collections.js';
+import { auth } from '../firebase/firebase.js';
 import { formatPriceEUR } from '../data/products.js';
 import { useToast } from '../context/ToastContext.jsx';
-import { Package, Search, X, Eye, Trash2, Calendar, CreditCard, User, ShoppingBag, Download, CheckCircle, Clock, Truck, FileText, ExternalLink } from 'lucide-react';
+import { Package, Search, X, Eye, Trash2, Calendar, CreditCard, User, ShoppingBag, Download, Printer, RefreshCw, CheckCircle, Clock, Truck, FileText, ExternalLink } from 'lucide-react';
+
+const getOrderLabelUrl = (order) => order?.shipping?.labelUrl
+  || (order?.shipping?.parcelId ? `/api/sendcloud-label?parcelId=${order.shipping.parcelId}` : null);
+
+const getOrderLabelDownloadUrl = (order) => {
+  const labelUrl = getOrderLabelUrl(order);
+  return labelUrl?.startsWith('/api/sendcloud-label') ? `${labelUrl}&download=1` : labelUrl;
+};
+
+const getAdminHeaders = async () => {
+  const token = await auth.currentUser?.getIdToken();
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+};
 
 export default function AdminOrders() {
   const { showToast } = useToast();
@@ -26,6 +43,11 @@ export default function AdminOrders() {
   });
   const [labelLoading, setLabelLoading] = useState(false);
 
+  const syncOrderShipping = (orderId, shipping) => {
+    setOrders((prev) => prev.map((item) => item.id === orderId ? { ...item, shipping } : item));
+    setSelectedOrder((prev) => prev?.id === orderId ? { ...prev, shipping } : prev);
+  };
+
   const handleGenerateLabel = async (order, testMode = false) => {
     if (!order.shipping?.shippingOptionCode) {
       showToast('Aucune option de livraison sur cette commande', 'error');
@@ -42,14 +64,30 @@ export default function AdminOrders() {
       showToast('Adresse client incomplète', 'error');
       return;
     }
-    
+
+    const optionCode = String(order.shipping.shippingOptionCode || '').toLowerCase();
+    const servicePointId = order.shipping.servicePoint?.id || null;
+    const isServicePointMethod = order.shipping.isServicePoint === true
+      || /service_point|post-office|locker_delivery/.test(optionCode);
+
+    if (!testMode && servicePointId && !isServicePointMethod) {
+      showToast('Cette méthode de livraison ne supporte pas les points relais', 'error');
+      return;
+    }
+
+    if (!testMode && isServicePointMethod && !servicePointId) {
+      showToast('Point relais manquant sur cette commande', 'error');
+      return;
+    }
+
     setLabelLoading(true);
     try {
       const resp = await fetch('/api/sendcloud-create-shipment', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: await getAdminHeaders(),
         body: JSON.stringify({
           shippingOptionCode: order.shipping.shippingOptionCode,
+          servicePointId: testMode ? null : servicePointId,
           testMode,
           recipient: {
             firstName: order.customer?.firstName || '',
@@ -72,7 +110,10 @@ export default function AdminOrders() {
       const data = await resp.json();
       if (!resp.ok) {
         console.error('[Admin] Sendcloud shipment error:', data);
-        const errorDetail = data.details?.[0]?.detail || data.error || 'Erreur génération étiquette';
+        const errorDetail = data.details?.[0]?.detail
+          || data.raw?.errors?.[0]?.detail
+          || data.error
+          || 'Erreur génération étiquette';
         throw new Error(errorDetail);
       }
 
@@ -83,16 +124,225 @@ export default function AdminOrders() {
         testMode: data.testMode || false,
       };
       if (data.shipmentId) shippingUpdate.sendcloudShipmentId = data.shipmentId;
-      if (data.labelUrl) shippingUpdate.labelUrl = data.labelUrl;
+      if (data.parcelId) shippingUpdate.parcelId = data.parcelId;
+      if (data.labelUrl || data.parcelId) {
+        shippingUpdate.labelUrl = data.labelUrl || `/api/sendcloud-label?parcelId=${data.parcelId}`;
+      }
       if (data.trackingNumber) shippingUpdate.trackingNumber = data.trackingNumber;
       if (data.trackingUrl) shippingUpdate.trackingUrl = data.trackingUrl;
 
       await updateOrderShipping(order.id, shippingUpdate);
 
-      showToast(testMode ? 'Étiquette de test générée' : 'Étiquette générée avec succès', 'success');
-      setSelectedOrder((prev) => prev ? { ...prev, shipping: { ...prev.shipping, sendcloudShipmentId: data.shipmentId, labelUrl: data.labelUrl, trackingNumber: data.trackingNumber, trackingUrl: data.trackingUrl, status: 'label_created', testMode: data.testMode } } : prev);
+      // Trigger automatic shipping tracking notification email
+      const trackingAvailable = !!(data.trackingNumber || data.trackingUrl);
+      let emailSent = false;
+      let finalShippingUpdate = shippingUpdate;
+      if (order.customer?.email && trackingAvailable) {
+        try {
+          const emailResp = await fetch('/api/send-order-email', {
+            method: 'POST',
+            headers: await getAdminHeaders(),
+            body: JSON.stringify({
+              type: 'shipping_tracking',
+              order: { ...order, shipping: shippingUpdate },
+              recipientEmail: order.customer.email,
+              recipientName: `${order.customer.firstName || ''} ${order.customer.lastName || ''}`.trim(),
+              trackingNumber: data.trackingNumber,
+              trackingUrl: data.trackingUrl,
+              carrier: order.shipping?.carrier,
+            }),
+          });
+          emailSent = emailResp.ok;
+          if (emailSent) {
+            finalShippingUpdate = {
+              ...shippingUpdate,
+              trackingEmailSentAt: new Date().toISOString(),
+            };
+            await updateOrderShipping(order.id, finalShippingUpdate);
+          }
+        } catch (emailErr) {
+          console.warn('[Admin] Tracking email error:', emailErr);
+        }
+      }
+
+      showToast(testMode
+        ? 'Étiquette de test générée'
+        : emailSent
+          ? 'Étiquette générée avec succès (email de suivi envoyé)'
+          : 'Étiquette générée avec succès', 'success');
+      syncOrderShipping(order.id, finalShippingUpdate);
     } catch (err) {
       console.error('[Label] error:', err);
+      showToast('Erreur: ' + err.message, 'error');
+    } finally {
+      setLabelLoading(false);
+    }
+  };
+
+  const handleCancelLabel = async (order) => {
+    if (!order.shipping?.sendcloudShipmentId && !order.shipping?.parcelId) {
+      showToast('Aucune expédition à annuler sur cette commande', 'error');
+      return;
+    }
+    if (!window.confirm('Êtes-vous sûr de vouloir annuler cette étiquette d’expédition Sendcloud ?')) {
+      return;
+    }
+    setLabelLoading(true);
+    try {
+      const resp = await fetch('/api/sendcloud-cancel-shipment', {
+        method: 'POST',
+        headers: await getAdminHeaders(),
+        body: JSON.stringify({
+          parcelId: order.shipping?.parcelId,
+          shipmentId: order.shipping?.sendcloudShipmentId,
+        }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.error || 'Erreur annulation étiquette');
+
+      const updatedShipping = {
+        ...order.shipping,
+        status: 'cancelled',
+        labelUrl: null,
+      };
+      await updateOrderShipping(order.id, updatedShipping);
+      showToast('Étiquette annulée avec succès', 'success');
+      syncOrderShipping(order.id, updatedShipping);
+    } catch (err) {
+      console.error('[Admin] Cancel shipment error:', err);
+      showToast('Erreur: ' + err.message, 'error');
+    } finally {
+      setLabelLoading(false);
+    }
+  };
+
+  const handlePrintLabel = async (order) => {
+    const labelUrl = order.shipping?.labelUrl
+      || (order.shipping?.parcelId ? `/api/sendcloud-label?parcelId=${order.shipping.parcelId}` : null);
+    if (!labelUrl) {
+      showToast('Aucune étiquette disponible à imprimer', 'error');
+      return;
+    }
+
+    const printWindow = window.open('', '_blank', 'width=900,height=700');
+    if (!printWindow) {
+      showToast('Autorisez les fenêtres pop-up pour imprimer l’étiquette', 'error');
+      return;
+    }
+
+    printWindow.document.write('<p style="font-family:Arial,sans-serif;padding:24px;">Préparation de l’étiquette…</p>');
+    printWindow.document.close();
+    setLabelLoading(true);
+
+    try {
+      const response = await fetch(labelUrl);
+      if (!response.ok) throw new Error(`Impossible de charger l’étiquette (${response.status})`);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+
+      printWindow.document.open();
+      printWindow.document.write(`
+        <!doctype html>
+        <html lang="fr">
+          <head>
+            <title>Étiquette d’expédition</title>
+            <style>
+              html, body { margin: 0; height: 100%; }
+              iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+            </style>
+          </head>
+          <body>
+            <iframe id="label-frame" src="${blobUrl}" title="Étiquette d’expédition"></iframe>
+            <script>
+              const frame = document.getElementById('label-frame');
+              frame.addEventListener('load', function () {
+                setTimeout(function () {
+                  try {
+                    frame.contentWindow.focus();
+                    frame.contentWindow.print();
+                  } catch (error) {
+                    window.focus();
+                    window.print();
+                  }
+                }, 500);
+              });
+            <\/script>
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 120000);
+      showToast('Impression de l’étiquette lancée', 'success');
+    } catch (err) {
+      console.error('[Admin] Print label error:', err);
+      printWindow.location.href = labelUrl;
+      showToast('PDF ouvert dans un nouvel onglet — utilisez Ctrl+P pour imprimer', 'info');
+    } finally {
+      setLabelLoading(false);
+    }
+  };
+
+  const handleRefreshTracking = async (order) => {
+    const shipmentId = order.shipping?.sendcloudShipmentId;
+    if (!shipmentId) {
+      showToast('Aucun identifiant Sendcloud sur cette commande', 'error');
+      return;
+    }
+
+    setLabelLoading(true);
+    try {
+      const resp = await fetch('/api/sendcloud-refresh-shipment', {
+        method: 'POST',
+        headers: await getAdminHeaders(),
+        body: JSON.stringify({ shipmentId }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) {
+        throw new Error(data.raw?.errors?.[0]?.detail || data.error || 'Erreur récupération du suivi');
+      }
+
+      let shippingUpdate = { ...order.shipping };
+      if (data.status) shippingUpdate.status = data.status;
+      if (data.parcelId) shippingUpdate.parcelId = data.parcelId;
+      if (data.labelUrl) shippingUpdate.labelUrl = data.labelUrl;
+      if (data.trackingNumber) shippingUpdate.trackingNumber = data.trackingNumber;
+      if (data.trackingUrl) shippingUpdate.trackingUrl = data.trackingUrl;
+      shippingUpdate.lastSendcloudSyncAt = new Date().toISOString();
+
+      const trackingAvailable = !!(data.trackingNumber || data.trackingUrl);
+      if (order.customer?.email && trackingAvailable && !order.shipping?.trackingEmailSentAt) {
+        try {
+          const emailResp = await fetch('/api/send-order-email', {
+            method: 'POST',
+            headers: await getAdminHeaders(),
+            body: JSON.stringify({
+              type: 'shipping_tracking',
+              order: { ...order, shipping: shippingUpdate },
+              recipientEmail: order.customer.email,
+              recipientName: `${order.customer.firstName || ''} ${order.customer.lastName || ''}`.trim(),
+              trackingNumber: data.trackingNumber,
+              trackingUrl: data.trackingUrl,
+              carrier: order.shipping?.carrier,
+            }),
+          });
+          if (emailResp.ok) {
+            shippingUpdate = {
+              ...shippingUpdate,
+              trackingEmailSentAt: new Date().toISOString(),
+            };
+          }
+        } catch (emailErr) {
+          console.warn('[Admin] Tracking email error:', emailErr);
+        }
+      }
+
+      await updateOrderShipping(order.id, shippingUpdate);
+      syncOrderShipping(order.id, shippingUpdate);
+      showToast(trackingAvailable
+        ? 'Suivi Sendcloud synchronisé et email client envoyé si nécessaire'
+        : 'Commande synchronisée — le suivi n’est pas encore disponible chez Sendcloud', trackingAvailable ? 'success' : 'info');
+    } catch (err) {
+      console.error('[Admin] Refresh tracking error:', err);
       showToast('Erreur: ' + err.message, 'error');
     } finally {
       setLabelLoading(false);
@@ -231,6 +481,9 @@ export default function AdminOrders() {
     }
   };
 
+  const selectedOrderLabelUrl = getOrderLabelUrl(selectedOrder);
+  const selectedOrderLabelDownloadUrl = getOrderLabelDownloadUrl(selectedOrder);
+
   if (loading) return <div className="admin-orders-loading">Chargement des commandes...</div>;
 
   return (
@@ -263,6 +516,8 @@ export default function AdminOrders() {
           <option value="all">Tous les statuts</option>
           <option value="paid">Payée</option>
           <option value="pending">En attente</option>
+          <option value="shipped">Expédiée</option>
+          <option value="delivered">Livrée</option>
           <option value="cancelled">Annulée</option>
         </select>
         <select value={filterPayment} onChange={(e) => setFilterPayment(e.target.value)}>
@@ -333,15 +588,23 @@ export default function AdminOrders() {
                 <td>
                   <span className={`status-badge ${order.status}`}>
                     {order.status === 'paid' ? <CheckCircle size={14} /> : <Clock size={14} />}
-                    {order.status === 'paid' ? 'Payée' : order.status === 'pending' ? 'En attente' : order.status === 'cancelled' ? 'Annulée' : order.status}
+                    {order.status === 'paid' ? 'Payée' : order.status === 'pending' ? 'En attente' : order.status === 'shipped' ? 'Expédiée' : order.status === 'delivered' ? 'Livrée' : order.status === 'cancelled' ? 'Annulée' : order.status}
                   </span>
                 </td>
                 <td>
-                  {order.shipping?.labelUrl ? (
-                    <span className="shipping-badge label-ready">
-                      <Truck size={14} />
-                      Étiquette prête
-                    </span>
+                  {getOrderLabelUrl(order) ? (
+                    <a
+                      href={getOrderLabelDownloadUrl(order)}
+                      target="_blank"
+                      rel="noreferrer"
+                      download={`etiquette-${order.id}.pdf`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="shipping-badge label-ready shipping-badge-link"
+                      title="Télécharger l'étiquette Sendcloud"
+                    >
+                      <Download size={14} />
+                      Télécharger
+                    </a>
                   ) : order.shipping?.shippingOptionCode ? (
                     <span className="shipping-badge pending">
                       <Package size={14} />
@@ -424,6 +687,12 @@ export default function AdminOrders() {
                 <p><strong>Email:</strong> {selectedOrder.customer?.email}</p>
                 <p><strong>Téléphone:</strong> {selectedOrder.customer?.phone || '-'}</p>
                 <p><strong>Adresse:</strong> {[selectedOrder.customer?.address, selectedOrder.customer?.postalCode, selectedOrder.customer?.city].filter(Boolean).join(', ') || '-'}</p>
+                {selectedOrder.customer?.addressComplement && (
+                  <p><strong>Complément:</strong> {selectedOrder.customer.addressComplement}</p>
+                )}
+                {selectedOrder.customer?.deliveryNotes && (
+                  <p><strong>Instructions livreur:</strong> {selectedOrder.customer.deliveryNotes}</p>
+                )}
               </div>
               <div className="detail-section">
                 <h4><ShoppingBag size={16} /> Articles</h4>
@@ -458,11 +727,30 @@ export default function AdminOrders() {
                   <h4><Truck size={16} /> Livraison & Expédition</h4>
                   <p><strong>Mode:</strong> {selectedOrder.shipping.name || selectedOrder.shipping.shippingOptionCode || '-'}</p>
                   {selectedOrder.shipping.carrier && <p><strong>Transporteur:</strong> {selectedOrder.shipping.carrier}</p>}
+
+                  {selectedOrder.shipping.pickupLocation && (
+                    <div style={{ background: '#ECFDF5', padding: '10px 14px', borderRadius: 8, margin: '10px 0', border: '1px solid #A7F3D0' }}>
+                      <strong style={{ color: '#065F46', display: 'block', marginBottom: 2 }}>Retrait en Institut (Click & Collect) :</strong>
+                      <span style={{ fontSize: 13, color: '#047857' }}>{selectedOrder.shipping.pickupLocation}</span>
+                    </div>
+                  )}
+
+                  {selectedOrder.shipping.servicePoint && (
+                    <div style={{ background: '#F8F5F1', padding: '10px 14px', borderRadius: 8, margin: '10px 0', border: '1px solid var(--gris-border)' }}>
+                      <strong style={{ color: 'var(--brun-dark)', display: 'block', marginBottom: 2 }}>Point Relais / Consigne sélectionné :</strong>
+                      <div style={{ fontWeight: 600, color: 'var(--noir)' }}>{selectedOrder.shipping.servicePoint.name}</div>
+                      <div style={{ fontSize: 12.5, color: '#666', marginTop: 2 }}>
+                        {selectedOrder.shipping.servicePoint.address}, {selectedOrder.shipping.servicePoint.postalCode} {selectedOrder.shipping.servicePoint.city}
+                      </div>
+                    </div>
+                  )}
+
                   <p><strong>Statut expédition:</strong>
                     <span className={`shipping-status-badge ${selectedOrder.shipping.status || 'pending'}`}>
                       {selectedOrder.shipping.status === 'label_created' ? 'Étiquette créée' :
                        selectedOrder.shipping.status === 'shipped' ? 'Expédiée' :
-                       selectedOrder.shipping.status === 'delivered' ? 'Livrée' : 'En attente'}
+                       selectedOrder.shipping.status === 'delivered' ? 'Livrée' :
+                       selectedOrder.shipping.status === 'cancelled' ? 'Annulée' : 'En attente'}
                     </span>
                   </p>
                   {selectedOrder.shipping.trackingNumber && (
@@ -475,19 +763,48 @@ export default function AdminOrders() {
                       </a>
                     </p>
                   )}
-                  {selectedOrder.shipping.labelUrl && (
+                  {selectedOrder.shipping.sendcloudShipmentId && (
+                    <button
+                      type="button"
+                      onClick={() => handleRefreshTracking(selectedOrder)}
+                      disabled={labelLoading}
+                      className="admin-label-btn secondary admin-refresh-tracking-btn"
+                      title="Récupérer le statut et le suivi depuis Sendcloud"
+                    >
+                      <RefreshCw size={14} /> Actualiser le suivi
+                    </button>
+                  )}
+                  {selectedOrderLabelUrl && (
                     <div className="admin-label-section">
                       <div className="admin-label-actions-row">
-                        <a href={selectedOrder.shipping.labelUrl} target="_blank" rel="noreferrer" className="admin-label-btn">
+                        <a href={selectedOrderLabelDownloadUrl} target="_blank" rel="noreferrer" download={`etiquette-${selectedOrder.id}.pdf`} className="admin-label-btn">
                           <Download size={14} /> Télécharger le PDF
                         </a>
-                        <a href={selectedOrder.shipping.labelUrl} target="_blank" rel="noreferrer" className="admin-label-btn secondary">
+                        <a href={selectedOrderLabelUrl} target="_blank" rel="noreferrer" className="admin-label-btn secondary">
                           <ExternalLink size={14} /> Ouvrir dans un nouvel onglet
                         </a>
+                        <button
+                          type="button"
+                          onClick={() => handlePrintLabel(selectedOrder)}
+                          disabled={labelLoading}
+                          className="admin-label-btn secondary"
+                          title="Imprimer l'étiquette"
+                        >
+                          <Printer size={14} /> Imprimer
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleCancelLabel(selectedOrder)}
+                          disabled={labelLoading}
+                          className="admin-cancel-label-btn"
+                          title="Annuler l'étiquette Sendcloud"
+                        >
+                          <X size={14} /> Annuler l'étiquette
+                        </button>
                       </div>
                       <div className="admin-pdf-viewer">
                         <iframe
-                          src={selectedOrder.shipping.labelUrl}
+                          src={selectedOrderLabelUrl}
                           title="Étiquette de livraison"
                           className="pdf-iframe"
                         />
@@ -497,7 +814,7 @@ export default function AdminOrders() {
                   {selectedOrder.shipping.testMode && (
                     <p className="admin-test-mode-note">Mode test — étiquette non facturée</p>
                   )}
-                  {!selectedOrder.shipping.labelUrl && (
+                  {!selectedOrderLabelUrl && (
                     <div className="admin-label-actions">
                       <button
                         className="admin-generate-label-btn"
@@ -527,6 +844,7 @@ export default function AdminOrders() {
                   <option value="paid">Payée</option>
                   <option value="pending">En attente</option>
                   <option value="shipped">Expédiée</option>
+                  <option value="delivered">Livrée</option>
                   <option value="cancelled">Annulée</option>
                 </select>
                 <button className="delete-order-btn" onClick={() => handleDelete(selectedOrder.id, selectedOrder.customer?.email)}>

@@ -1283,7 +1283,12 @@ function AdminProducts({ products, setProducts, onOpenDetail, editIdFromNav, cle
 
           <div className="admin-form-group admin-form-full">
             <label>Livraison & retours</label>
-            <textarea value={form.delivery} onChange={(e) => setForm((s) => ({ ...s, delivery: e.target.value }))} rows={3} />
+            <textarea
+              value={form.delivery}
+              onChange={(e) => setForm((s) => ({ ...s, delivery: e.target.value }))}
+              rows={4}
+              placeholder="Livraison en France via Chronopost, Colissimo ou Mondial Relay selon l’option choisie lors du paiement. Retrait Click & Collect gratuit dans nos instituts de Viry-Châtillon. Retour sous 14 jours pour un produit neuf, non ouvert et dans son emballage d’origine."
+            />
           </div>
 
           <div className="admin-form-group">
@@ -1783,10 +1788,35 @@ function AdminPostEditor({ userEmail, posts, setPosts, postId, onBack }) {
   );
 }
 
-function AdminDashboard({ products, posts, orders, userEmail, onGoProducts, onGoBlog }) {
+const REVENUE_STATUSES = new Set(['paid', 'shipped', 'delivered', 'completed']);
+
+function getOrderDate(order) {
+  const value = order?.createdAt;
+  if (!value) return null;
+  if (typeof value.toDate === 'function') return value.toDate();
+  if (typeof value.seconds === 'number') return new Date(value.seconds * 1000);
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function getOrderTotalCents(order) {
+  if (Number.isFinite(Number(order?.totalAmountCents))) return Number(order.totalAmountCents);
+  if (Number.isFinite(Number(order?.totalCents))) return Number(order.totalCents);
+  if (Number.isFinite(Number(order?.totalAmount))) return Math.round(Number(order.totalAmount) * 100);
+  return 0;
+}
+
+function AdminDashboard({ products, posts, orders, ordersError, userEmail, onGoProducts, onGoBlog }) {
   const stats = useMemo(() => {
-    const totalRevenueCents = (orders || []).reduce((sum, o) => sum + (o.totalCents || 0), 0);
-    const totalOrders = (orders || []).length;
+    const now = new Date();
+    const monthlyOrders = (orders || []).filter((order) => {
+      const createdAt = getOrderDate(order);
+      return createdAt && createdAt.getFullYear() === now.getFullYear() && createdAt.getMonth() === now.getMonth();
+    });
+    const totalRevenueCents = monthlyOrders
+      .filter((order) => REVENUE_STATUSES.has(String(order.status || '').toLowerCase()))
+      .reduce((sum, order) => sum + getOrderTotalCents(order), 0);
+    const totalOrders = monthlyOrders.filter((order) => order.status !== 'cancelled').length;
     const activeProducts = products.length;
     const publishedPosts = posts.filter((p) => p.status === 'published').length;
     return {
@@ -1821,6 +1851,12 @@ function AdminDashboard({ products, posts, orders, userEmail, onGoProducts, onGo
           aria-hidden="true"
         />
       </div>
+
+      {ordersError && (
+        <div className="admin-inline-error">
+          Impossible de charger les commandes Firebase : {ordersError}
+        </div>
+      )}
 
       <div className="admin-stats-grid">
         <div className="admin-stat-card">
@@ -2048,6 +2084,7 @@ export default function AdminPage() {
   const [products, setProducts] = usePersistentState(LS_PRODUCTS, seedAdminProducts);
   const [posts, setPosts] = usePersistentState(LS_POSTS, seedAdminPosts);
   const [orders, setOrders] = useState([]);
+  const [ordersError, setOrdersError] = useState('');
   const [user, setUser] = useState(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
@@ -2096,10 +2133,12 @@ export default function AdminPage() {
 
     const unsubOrders = listenOrders(
       (list) => {
+        setOrdersError('');
         if (Array.isArray(list)) setOrders(list);
       },
-      () => {
-        // ignore
+      (err) => {
+        setOrders([]);
+        setOrdersError(err?.message || 'Vérifiez les règles Firestore et la connexion admin.');
       }
     );
 
@@ -2405,6 +2444,7 @@ export default function AdminPage() {
                   products={products}
                   posts={posts}
                   orders={orders}
+                  ordersError={ordersError}
                   userEmail={user?.email || ''}
                   onGoProducts={() => setAdminHash({ view: 'products' })}
                   onGoBlog={() => setAdminHash({ view: 'blog' })}

@@ -1,6 +1,8 @@
 // Sendcloud Shipments API - Create a shipment and retrieve the label
 // Called by the admin panel to generate a shipping label for an order
 
+import { verifyAdminRequest } from '../../server/admin-auth.js';
+
 const SENDCLOUD_API_BASE = 'https://panel.sendcloud.sc';
 
 function json(statusCode, body) {
@@ -8,7 +10,7 @@ function json(statusCode, body) {
     statusCode,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Content-Type': 'application/json',
     },
@@ -16,14 +18,26 @@ function json(statusCode, body) {
   };
 }
 
+const supportsServicePoint = (shippingOptionCode) => {
+  const code = String(shippingOptionCode || '').toLowerCase();
+  const optionCode = code.includes(':') ? code.split(':').slice(1).join(':') : code;
+  return optionCode.includes('service_point')
+    || optionCode.includes('post-office')
+    || optionCode.includes('locker_delivery')
+    || optionCode.includes('relay');
+};
+
 export const handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type', 'Access-Control-Allow-Methods': 'POST, OPTIONS' } };
+    return { statusCode: 200, headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Access-Control-Allow-Methods': 'POST, OPTIONS' } };
   }
 
   if (event.httpMethod !== 'POST') {
     return json(405, { error: 'Method not allowed' });
   }
+
+  const admin = await verifyAdminRequest(event.headers);
+  if (!admin.ok) return json(admin.status, { error: admin.error });
 
   const publicKey = process.env.SENDCLOUD_PUBLIC_KEY;
   const secretKey = process.env.SENDCLOUD_SECRET_KEY;
@@ -38,16 +52,24 @@ export const handler = async (event) => {
       recipient,
       parcel,
       testMode,
-    } = JSON.parse(event.body);
+      servicePointId,
+    } = JSON.parse(event.body || '{}');
 
     if (!shippingOptionCode || !recipient || !parcel) {
       return json(400, { error: 'Paramètres manquants: shippingOptionCode, recipient, parcel requis' });
+    }
+    if (!testMode && servicePointId && !supportsServicePoint(shippingOptionCode)) {
+      return json(400, { error: 'Cette méthode Sendcloud ne supporte pas les points relais' });
     }
 
     const auth = Buffer.from(`${publicKey}:${secretKey}`).toString('base64');
 
     // Build the shipment payload
     const payload = {
+      label_details: {
+        mime_type: 'application/pdf',
+        dpi: 72,
+      },
       to_address: {
         name: `${recipient.firstName} ${recipient.lastName}`.trim(),
         address_line_1: recipient.address || '',
@@ -86,6 +108,10 @@ export const handler = async (event) => {
       ],
     };
 
+    if (!testMode && servicePointId) {
+      payload.to_service_point = { id: Number(servicePointId) };
+    }
+
     // Create shipment synchronously
     const url = `${SENDCLOUD_API_BASE}/api/v3/shipments/announce`;
     const resp = await fetch(url, {
@@ -106,41 +132,22 @@ export const handler = async (event) => {
     }
 
     // Extract shipment + parcel + label info
-    const shipment = data.shipment || data;
+    const shipment = data.data || data.shipment || data;
     const parcels = shipment.parcels || [];
     const firstParcel = parcels[0] || {};
-
-    // Label can be in the response (synchronous) or needs a separate fetch
-    let labelUrl = data.label_file || firstParcel.label_file_url || null;
-
-    // If no label URL in response, try to fetch it via Parcel Documents API
-    if (!labelUrl && firstParcel.id) {
-      try {
-        const labelResp = await fetch(
-          `${SENDCLOUD_API_BASE}/api/v3/parcels/${firstParcel.id}/documents/label`,
-          {
-            method: 'GET',
-            headers: {
-              'Authorization': `Basic ${auth}`,
-              'Accept': 'application/json',
-            },
-          }
-        );
-        if (labelResp.ok) {
-          const labelData = await labelResp.json();
-          labelUrl = labelData.label_url || labelData.url || labelData.download_url || null;
-        }
-      } catch (e) {
-        console.error('[Sendcloud] label fetch failed:', e.message);
-      }
-    }
+    const labelBase64 = firstParcel.label_file || shipment.label_file || data.label_file || null;
+    const labelUrl = firstParcel.id
+      ? `/api/sendcloud-label?parcelId=${firstParcel.id}`
+      : labelBase64
+        ? `data:application/pdf;base64,${labelBase64}`
+        : null;
 
     return json(200, {
       shipmentId: shipment.id || data.id,
       parcelId: firstParcel.id,
       labelUrl,
-      trackingNumber: firstParcel.tracking_number || firstParcel.tracking_code || null,
-      trackingUrl: firstParcel.tracking_url || firstParcel.tracking_link || null,
+      trackingNumber: firstParcel.tracking_number || firstParcel.tracking_code || shipment.tracking_number || data.tracking_number || null,
+      trackingUrl: firstParcel.tracking_url || firstParcel.tracking_link || shipment.tracking_url || data.tracking_url || null,
       status: shipment.status || data.status || 'created',
       testMode: !!testMode,
     });
