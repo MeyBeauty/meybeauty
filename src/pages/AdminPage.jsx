@@ -1789,6 +1789,14 @@ function AdminPostEditor({ userEmail, posts, setPosts, postId, onBack }) {
 }
 
 const REVENUE_STATUSES = new Set(['paid', 'shipped', 'delivered', 'completed']);
+const ORDER_STATUS_LABELS = {
+  paid: 'Payée',
+  pending: 'En attente',
+  shipped: 'Expédiée',
+  delivered: 'Livrée',
+  cancelled: 'Annulée',
+  completed: 'Terminée',
+};
 
 function getOrderDate(order) {
   const value = order?.createdAt;
@@ -1826,6 +1834,38 @@ function AdminDashboard({ products, posts, orders, ordersError, userEmail, onGoP
       posts: publishedPosts.toLocaleString('fr-FR'),
     };
   }, [products, posts, orders]);
+
+  const recentOrders = useMemo(() => {
+    return [...(orders || [])]
+      .sort((a, b) => (getOrderDate(b)?.getTime() || 0) - (getOrderDate(a)?.getTime() || 0))
+      .slice(0, 5);
+  }, [orders]);
+
+  const topProducts = useMemo(() => {
+    const totals = new Map();
+    (orders || [])
+      .filter((order) => REVENUE_STATUSES.has(String(order.status || '').toLowerCase()))
+      .forEach((order) => {
+        (order.items || []).forEach((item) => {
+          const key = item.productId || item.name;
+          if (!key) return;
+          const quantity = Number(item.quantity) || 0;
+          const revenueCents = Number.isFinite(Number(item.totalCents))
+            ? Number(item.totalCents)
+            : (Number(item.priceCents) || 0) * quantity;
+          const current = totals.get(key) || { id: item.productId || '', name: item.name || 'Produit', quantity: 0, revenueCents: 0 };
+          current.quantity += quantity;
+          current.revenueCents += revenueCents;
+          totals.set(key, current);
+        });
+      });
+    return [...totals.values()].sort((a, b) => b.revenueCents - a.revenueCents).slice(0, 5);
+  }, [orders]);
+
+  const formatOrderDate = (order) => {
+    const date = getOrderDate(order);
+    return date ? date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+  };
 
   return (
     <div className="admin-page-view">
@@ -1931,7 +1971,71 @@ function AdminDashboard({ products, posts, orders, ordersError, userEmail, onGoP
         </div>
       </div>
 
-      {import.meta.env.DEV && <AdminMaintenanceSection />}
+      <div className="admin-dashboard-grid">
+        <div className="admin-section">
+          <div className="admin-section-header">
+            <div className="admin-section-title">Commandes récentes</div>
+            <a className="admin-section-link" href="#admin?view=orders">Tout voir</a>
+          </div>
+          {recentOrders.length === 0 ? (
+            <div className="admin-empty">Aucune commande enregistrée pour le moment.</div>
+          ) : (
+            <div className="admin-table-wrap">
+              <table className="admin-table admin-dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Commande</th>
+                    <th>Cliente</th>
+                    <th>Date</th>
+                    <th>Statut</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentOrders.map((order) => {
+                    const status = String(order.status || 'pending').toLowerCase();
+                    return (
+                      <tr key={order.id}>
+                        <td><strong>#{String(order.id || '').slice(-8).toUpperCase()}</strong></td>
+                        <td>{`${order.customer?.firstName || ''} ${order.customer?.lastName || ''}`.trim() || order.customer?.email || '—'}</td>
+                        <td>{formatOrderDate(order)}</td>
+                        <td><span className={`status-badge ${status}`}>{ORDER_STATUS_LABELS[status] || status}</span></td>
+                        <td><strong>{formatPriceEUR(getOrderTotalCents(order))}</strong></td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+
+        <div className="admin-section">
+          <div className="admin-section-header">
+            <div className="admin-section-title">Produits les plus vendus</div>
+          </div>
+          {topProducts.length === 0 ? (
+            <div className="admin-empty">Les ventes par produit apparaîtront ici dès qu’une commande payée sera enregistrée.</div>
+          ) : (
+            <div className="admin-dashboard-product-list">
+              {topProducts.map((product, index) => (
+                <a
+                  key={product.id || product.name}
+                  className="admin-dashboard-product-row"
+                  href={product.id ? `#admin?view=product&id=${encodeURIComponent(product.id)}` : '#admin?view=products'}
+                >
+                  <span className="admin-dashboard-rank">{index + 1}</span>
+                  <span className="admin-dashboard-product-name">{product.name}</span>
+                  <span className="admin-dashboard-product-meta">{product.quantity} vendu(s)</span>
+                  <strong>{formatPriceEUR(product.revenueCents)}</strong>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {import.meta.env.DEV && import.meta.env.VITE_ADMIN_MAINTENANCE === 'true' && <AdminMaintenanceSection />}
     </div>
   );
 }
