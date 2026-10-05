@@ -814,7 +814,7 @@ export default function AdminOrders() {
                   {selectedOrder.shipping.testMode && (
                     <p className="admin-test-mode-note">Mode test — étiquette non facturée</p>
                   )}
-                  {!selectedOrderLabelUrl && (
+                  {!selectedOrderLabelUrl && selectedOrder.shipping?.shippingOptionCode !== 'pickup:store' && (
                     <div className="admin-label-actions">
                       <button
                         className="admin-generate-label-btn"

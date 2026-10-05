@@ -463,6 +463,7 @@ function CheckoutModal({ amount, subtotalCents, shippingCents, totalSavings, cus
   const [servicePoints, setServicePoints] = useState([]);
   const [servicePointsLoading, setServicePointsLoading] = useState(false);
   const [servicePointsError, setServicePointsError] = useState('');
+  const [selectedPickupInstitute, setSelectedPickupInstitute] = useState('Mey Beauty — Place du Marché');
   const [addressSuggestions, setAddressSuggestions] = useState([]);
   const [showAddressSuggestions, setShowAddressSuggestions] = useState(false);
   const [addressSearchTimeout, setAddressSearchTimeout] = useState(null);
