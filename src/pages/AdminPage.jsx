@@ -2438,8 +2438,8 @@ export default function AdminPage() {
                 <div className="admin-user-row">
                   <img
                     className="admin-user-avatar-img"
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80"
-                    alt="Admin"
+                    src="/equipe/mey%20beauty%20team%20(3).png"
+                    alt="Mélanie"
                     loading="lazy"
                   />
                   <div className="admin-user-info">
