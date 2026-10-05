@@ -90,9 +90,10 @@ export default function CartPage() {
   const shippingCents = shippingInfo?.priceCents || 0;
   const totalCents = subtotalCents + shippingCents;
 
-  // Total weight in grams (default 500g per item — cosmetics are lightweight)
+  // Total weight in grams: real product weights + ~150g of parcel packaging
+  const PACKAGING_GRAMS = 150;
   const totalWeightGrams = useMemo(
-    () => lines.reduce((sum, l) => sum + (l.product.weightGrams || 500) * l.quantity, 0),
+    () => PACKAGING_GRAMS + lines.reduce((sum, l) => sum + (l.product.weightGrams || 300) * l.quantity, 0),
     [lines]
   );
 
